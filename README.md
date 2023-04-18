@@ -31,13 +31,25 @@ Next I'll create a components folder to store all available components we wan't 
 ## Creating the first library component
 In DashboardMeter.tsx, lets create our re-usable react function component the same way we normally do in our react apps. Lets think about what values we want the user to provide the component so it'll give them the functionality they want. In types.ts, lets declare several types and export each one individually (so any other file can use a single type), as well as an interface so we can pass them along to the main components props. In the main components parameters, we extract all fields we want to use from the props object by name. This should always be done to provide quick reference to anyone working on the file, keep track of unused variables, assign default values, and shorten out some code by not having to write props.value, .... . 
 
-In types.ts, we declare our types by keywords like string, number, or boolean. We can further specify what types of properties is acceptable for each type variable by adding more complex but specific values we can accept. For instance the title type can either be an array of 2-3 strings, a single string or entirely ommitted. It is your responsibility to let the user understand how each different input affects the output of the component. I will discuss more about types later or in a different article.
+In types.ts, we declare our types by keywords like string, number, or boolean. We can further specify what types of properties is acceptable for each type variable by adding more complex but specific values we can accept. For instance the title type can either be an array of 2-3 strings, a single string or entirely ommitted. The outcome of each type returns a different form of title. It is your responsibility to let the user understand how each different input affects the output of the component if it is not already obvious. I will discuss more about types later or in a different article.
 
-Lets import those types and assign them to the prop types of our main function component like so
+Lets import those types and assign them to the prop types of our main function component. I'm also going to decontruct the props object in the parameter so we can use it within our component. Since some types are optional, I am going to assign default values to several properties so the user can still use the component without having to heavily customize and assign common values to the component.
 ``` 
-    const DashboardMeter: React.FunctionComponent<DashboardMeterProps> = ({})=> ...
+    const DashboardMeter: React.FunctionComponent<DashboardMeterProps> = ({
+
+    })=> ...
 ```
 
-Developing libraries is a complex process where you need to think of every use-case and aspect of the component and make sure to solve bugs before they appear. To make this process easier, I use typescript, styled components(to help easily visualize and pass style props to components), storybook, and several techniques such as code splitting.
 
 
+
+
+## Notes
+Developing libraries is a complex process where you need to think of every use-case and aspect of the component and make sure to solve bugs before they appear. To make this process easier, I use typescript, styled components(to help easily visualize and pass style props to components), storybook, and common coding practices. It is also important to make your code very easy to understand, this may mean writing documentation not only for how to use the library, but to contribute and how things work. Having excess comments could make the bundle size larger and make it even more confusing. A good programmer could write easy to understand code by having appropriate names, comments on hard to understand lines, and separation of concerns. You should assume the person working on your code isn't a complete beginner but also not an expert. 
+
+Benefits of using typescript:
+- Prevent bugs before we write code, when we write code, and when we maintain our code in the future.
+- Provide context to variables without having to further explaiin them beyond their names.
+- Specify specific acceptable values to make sure our code works 100% of the time, and quickly return errors when the wrong type is passed through.
+- Take advantage of your code editor features to quickly view an expressions, statements, or variables types.
+- Make sure the user using your library is passing in properties with acceptable types.
