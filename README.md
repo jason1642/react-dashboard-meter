@@ -40,6 +40,7 @@ Lets import those types and assign them to the prop types of our main function c
     })=> ...
 ```
 
+Now, lets think about the different types of components we can create and separate into different files. We'll use Reacts core philosophy of components, in that everything is or can be a component - which helps us isolate and magnify a part of a component to add complex funcitonality without affecting the whole. Here we can see several parts that can be separated from the whole and isolated so we can add as much styles, customization conditions, functions as we need to without bloating any one file in particular. We'll create ProgressMeter.tsx, Labels.tsx, and Title.tsx. Depending on the properties passed in, these will have dynamic styles that change how the overall component looks. 
 
 
 
