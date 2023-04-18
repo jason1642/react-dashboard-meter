@@ -10,6 +10,7 @@ What this tutorial will cover -
 
 ### Things to discuss/include
 - Babel.config.cjs, jest.config.mjs, ts.config.json, package.json, rollup.config.mjs
+- Thinking of every aspect/use case of your components and designing them to adapt.
 - 
 ## Initialization
 Using npm to create our new React library is very important, but for the most part we just need the barebones create react app template with Typescript. Since this is just a library, great frameworks such as Nextjs will not be useful whatsoever.  
@@ -23,7 +24,11 @@ After installation is complete, there are many files that we would normally usin
 After several files have been removed, lets add or change the index.ts file in the /src level. This file acts as the directory for all the exports of the components we have created. We can have both default and named exports here depending on our library design. 
 In this tutorial I will be creating two different components to demonstrate having multiple components available for the user to use, and how scaling a library would look like when there may be (for instance) 100 different components.
 
-Next I'll create a components folder to store all available components we wan't users to have access to. Each folder in our components folder will represent a components which can be imported by its name. Here in the dashboard-meter folder, we have Dashboard.tsx which will act as the default export for this components, as well as types.ts, to organize our typescript types so we can stay consistent throughout development and catch errors as soon as we make them. DashboardMeter.stories.tsx is where we will declare our component and design a container for storybook to include when you run storybook locally. 
+Next I'll create a components folder to store all available components we wan't users to have access to. Each folder in our components folder will represent a components which can be imported by its name. Here in the dashboard-meter folder, we have Dashboard.tsx which will act as the default export for this components, as well as types.ts, to organize our typescript types so we can stay consistent throughout development and catch errors as soon as we make them. DashboardMeter.stories.tsx is where we will declare our component and design a container for storybook to include when you run storybook locally. DashboardMeter.test.tsx is our jest test file for this component. We will include some tests to make sure our component is rendering properly, but for this type of component (ui component), our testing could simply be done on storybook so jest test is optional. 
+
+### Make sure to install - [ styled-components, ]
+## Creating the first library component
+In DashboardMeter.tsx, lets create our re-usable react function component the same way we normally do in our react apps. 
 
 
 
