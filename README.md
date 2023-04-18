@@ -31,7 +31,13 @@ Next I'll create a components folder to store all available components we wan't 
 ## Creating the first library component
 In DashboardMeter.tsx, lets create our re-usable react function component the same way we normally do in our react apps. Lets think about what values we want the user to provide the component so it'll give them the functionality they want. In types.ts, lets declare several types and export each one individually (so any other file can use a single type), as well as an interface so we can pass them along to the main components props. In the main components parameters, we extract all fields we want to use from the props object by name. This should always be done to provide quick reference to anyone working on the file, keep track of unused variables, assign default values, and shorten out some code by not having to write props.value, .... . 
 
-In types.ts, we declare our types by keywords like string, number, or 
+In types.ts, we declare our types by keywords like string, number, or boolean. We can further specify what types of properties is acceptable for each type variable by adding more complex but specific values we can accept. For instance the title type can either be an array of 2-3 strings, a single string or entirely ommitted. It is your responsibility to let the user understand how each different input affects the output of the component. I will discuss more about types later or in a different article.
 
+Lets import those types and assign them to the prop types of our main function component like so
+``` 
+    const DashboardMeter: React.FunctionComponent<DashboardMeterProps> = ({})=> ...
+```
+
+Developing libraries is a complex process where you need to think of every use-case and aspect of the component and make sure to solve bugs before they appear. To make this process easier, I use typescript, styled components(to help easily visualize and pass style props to components), storybook, and several techniques such as code splitting.
 
 
