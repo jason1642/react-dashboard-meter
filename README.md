@@ -1,46 +1,23 @@
-# Getting Started with Create React App
+ # How to create a React Library with Rollup in 2023
+Written by Jason Cruz
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+What this tutorial will cover - 
+- Create a new react project with typescript and discuss folder structure
+- Designing exports to change how the package is imported and used by the user. 
+- Using storybook to test out our new components since we can't use 'npm run start' to see how it looks in localhost. 
+- Using rollup and understanding package optimization and configurations.
+  
+## Initialization
+Using npm to create our new React library is very important, but for the most part we just need the barebones create react app template with Typescript. Since this is just a library, great frameworks such as Nextjs is not needed whatsoever.  
 
-## Available Scripts
+Lets install our new React Library starter code 
+	
+    npx create-react-app my-app --template typescript	
+ 
+After installation is complete, there are many files that we would normally using in a react website app that we have no use for in our library. Lets remove all the files that simply act as clutter. 
 
-In the project directory, you can run:
+After several files have been removed, lets add or change the index.ts file in the /src level. This file acts as the directory for all the exports of the components we have created. We can have both default and named exports here depending on our library design. 
+In this tutorial I will be creating two different components to demonstrate having multiple components available for the user to use, and how scaling a library would look like when there may be (for instance) 100 different components.
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
