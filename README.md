@@ -11,7 +11,7 @@ What this tutorial will cover -
 ### Things to discuss/include
 - Babel.config.cjs, jest.config.mjs, ts.config.json, package.json, rollup.config.mjs
 - Thinking of every aspect/use case of your components and designing them to adapt.
-- 
+- z
 ## Initialization
 Using npm to create our new React library is very important, but for the most part we just need the barebones create react app template with Typescript. Since this is just a library, great frameworks such as Nextjs will not be useful whatsoever.  
 
