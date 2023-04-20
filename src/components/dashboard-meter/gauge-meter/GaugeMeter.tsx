@@ -1,15 +1,15 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import type {labels, value, progressBarColor} from '../types'
+import type { labels, value, progressBarColor, titleFontSize } from '../types'
 
 
 interface RotatingProgressBarProps {
   percentFilled: number;
-  maxValues: {maxHeight: number, maxWidth: number};
+  maxValues: { maxHeight: number, maxWidth: number };
 }
 
 interface StaticProgressMeterProps {
-  maxValues: {maxHeight: number, maxWidth: number};
+  maxValues: { maxHeight: number, maxWidth: number };
   guageInnerAreaSize: number;
   progressBarColor: progressBarColor;
 }
@@ -23,7 +23,7 @@ interface GaugeProps {
 
 
 
-const calcRem = (val: number, fontSizePx: number = 16)=>
+const calcRem = (val: number, fontSizePx: number = 16) =>
   // Either calc all sizes by multplying static value, or having val be width and have responsive calculations
   `${(val) / fontSizePx}rem`
 
@@ -36,7 +36,7 @@ const Gauge = styled.div<GaugeProps>`
   display: flex;
   border: 2px solid white;
   width: 100%;
-  height: ${({maxWidth})=> maxWidth! / 2}px;
+  height: ${({ maxWidth }) => maxWidth! / 2}px;
 
   /* margin: ${calcRem(20)}; */
 `;
@@ -47,8 +47,8 @@ const StaticProgressMeter = styled.div<StaticProgressMeterProps>`
   position: relative;
   /* width: 100%;
   height: 100%; */
-  width: ${({maxValues: { maxWidth}}) =>calcRem(maxWidth)};
-  height:${({maxValues: {maxHeight}}) =>calcRem(maxHeight)};
+  width: ${({ maxValues: { maxWidth } }) => calcRem(maxWidth)};
+  height:${({ maxValues: { maxHeight } }) => calcRem(maxHeight)};
   background: linear-gradient(to right, #f7351f 0%, #f3ff18 50%, #12f912 100%);
   /* background: #00a2ff; */
   border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
@@ -56,21 +56,20 @@ const StaticProgressMeter = styled.div<StaticProgressMeterProps>`
 
   /* Inner area */
   &::before {
-    content: '1231';
+    content: '';
     text-align: center;
     position: absolute;
     bottom: 0;
     left: 50%;
     z-index: 3;
-    vertical-align: middle;
 
     display: flex;
 
     /* Values with * .x - Percent of entire semi-circle gauge covered by inner space */
-    width:${({maxValues: {maxWidth},guageInnerAreaSize}) =>calcRem(maxWidth * (guageInnerAreaSize / 100))};
-    height:${({maxValues: {maxWidth, maxHeight,},guageInnerAreaSize}) =>calcRem(maxHeight * (guageInnerAreaSize / 100))};
+    width:${({ maxValues: { maxWidth }, guageInnerAreaSize }) => calcRem(maxWidth * (guageInnerAreaSize / 100))};
+    height:${({ maxValues: { maxWidth, maxHeight, }, guageInnerAreaSize }) => calcRem(maxHeight * (guageInnerAreaSize / 100))};
     /* Original margin-left = -70 */
-    margin-left: -${({maxValues: {maxWidth, maxHeight},guageInnerAreaSize}) =>calcRem(maxHeight * (guageInnerAreaSize / 100))};
+    margin-left: -${({ maxValues: { maxWidth, maxHeight }, guageInnerAreaSize }) => calcRem(maxHeight * (guageInnerAreaSize / 100))};
 
     background: #ffffff;
 
@@ -88,11 +87,11 @@ const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
   top: 0;
   left: 0;
 
-  width: ${({maxValues: { maxWidth}}) =>calcRem(maxWidth)};
-  height:${({maxValues: {maxHeight, maxWidth}}) =>calcRem(maxWidth)};
+  width: ${({ maxValues: { maxWidth } }) => calcRem(maxWidth)};
+  height:${({ maxValues: { maxHeight, maxWidth } }) => calcRem(maxWidth)};
   background: transparent;
 
-  transform: ${({percentFilled})=>`rotate(${(percentFilled / 100) * 180}deg) translate3d(0,0,0)`};
+  transform: ${({ percentFilled }) => `rotate(${(percentFilled / 100) * 180}deg) translate3d(0,0,0)`};
   transform-origin: center center;
   backface-visibility: hidden;
   transition: all .3s ease-in-out;
@@ -107,8 +106,8 @@ const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
     left: 0%;
     z-index: 2;
     display: flex;
-    width: ${({maxValues: { maxWidth}}) =>calcRem(maxWidth + (maxWidth / 100))};
-  height:${({maxValues: { maxWidth}}) =>calcRem((maxWidth / 2) + (maxWidth / 100))};
+    width: ${({ maxValues: { maxWidth } }) => calcRem(maxWidth + (maxWidth / 100))};
+  height:${({ maxValues: { maxWidth } }) => calcRem((maxWidth / 2) + (maxWidth / 100))};
   
     /* 200w & 100h - Set proportional margins */
     margin: -1px 0 0 -1px;
@@ -120,11 +119,11 @@ const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
 `;
 
 
-const Title = styled.div`
+const Title = styled.div<{titleFontSize: string}>`
   position: absolute;
-  font-size: 2.5rem;
+  font-size: ${({titleFontSize})=> titleFontSize};
   /* background-color: blue; */
-  left: calc(50% - 2.2rem);
+  left: ${({titleFontSize})=> `calc(50% - ${titleFontSize})`};
   top: 50%;
   display: flex;
   /* justify-self: center; */
@@ -139,20 +138,28 @@ const Title = styled.div`
 interface IMeterProps {
   percentFilled: number;
   labels: labels;
-  guageInnerAreaSize?: number; 
+  guageInnerAreaSize?: number;
   progressBarColor: progressBarColor;
+  titleFontSize: titleFontSize;
 }
 
 
-const GaugeMeter: React.FunctionComponent<IMeterProps> = ({percentFilled = 50,progressBarColor='#00a2ff', labels, guageInnerAreaSize = 80}) => {
+const GaugeMeter: React.FunctionComponent<IMeterProps> = (
+  { 
+    percentFilled = 50,
+     progressBarColor = '#00a2ff', 
+     labels, 
+     guageInnerAreaSize = 80,
+     titleFontSize = '1.7rem'
+  }) => {
   const gaugeRef: React.MutableRefObject<HTMLDivElement | null> | null = React.useRef(null)
-  const [maxValues, setMaxValues] = React.useState<{maxHeight: number, maxWidth: number}>()
+  const [maxValues, setMaxValues] = React.useState<{ maxHeight: number, maxWidth: number }>()
 
   React.useEffect(() => {
-    gaugeRef.current && setMaxValues({maxHeight: gaugeRef.current.clientHeight, maxWidth: gaugeRef?.current.clientWidth})
+    gaugeRef.current && setMaxValues({ maxHeight: gaugeRef.current.clientHeight, maxWidth: gaugeRef?.current.clientWidth })
     console.log(maxValues)
   }, [gaugeRef]);
-    
+
 
 
   React.useEffect(() => {
@@ -161,24 +168,24 @@ const GaugeMeter: React.FunctionComponent<IMeterProps> = ({percentFilled = 50,pr
 
 
   return (
-      <Gauge maxWidth={maxValues?.maxWidth} ref={gaugeRef}>
-        {maxValues && <>
-           <StaticProgressMeter
-             progressBarColor={progressBarColor}
-             maxValues={{maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth}}
-             guageInnerAreaSize={guageInnerAreaSize}
-             />
+    <Gauge maxWidth={maxValues?.maxWidth} ref={gaugeRef}>
+      {maxValues && <>
+        <StaticProgressMeter
+          progressBarColor={progressBarColor}
+          maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
+          guageInnerAreaSize={guageInnerAreaSize}
+        />
         <RotatingProgressBar
-         percentFilled={percentFilled}
-          maxValues={{maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth}} 
-          />
-          <Title>
-            80%
-          </Title>
-      
-       </>
-        }
-      </Gauge>
+          percentFilled={percentFilled}
+          maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
+        />
+        <Title titleFontSize={titleFontSize}>
+          80%
+        </Title>
+
+      </>
+      }
+    </Gauge>
 
 
   );

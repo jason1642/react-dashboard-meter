@@ -18,12 +18,12 @@ const LinearMeter: React.FunctionComponent<LinearMeterProps> = ({
 
   return (
     <Container>
-        <GaugeMeter  
+        {/* <GaugeMeter  
         progressBarColor={progressBarColor} 
         percentFilled={55} 
         labels={['%']} 
-        />
-
+        /> */}
+  LINEAR METER WIP
     </Container>
   );
 };
