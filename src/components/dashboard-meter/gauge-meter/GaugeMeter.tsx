@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import type { labels, value, progressBarColor, titleFontSize, maxValues } from '../types'
+import type { labels, value, progressBarColor, titleFontSize, maxValues, range } from '../types'
 import Container from './Container'
 import ProgressBarFiller from './ProgressBarFiller';
 import ProgressBarCover from './ProgressBarCover';
@@ -17,7 +17,6 @@ const Title = styled.div<{titleFontSize: string}>`
   /* If text is needed at bottom */
   top: ${({titleFontSize})=> `calc(100% - ${titleFontSize})`};
   display: block;
-  /* justify-self: center; */
   z-index: 10;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   width: 100%;
@@ -31,6 +30,7 @@ interface IMeterProps {
   guageInnerAreaSize?: number;
   progressBarColor: progressBarColor;
   titleFontSize: titleFontSize;
+  range: range;
 }
 
 
@@ -39,6 +39,7 @@ const GaugeMeter: React.FunctionComponent<IMeterProps> = (
     percentFilled = 50,
      progressBarColor = '#00a2ff', 
      labels, 
+     range = [25, 80],
      guageInnerAreaSize = 80,
      titleFontSize = '2.2rem'
   }) => {
@@ -66,7 +67,9 @@ const GaugeMeter: React.FunctionComponent<IMeterProps> = (
           progressBarColor={progressBarColor}
           />
 
+          {/* Cover is the component that rotates */}
         <ProgressBarCover
+          range={range}
           percentFilled={percentFilled}
           maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
         />

@@ -4,12 +4,8 @@ import type { labels, value, progressBarColor, titleFontSize, maxValues } from '
 import { calcRem } from './methods';
 
 
-
-
-
-
 interface StaticProgressMeterProps {
-    maxValues: { maxHeight: number, maxWidth: number };
+    maxValues: maxValues;
     guageInnerAreaSize: number;
     progressBarColor: progressBarColor;
   }
