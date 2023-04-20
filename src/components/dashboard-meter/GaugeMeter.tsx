@@ -5,16 +5,22 @@ const Container = styled.div`
   display:flex;
   background-color: green;
   padding: 10px;
-  /* height: 185px;
-  width: 280px; */
+  height: 185px;
+  width: 280px;
   /* border-radius: 50%; */
   position: relative;
   /* overflow: hidden; */
 
 `;
 
-const calcRem = (val: number)=>
-  `${val / 16}rem`
+
+
+
+
+
+const calcRem = (val: number, fontSizePx: number = 20)=>
+
+  `${(val * 2) / fontSizePx}rem`
 
 interface RotatingFillerProps {
   percentFilled: number;
@@ -25,8 +31,11 @@ const Gauge = styled.div`
   position: relative;
   overflow: hidden;
   display: block;
-  width: ${calcRem(200)};
-  height: ${calcRem(100)};
+  width: 100%;
+  height: 100%;
+  /* width: ${calcRem(200)};
+  height: ${calcRem(100)}; */
+
   margin: ${calcRem(20)};
 `;
 
@@ -34,10 +43,12 @@ const Gauge = styled.div`
 const StaicProgressMeter = styled.div`
   display:block;
   position: relative;
+  width: 100%;
+  height: 100%;
   width: ${calcRem(200)};
   height: ${calcRem(100)};
-  background: linear-gradient(to right, #f7351f 0%, #f3ff18 50%, #12f912 100%);
-
+  /* background: linear-gradient(to right, #f7351f 0%, #f3ff18 50%, #12f912 100%); */
+  background-color: #00a2ff;
   border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
 
 
@@ -55,7 +66,7 @@ const StaicProgressMeter = styled.div`
     height: ${calcRem(70)};
     margin-left: ${calcRem(-70)};
 
-    background: #e8f927;
+    background: #ffffff;
 
     border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
   } 
@@ -92,7 +103,7 @@ const RotatingFiller = styled.div<RotatingFillerProps>`
     height: ${calcRem(102)};
     margin: -1px 0 0 -1px;
 
-    background: #f2f2f2;
+    background: #808080;
 
     border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
   }      
