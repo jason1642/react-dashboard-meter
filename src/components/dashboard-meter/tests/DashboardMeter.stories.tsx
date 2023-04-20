@@ -1,6 +1,6 @@
 import React from "react";
 import { StoryObj, Meta } from "@storybook/react";
-import DashboardMeter from "../DashboardMeter";
+import GaugeMeter from "../gauge-meter/GaugeMeter";
 // View component with this story, changes saved in the code editor automatically show on storybook
 import styled from 'styled-components'
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -16,9 +16,26 @@ const Container = styled.div`
 `;
 
 
-const meta: Meta<typeof DashboardMeter> = {
+const GaugeContainer = styled.div`
+  display:flex;
+  background-color: green;
+  padding: 10px;
+  width: 25%;
+
+
+
+/* 
+  height: 500px;
+  width: 220px;
+
+  position: relative;
+  overflow: hidden; */
+
+`;
+
+const meta: Meta<typeof GaugeMeter> = {
   title: "ReactComponentLibrary/DashboardMeter",
-  component: DashboardMeter,
+  component: GaugeMeter,
   decorators: [
     (Story) => (
       <Container>
@@ -38,7 +55,11 @@ const meta: Meta<typeof DashboardMeter> = {
                  width: '70vw'
                  }
                  } >
-            <Story  />
+
+                    <GaugeContainer>
+                          <Story  />
+                    </GaugeContainer>
+          
 
         
         </div>    
@@ -52,7 +73,7 @@ const meta: Meta<typeof DashboardMeter> = {
 } 
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-type Template = StoryObj<typeof DashboardMeter>;
+type Template = StoryObj<typeof GaugeMeter>;
 
 
 // More on args: https://storybook.js.org/docs/react/writing-stories/args

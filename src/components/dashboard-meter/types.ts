@@ -8,7 +8,16 @@ export type progressBarColor = string | undefined;
 
 
 
-export interface DashboardMeterProps {
+export interface GaugeMeterProps {
+    value: value;
+    type?: type;
+    title: title;
+    range?: range;
+    labels?: labels;
+    progressBarColor?: progressBarColor;
+}
+
+export interface LinearMeterProps {
     value: value;
     type?: type;
     title: title;

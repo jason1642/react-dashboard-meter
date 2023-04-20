@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import type {DashboardMeterProps} from './types'
-import GaugeMeter from './GaugeMeter'
+import type {LinearMeterProps} from '../types'
+import GaugeMeter from '../gauge-meter/GaugeMeter'
 
 
 const Container = styled.div`
@@ -12,7 +12,7 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-const DashboardMeter: React.FunctionComponent<DashboardMeterProps> = ({
+const LinearMeter: React.FunctionComponent<LinearMeterProps> = ({
     value, type, title, range,progressBarColor
 }) => {
 
@@ -28,4 +28,4 @@ const DashboardMeter: React.FunctionComponent<DashboardMeterProps> = ({
   );
 };
 
-export default DashboardMeter;
+export default LinearMeter;
