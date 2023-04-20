@@ -13,51 +13,83 @@ const Container = styled.div`
 
 `;
 
+const calcRem = (val: number)=>
+  `${val / 16}rem`
 
 
-const Filler = styled.div`
-  display:flex;
-  background-color:red;
+const Mask = styled.div`
+  position: relative;
+  overflow: hidden;
+  display: block;
+  width: calcRem(200);
+  height: calcRem(100);
+  margin: calcRem(20);
+`;
+
+
+const SemiCircle = styled.div`
+  display:block;
+  position: relative;
+  width: calcRem(200);
+  height: calcRem(100);
+  background: linear-gradient(to right, #c0392b 0%, #f1c40f 50%, #1abc9c 100%);
+
+  border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
+
+  &::before {
+    content: "";
+
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    z-index: 2;
+
+    display: block;
+    width: calcRem(140);
+    height: calcRem(70);
+    margin-left: calcRem(-70);
+
+    background: #033be5;
+
+    border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
+  } 
+
+`;
+
+
+
+const SemiCircleMask = styled.div`
   position: absolute;
-  border: 10px solid blue;
-  border-bottom: none;
-
-    overflow: hidden;
-
-  /* z-index: 1; */
-  left:0;
   top: 0;
-  right:0;
-  bottom: -25px;
-  /* height: 80%; */
-  border-radius: 50% 50% 50% 50%;
+  left: 0;
 
-`;
+  width: rem(200);
+  height: rem(200);
 
-const ProgressFiller = styled.div`
-  display:flex;
-  position: absolute;
-  height: 50%;
-  left: 60%;
-  width: 42%;
-  /* z-index: 5; */
-  background-color: #07ff8b;
-  /* border-radius: inherit; */
-`;
+  background: transparent;
 
+  transform: rotate(120deg) translate3d(0,0,0);
+  transform-origin: center center;
+  backface-visibility: hidden;
+  transition: all .3s ease-in-out;
+  transform: rotate(20deg) translate3d(0,0,0);
+  &::before {
+    content: "";
 
+    position: absolute;
+    top: 0;
+    left: 0%;
+    z-index: 2;
 
+    display: block;
+    width: rem(202);
+    height: rem(102);
+    margin: -1px 0 0 -1px;
 
+    background: #f2f2f2;
 
-const Title = styled.div`
-  display:flex;
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  font-size: 1rem;
-  margin: 0 auto;
-  /* If title font size changes, change calc to 100% - fontsize */
-  left: calc(50% - 1rem);
+    border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
+  }      
 `;
 
 interface IMeterProps {
@@ -69,14 +101,13 @@ interface IMeterProps {
 const GaugeMeter: React.FunctionComponent<IMeterProps> = ({percentFilled, labels}) => {
   return (
      <Container>
-     <Filler>
-      <ProgressFiller/>
-     </Filler>
 
+      <Mask>
+        <SemiCircle/>
+        <SemiCircleMask/>
+      </Mask>
 
-<Title>
- 80%
-</Title>
+      
 </Container>
   );
 };
