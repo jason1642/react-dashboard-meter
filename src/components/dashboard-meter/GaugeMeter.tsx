@@ -12,18 +12,20 @@ interface StaticProgressMeterProps {
   maxValues: {maxHeight: number, maxWidth: number};
 
 }
-
+interface GaugeProps {
+  maxWidth?: number;
+}
 
 const Container = styled.div`
   display:flex;
   background-color: green;
   padding: 10px;
-  height: 400px;
-  width: 700px;
+  /* height: 760px; */
+  width: 450px;
   /* padding: 5px; */
   /* border-radius: 50%; */
   position: relative;
-  /* overflow: hidden; */
+  overflow: hidden;
 
 `;
 
@@ -40,12 +42,13 @@ const calcRem = (val: number, fontSizePx: number = 16)=>
 
 
 // Container for meter, labels, and title
-const Gauge = styled.div`
+const Gauge = styled.div<GaugeProps>`
   position: relative;
   overflow: hidden;
-  display: block;
+  display: flex;
+  border: 2px solid white;
   width: 100%;
-  height: 100%;
+  height: ${({maxWidth})=> maxWidth! / 2}px;
 
   /* margin: ${calcRem(20)}; */
 `;
@@ -70,7 +73,7 @@ const StaticProgressMeter = styled.div<StaticProgressMeterProps>`
     position: absolute;
     bottom: 0;
     left: 50%;
-    z-index: 2;
+    z-index: 3;
 
     display: block;
 
@@ -85,6 +88,9 @@ const StaticProgressMeter = styled.div<StaticProgressMeterProps>`
     border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
   } 
 
+
+
+
 `;
 
 // Entire progress bar underneath actual filler
@@ -94,7 +100,7 @@ const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
   left: 0;
 
   width: ${({maxValues: { maxWidth}}) =>calcRem(maxWidth)};
-  height:${({maxValues: {maxHeight}}) =>calcRem(maxHeight * 2)};
+  height:${({maxValues: {maxHeight, maxWidth}}) =>calcRem(maxWidth)};
   background: transparent;
 
   transform: rotate(60deg) translate3d(0,0,0);
@@ -114,7 +120,7 @@ const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
 
     display: block;
     width: ${({maxValues: { maxWidth}}) =>calcRem(maxWidth + (maxWidth / 100))};
-  height:${({maxValues: { maxHeight}}) =>calcRem(maxHeight + (maxHeight / 50))};
+  height:${({maxValues: { maxWidth}}) =>calcRem((maxWidth / 2) + (maxWidth / 100))};
   
     /* 200w & 100h - Set proportional margins */
     margin: -1px 0 0 -1px;
@@ -148,16 +154,15 @@ const GaugeMeter: React.FunctionComponent<IMeterProps> = ({percentFilled, labels
   return (
      <Container>
 
-      <Gauge  ref={gaugeRef}>
+      <Gauge maxWidth={maxValues?.maxWidth} ref={gaugeRef}>
         {maxValues && <>
-           <StaticProgressMeter maxValues={maxValues}/>
-        <RotatingProgressBar maxValues={maxValues} percentFilled={30}/>
-        </>
-        }
+           <StaticProgressMeter maxValues={{maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth}}/>
+        <RotatingProgressBar maxValues={{maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth}} percentFilled={30}/>
        
+       </>
+        }
       </Gauge>
 
-      
 </Container>
   );
 };
