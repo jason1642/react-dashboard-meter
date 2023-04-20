@@ -35,7 +35,7 @@ In types.ts, we declare our types by keywords like string, number, or boolean. W
 
 Lets import those types and assign them to the prop types of our main function component. I'm also going to decontruct the props object in the parameter so we can use it within our component. Since some types are optional, I am going to assign default values to several properties so the user can still use the component without having to heavily customize and assign common values to the component.
 ``` 
-    const DashboardMeter: React.FunctionComponent<DashboardMeterProps> = ({
+    const DashboardMeter: React.FunctionComponent<DashboardMeterProps> =  ({
 
     })=> ...
 ```
