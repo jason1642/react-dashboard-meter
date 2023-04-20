@@ -1,6 +1,19 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import type {labels, value} from './types'
+
+
+interface RotatingProgressBarProps {
+  percentFilled: number;
+  maxValues: {maxHeight: number, maxWidth: number};
+}
+
+interface StaticProgressMeterProps {
+  maxValues: {maxHeight: number, maxWidth: number};
+
+}
+
+
 const Container = styled.div`
   display:flex;
   background-color: green;
@@ -13,9 +26,9 @@ const Container = styled.div`
 
 `;
 
-
-const staticHeight = 250
-const staticWidth = 500
+// Static values to calculate - Test with h/w from 100% of parent div using useref
+// const staticHeight = 250
+// const staticWidth = 500
 
 
 
@@ -23,33 +36,27 @@ const calcRem = (val: number, fontSizePx: number = 16)=>
   // Either calc all sizes by multplying static value, or having val be width and have responsive calculations
   `${(val * 1) / fontSizePx}rem`
 
-interface RotatingFillerProps {
-  percentFilled: number;
 
-}
 
 // Container for meter, labels, and title
 const Gauge = styled.div`
   position: relative;
   overflow: hidden;
   display: block;
-  /* width: 100%; */
-  /* height: 100%; */
+  width: 100%;
+  height: 100%;
 
-  width: ${calcRem(staticWidth)};
-  height: ${calcRem(staticHeight)};
-
-  margin: ${calcRem(20)};
+  /* margin: ${calcRem(25)}; */
 `;
 
 // Filler for curved progress bar
-const StaticProgressMeter = styled.div`
+const StaticProgressMeter = styled.div<StaticProgressMeterProps>`
   display:block;
   position: relative;
   /* width: 100%;
   height: 100%; */
-  /* width: ${calcRem(staticWidth)}; */
-  height: ${calcRem(staticHeight)};
+  width: ${({maxValues: { maxWidth}}) =>calcRem(maxWidth)};
+  height:${({maxValues: {maxHeight}}) =>calcRem(maxHeight)};
   /* background: linear-gradient(to right, #f7351f 0%, #f3ff18 50%, #12f912 100%); */
   background-color: #00a2ff;
   border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
@@ -65,9 +72,12 @@ const StaticProgressMeter = styled.div`
     z-index: 2;
 
     display: block;
-    width: ${calcRem(staticWidth * .7)};
-    height: ${calcRem(staticHeight * .7)};
-    margin-left: ${calcRem(-175)};
+
+    /* Values with * .x - Percent of entire semi-circle gauge covered by inner space */
+    width:${({maxValues: {maxWidth}}) =>calcRem(maxWidth * .5)};
+    height:${({maxValues: {maxHeight}}) =>calcRem(maxHeight * .5)};
+    /* Original margin-left = -70 */
+    margin-left: -${({maxValues: {maxHeight}}) =>calcRem(maxHeight * .5)};
 
     background: #ffffff;
 
@@ -77,14 +87,13 @@ const StaticProgressMeter = styled.div`
 `;
 
 // Entire progress bar underneath actual filler
-const RotatingProgressBar = styled.div<RotatingFillerProps>`
+const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
   position: absolute;
   top: 0;
   left: 0;
 
-  width: ${calcRem(staticWidth)};
-  height: ${calcRem(staticHeight)};
-
+  width: ${({maxValues: { maxWidth}}) =>calcRem(maxWidth)};
+  height:${({maxValues: {maxHeight}}) =>calcRem(maxHeight)};
   background: transparent;
 
   transform: rotate(120deg) translate3d(0,0,0);
@@ -103,9 +112,11 @@ const RotatingProgressBar = styled.div<RotatingFillerProps>`
     z-index: 2;
 
     display: block;
-    width: ${calcRem(staticWidth + (staticWidth / 100))};
-    height: ${calcRem(staticHeight + (staticHeight / 50))};
-    margin: -1px 0 0 -1px;
+    width: ${({maxValues: { maxWidth}}) =>calcRem(maxWidth + (maxWidth / 100))};
+  height:${({maxValues: { maxHeight}}) =>calcRem(maxHeight + (maxHeight / 50))};
+  
+    /* 200w & 100h - Set proportional margins */
+    margin: -2.5px 0 0 -2.5px;
 
     background: #808080;
 
@@ -120,12 +131,29 @@ interface IMeterProps {
 
 
 const GaugeMeter: React.FunctionComponent<IMeterProps> = ({percentFilled, labels}) => {
+  const gaugeRef: React.MutableRefObject<HTMLDivElement | null> | null = React.useRef(null)
+  const [maxValues, setMaxValues] = React.useState<{maxHeight: number, maxWidth: number}>()
+
+  React.useEffect(() => {
+    gaugeRef.current && setMaxValues({maxHeight: gaugeRef.current.clientHeight, maxWidth: gaugeRef?.current.clientWidth})
+    console.log(maxValues)
+  }, [gaugeRef]);
+    
+
+
+  React.useEffect(() => {
+    console.log(maxValues)
+  }, [maxValues]);
   return (
      <Container>
 
-      <Gauge>
-        <StaticProgressMeter/>
-        <RotatingProgressBar percentFilled={30}/>
+      <Gauge  ref={gaugeRef}>
+        {maxValues && <>
+           <StaticProgressMeter maxValues={maxValues}/>
+        <RotatingProgressBar maxValues={maxValues} percentFilled={30}/>
+        </>
+        }
+       
       </Gauge>
 
       
