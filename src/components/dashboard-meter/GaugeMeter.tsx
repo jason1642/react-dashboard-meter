@@ -104,7 +104,7 @@ const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
   height:${({maxValues: {maxHeight, maxWidth}}) =>calcRem(maxWidth)};
   background: transparent;
 
-  transform: rotate(60deg) translate3d(0,0,0);
+  transform: ${({percentFilled})=>`rotate(${(percentFilled / 100) * 180}deg) translate3d(0,0,0)`};
   transform-origin: center center;
   backface-visibility: hidden;
   transition: all .3s ease-in-out;
@@ -139,7 +139,7 @@ interface IMeterProps {
 }
 
 
-const GaugeMeter: React.FunctionComponent<IMeterProps> = ({percentFilled, labels,guageInnerAreaSize = 80}) => {
+const GaugeMeter: React.FunctionComponent<IMeterProps> = ({percentFilled = 50, labels,guageInnerAreaSize = 80}) => {
   const gaugeRef: React.MutableRefObject<HTMLDivElement | null> | null = React.useRef(null)
   const [maxValues, setMaxValues] = React.useState<{maxHeight: number, maxWidth: number}>()
 
@@ -159,11 +159,15 @@ const GaugeMeter: React.FunctionComponent<IMeterProps> = ({percentFilled, labels
       <Gauge maxWidth={maxValues?.maxWidth} ref={gaugeRef}>
         {maxValues && <>
            <StaticProgressMeter
+          
              maxValues={{maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth}}
              guageInnerAreaSize={guageInnerAreaSize}
              />
-        <RotatingProgressBar maxValues={{maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth}} percentFilled={30}/>
-       
+        <RotatingProgressBar
+         percentFilled={percentFilled}
+          maxValues={{maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth}} 
+          />
+      
        </>
         }
       </Gauge>

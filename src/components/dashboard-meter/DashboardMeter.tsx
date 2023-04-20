@@ -18,7 +18,7 @@ const DashboardMeter: React.FunctionComponent<DashboardMeterProps> = ({
 
   return (
     <Container>
-        <GaugeMeter percentFilled={60} labels={['%']} />
+        <GaugeMeter percentFilled={55} labels={['%']} />
 
     </Container>
   );
