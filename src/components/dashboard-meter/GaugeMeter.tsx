@@ -18,8 +18,8 @@ const Container = styled.div`
   display:flex;
   background-color: green;
   padding: 10px;
-  height: 250px;
-  width: 500px;
+  height: 400px;
+  width: 700px;
   /* border-radius: 50%; */
   position: relative;
   /* overflow: hidden; */
@@ -46,7 +46,7 @@ const Gauge = styled.div`
   width: 100%;
   height: 100%;
 
-  /* margin: ${calcRem(25)}; */
+  /* margin: ${calcRem(20)}; */
 `;
 
 // Filler for curved progress bar
@@ -74,10 +74,10 @@ const StaticProgressMeter = styled.div<StaticProgressMeterProps>`
     display: block;
 
     /* Values with * .x - Percent of entire semi-circle gauge covered by inner space */
-    width:${({maxValues: {maxWidth}}) =>calcRem(maxWidth * .5)};
-    height:${({maxValues: {maxHeight}}) =>calcRem(maxHeight * .5)};
+    width:${({maxValues: {maxWidth}}) =>calcRem(maxWidth * .8)};
+    height:${({maxValues: {maxHeight}}) =>calcRem(maxHeight * .8)};
     /* Original margin-left = -70 */
-    margin-left: -${({maxValues: {maxHeight}}) =>calcRem(maxHeight * .5)};
+    margin-left: -${({maxValues: {maxHeight}}) =>calcRem(maxHeight * .8)};
 
     background: #ffffff;
 
@@ -93,10 +93,10 @@ const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
   left: 0;
 
   width: ${({maxValues: { maxWidth}}) =>calcRem(maxWidth)};
-  height:${({maxValues: {maxHeight}}) =>calcRem(maxHeight)};
+  height:${({maxValues: {maxWidth}}) =>calcRem(maxWidth)};
   background: transparent;
 
-  transform: rotate(120deg) translate3d(0,0,0);
+  transform: rotate(60deg) translate3d(0,0,0);
   transform-origin: center center;
   backface-visibility: hidden;
   transition: all .3s ease-in-out;
@@ -116,7 +116,7 @@ const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
   height:${({maxValues: { maxHeight}}) =>calcRem(maxHeight + (maxHeight / 50))};
   
     /* 200w & 100h - Set proportional margins */
-    margin: -2.5px 0 0 -2.5px;
+    margin: -4px 0 0 -4px;
 
     background: #808080;
 
