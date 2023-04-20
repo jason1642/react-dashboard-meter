@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import type {DashboardMeterProps} from './types'
-
+import GaugeMeter from './GaugeMeter'
 
 
 const Container = styled.div`
@@ -15,7 +15,8 @@ const DashboardMeter: React.FunctionComponent<DashboardMeterProps> = ({
 
   return (
     <Container>
-        
+
+
     </Container>
   );
 };

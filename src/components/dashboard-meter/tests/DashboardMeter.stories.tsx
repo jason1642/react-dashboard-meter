@@ -4,13 +4,24 @@ import DashboardMeter from "../DashboardMeter";
 // View component with this story, changes saved in the code editor automatically show on storybook
 import styled from 'styled-components'
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
+
+const Container = styled.div`
+  display:flex;
+  position:relativve;
+  background-color:#80a0fd;
+  padding: 70px;
+  width: 100vw;
+  height: 100vh;
+
+`;
+
+
 const meta: Meta<typeof DashboardMeter> = {
   title: "ReactComponentLibrary/DashboardMeter",
   component: DashboardMeter,
   decorators: [
     (Story) => (
-      <div style={{backgroundColor: '#80a0fd', padding: '700px 0',
-      width: '100vw', height: '100vh', display:'flex'}}>
+      <Container>
 
         <div 
           style={
@@ -35,7 +46,7 @@ const meta: Meta<typeof DashboardMeter> = {
   
                  
                  
-                 </div>
+                 </Container>
     )
   ]
 } 
