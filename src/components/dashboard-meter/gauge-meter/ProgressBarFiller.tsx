@@ -8,8 +8,6 @@ import { calcRem } from './methods';
 
 
 
-interface IProgressBarFillerProps {
-}
 interface StaticProgressMeterProps {
     maxValues: { maxHeight: number, maxWidth: number };
     guageInnerAreaSize: number;
@@ -57,7 +55,12 @@ const StaticProgressMeter = styled.div<StaticProgressMeterProps>`
 `;
 
 
-const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = (props) => {
+interface IProgressBarFillerProps {
+    progressBarColor: string;
+    maxValues: { maxHeight: number, maxWidth: number };
+    guageInnerAreaSize: number;
+}
+const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = ({progressBarColor, maxValues,guageInnerAreaSize}) => {
   return (
     <StaticProgressMeter
     progressBarColor={progressBarColor}

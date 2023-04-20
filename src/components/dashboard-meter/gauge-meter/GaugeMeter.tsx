@@ -9,16 +9,6 @@ interface RotatingProgressBarProps {
   maxValues: { maxHeight: number, maxWidth: number };
 }
 
-
-
-
-
-
-
-
-
-
-
 // Entire progress bar underneath actual filler
 const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
   position: absolute;
@@ -74,8 +64,6 @@ const Title = styled.div<{titleFontSize: string}>`
 
 `;
 
-
-
 interface IMeterProps {
   percentFilled: number;
   labels: labels;
@@ -102,9 +90,6 @@ const GaugeMeter: React.FunctionComponent<IMeterProps> = (
 
 
 
-
-
-
   React.useEffect(() => {
     console.log(maxValues)
   }, [maxValues]);
@@ -113,11 +98,18 @@ const GaugeMeter: React.FunctionComponent<IMeterProps> = (
   return (
     <Container handleMaxValues={handleMaxValues}  >
       {maxValues && <>
-        <ProgressBarFiller />
+
+        <ProgressBarFiller 
+        guageInnerAreaSize={guageInnerAreaSize}
+          maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
+          progressBarColor={progressBarColor}
+          />
+
         <RotatingProgressBar
           percentFilled={percentFilled}
           maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
         />
+
         <Title titleFontSize={titleFontSize}>
           80%
         </Title>
