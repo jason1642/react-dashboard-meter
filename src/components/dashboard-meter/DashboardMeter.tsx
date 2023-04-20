@@ -6,7 +6,10 @@ import GaugeMeter from './GaugeMeter'
 
 const Container = styled.div`
   display:flex;
+  height: 100%;
   flex-direction:column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const DashboardMeter: React.FunctionComponent<DashboardMeterProps> = ({
@@ -15,7 +18,7 @@ const DashboardMeter: React.FunctionComponent<DashboardMeterProps> = ({
 
   return (
     <Container>
-
+        <GaugeMeter percentFilled={60} labels={['%']} />
 
     </Container>
   );
