@@ -5,17 +5,21 @@ const Container = styled.div`
   display:flex;
   background-color: green;
   padding: 10px;
-  height: 185px;
-  width: 280px;
+  /* height: 185px;
+  width: 280px; */
   /* border-radius: 50%; */
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
 
 `;
 
 const calcRem = (val: number)=>
   `${val / 16}rem`
 
+interface RotatingFillerProps {
+  percentFilled: number;
+
+}
 
 const Gauge = styled.div`
   position: relative;
@@ -36,6 +40,8 @@ const StaicProgressMeter = styled.div`
 
   border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
 
+
+  /* Inner area */
   &::before {
     content: "80 %";
     text-align: center;
@@ -57,10 +63,7 @@ const StaicProgressMeter = styled.div`
 `;
 
 
-
-
-
-const RotatingFiller = styled.div`
+const RotatingFiller = styled.div<RotatingFillerProps>`
   position: absolute;
   top: 0;
   left: 0;
@@ -74,6 +77,7 @@ const RotatingFiller = styled.div`
   transform-origin: center center;
   backface-visibility: hidden;
   transition: all .3s ease-in-out;
+  /* Change percentage filled below - 180deg = 100%, 60def = 30%, ect */
   transform: rotate(160deg) translate3d(0,0,0);
   &::before {
     content: "";
@@ -106,7 +110,7 @@ const GaugeMeter: React.FunctionComponent<IMeterProps> = ({percentFilled, labels
 
       <Gauge>
         <StaicProgressMeter/>
-        <RotatingFiller/>
+        <RotatingFiller percentFilled={30}/>
       </Gauge>
 
       
