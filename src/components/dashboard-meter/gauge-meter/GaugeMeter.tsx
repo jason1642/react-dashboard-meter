@@ -2,69 +2,22 @@ import * as React from 'react';
 import styled from 'styled-components';
 import type { labels, value, progressBarColor, titleFontSize, maxValues } from '../types'
 import Container from './Container'
-
+import { calcRem } from './methods';
+import ProgressBarFiller from './ProgressBarFiller';
 interface RotatingProgressBarProps {
   percentFilled: number;
   maxValues: { maxHeight: number, maxWidth: number };
 }
 
-interface StaticProgressMeterProps {
-  maxValues: { maxHeight: number, maxWidth: number };
-  guageInnerAreaSize: number;
-  progressBarColor: progressBarColor;
-}
 
 
 
 
 
-const calcRem = (val: number, fontSizePx: number = 16) =>
-  // Either calc all sizes by multplying static value, or having val be width and have responsive calculations
-  `${(val) / fontSizePx}rem`
 
 
 
 
-
-// Filler for curved progress bar
-const StaticProgressMeter = styled.div<StaticProgressMeterProps>`
-  display:block;
-  position: relative;
-  /* width: 100%;
-  height: 100%; */
-  width: ${({ maxValues: { maxWidth } }) => calcRem(maxWidth)};
-  height:${({ maxValues: { maxHeight } }) => calcRem(maxHeight)};
-  background: linear-gradient(to right, #f7351f 0%, #f3ff18 50%, #12f912 100%);
-  /* background: #00a2ff; */
-  border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
-
-
-  /* Inner area */
-  &::before {
-    content: '';
-    text-align: center;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    z-index: 3;
-
-    display: flex;
-
-    /* Values with * .x - Percent of entire semi-circle gauge covered by inner space */
-    width:${({ maxValues: { maxWidth }, guageInnerAreaSize }) => calcRem(maxWidth * (guageInnerAreaSize / 100))};
-    height:${({ maxValues: { maxWidth, maxHeight, }, guageInnerAreaSize }) => calcRem(maxHeight * (guageInnerAreaSize / 100))};
-    /* Original margin-left = -70 */
-    margin-left: -${({ maxValues: { maxWidth, maxHeight }, guageInnerAreaSize }) => calcRem(maxHeight * (guageInnerAreaSize / 100))};
-
-    background: #ffffff;
-
-    border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
-  } 
-
-
-
-
-`;
 
 // Entire progress bar underneath actual filler
 const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
@@ -160,11 +113,7 @@ const GaugeMeter: React.FunctionComponent<IMeterProps> = (
   return (
     <Container handleMaxValues={handleMaxValues}  >
       {maxValues && <>
-        <StaticProgressMeter
-          progressBarColor={progressBarColor}
-          maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
-          guageInnerAreaSize={guageInnerAreaSize}
-        />
+        <ProgressBarFiller />
         <RotatingProgressBar
           percentFilled={percentFilled}
           maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
