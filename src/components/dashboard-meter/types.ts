@@ -4,7 +4,7 @@ export type type = 'linear' | 'gague';
 export type title = [string, string, string?] | string | undefined;
 export type range = [number, number] | number;
 export type labels = Array<string>;
-
+export type progressBarColor = string | undefined;
 
 
 
@@ -14,4 +14,5 @@ export interface DashboardMeterProps {
     title: title;
     range?: range;
     labels?: labels;
+    progressBarColor?: progressBarColor;
 }

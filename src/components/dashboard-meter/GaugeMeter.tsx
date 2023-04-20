@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import type {labels, value} from './types'
+import type {labels, value, progressBarColor} from './types'
 
 
 interface RotatingProgressBarProps {
@@ -11,7 +11,7 @@ interface RotatingProgressBarProps {
 interface StaticProgressMeterProps {
   maxValues: {maxHeight: number, maxWidth: number};
   guageInnerAreaSize: number;
-
+  progressBarColor: progressBarColor;
 }
 interface GaugeProps {
   maxWidth?: number;
@@ -21,8 +21,8 @@ const Container = styled.div`
   display:flex;
   background-color: green;
   padding: 10px;
-  /* height: 760px; */
-  width: 250px;
+  /* height: 100px; */
+  width: 220px;
   /* padding: 5px; */
   /* border-radius: 50%; */
   position: relative;
@@ -62,8 +62,8 @@ const StaticProgressMeter = styled.div<StaticProgressMeterProps>`
   height: 100%; */
   width: ${({maxValues: { maxWidth}}) =>calcRem(maxWidth)};
   height:${({maxValues: {maxHeight}}) =>calcRem(maxHeight)};
-  /* background: linear-gradient(to right, #f7351f 0%, #f3ff18 50%, #12f912 100%); */
-  background-color: #00a2ff;
+  background: linear-gradient(to right, #f7351f 0%, #f3ff18 50%, #12f912 100%);
+  /* background: #00a2ff; */
   border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
 
 
@@ -136,10 +136,11 @@ interface IMeterProps {
   percentFilled: number;
   labels: labels;
   guageInnerAreaSize?: number; 
+  progressBarColor: progressBarColor;
 }
 
 
-const GaugeMeter: React.FunctionComponent<IMeterProps> = ({percentFilled = 50, labels,guageInnerAreaSize = 80}) => {
+const GaugeMeter: React.FunctionComponent<IMeterProps> = ({percentFilled = 50,progressBarColor='#00a2ff', labels, guageInnerAreaSize = 80}) => {
   const gaugeRef: React.MutableRefObject<HTMLDivElement | null> | null = React.useRef(null)
   const [maxValues, setMaxValues] = React.useState<{maxHeight: number, maxWidth: number}>()
 
@@ -159,7 +160,7 @@ const GaugeMeter: React.FunctionComponent<IMeterProps> = ({percentFilled = 50, l
       <Gauge maxWidth={maxValues?.maxWidth} ref={gaugeRef}>
         {maxValues && <>
            <StaticProgressMeter
-          
+             progressBarColor={progressBarColor}
              maxValues={{maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth}}
              guageInnerAreaSize={guageInnerAreaSize}
              />

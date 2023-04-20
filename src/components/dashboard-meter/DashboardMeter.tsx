@@ -13,12 +13,16 @@ const Container = styled.div`
 `;
 
 const DashboardMeter: React.FunctionComponent<DashboardMeterProps> = ({
-    value, type, title, range
+    value, type, title, range,progressBarColor
 }) => {
 
   return (
     <Container>
-        <GaugeMeter percentFilled={55} labels={['%']} />
+        <GaugeMeter  
+        progressBarColor={progressBarColor} 
+        percentFilled={55} 
+        labels={['%']} 
+        />
 
     </Container>
   );
