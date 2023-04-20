@@ -17,39 +17,39 @@ const calcRem = (val: number)=>
   `${val / 16}rem`
 
 
-const Mask = styled.div`
+const Gauge = styled.div`
   position: relative;
   overflow: hidden;
   display: block;
-  width: calcRem(200);
-  height: calcRem(100);
-  margin: calcRem(20);
+  width: ${calcRem(200)};
+  height: ${calcRem(100)};
+  margin: ${calcRem(20)};
 `;
 
 
-const SemiCircle = styled.div`
+const StaicProgressMeter = styled.div`
   display:block;
   position: relative;
-  width: calcRem(200);
-  height: calcRem(100);
-  background: linear-gradient(to right, #c0392b 0%, #f1c40f 50%, #1abc9c 100%);
+  width: ${calcRem(200)};
+  height: ${calcRem(100)};
+  background: linear-gradient(to right, #f7351f 0%, #f3ff18 50%, #12f912 100%);
 
   border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
 
   &::before {
-    content: "";
-
+    content: "80 %";
+    text-align: center;
     position: absolute;
     bottom: 0;
     left: 50%;
     z-index: 2;
 
     display: block;
-    width: calcRem(140);
-    height: calcRem(70);
-    margin-left: calcRem(-70);
+    width: ${calcRem(140)};
+    height: ${calcRem(70)};
+    margin-left: ${calcRem(-70)};
 
-    background: #033be5;
+    background: #e8f927;
 
     border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
   } 
@@ -58,13 +58,15 @@ const SemiCircle = styled.div`
 
 
 
-const SemiCircleMask = styled.div`
+
+
+const RotatingFiller = styled.div`
   position: absolute;
   top: 0;
   left: 0;
 
-  width: rem(200);
-  height: rem(200);
+  width: ${calcRem(200)};
+  height: ${calcRem(200)};
 
   background: transparent;
 
@@ -72,7 +74,7 @@ const SemiCircleMask = styled.div`
   transform-origin: center center;
   backface-visibility: hidden;
   transition: all .3s ease-in-out;
-  transform: rotate(20deg) translate3d(0,0,0);
+  transform: rotate(160deg) translate3d(0,0,0);
   &::before {
     content: "";
 
@@ -82,8 +84,8 @@ const SemiCircleMask = styled.div`
     z-index: 2;
 
     display: block;
-    width: rem(202);
-    height: rem(102);
+    width: ${calcRem(202)};
+    height: ${calcRem(102)};
     margin: -1px 0 0 -1px;
 
     background: #f2f2f2;
@@ -102,10 +104,10 @@ const GaugeMeter: React.FunctionComponent<IMeterProps> = ({percentFilled, labels
   return (
      <Container>
 
-      <Mask>
-        <SemiCircle/>
-        <SemiCircleMask/>
-      </Mask>
+      <Gauge>
+        <StaicProgressMeter/>
+        <RotatingFiller/>
+      </Gauge>
 
       
 </Container>
