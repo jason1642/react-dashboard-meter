@@ -5,8 +5,8 @@ const Container = styled.div`
   display:flex;
   background-color: green;
   padding: 10px;
-  height: 185px;
-  width: 280px;
+  height: 250px;
+  width: 500px;
   /* border-radius: 50%; */
   position: relative;
   /* overflow: hidden; */
@@ -14,39 +14,42 @@ const Container = styled.div`
 `;
 
 
+const staticHeight = 250
+const staticWidth = 500
 
 
 
-
-const calcRem = (val: number, fontSizePx: number = 20)=>
-
-  `${(val * 2) / fontSizePx}rem`
+const calcRem = (val: number, fontSizePx: number = 16)=>
+  // Either calc all sizes by multplying static value, or having val be width and have responsive calculations
+  `${(val * 1) / fontSizePx}rem`
 
 interface RotatingFillerProps {
   percentFilled: number;
 
 }
 
+// Container for meter, labels, and title
 const Gauge = styled.div`
   position: relative;
   overflow: hidden;
   display: block;
-  width: 100%;
-  height: 100%;
-  /* width: ${calcRem(200)};
-  height: ${calcRem(100)}; */
+  /* width: 100%; */
+  /* height: 100%; */
+
+  width: ${calcRem(staticWidth)};
+  height: ${calcRem(staticHeight)};
 
   margin: ${calcRem(20)};
 `;
 
-
-const StaicProgressMeter = styled.div`
+// Filler for curved progress bar
+const StaticProgressMeter = styled.div`
   display:block;
   position: relative;
-  width: 100%;
-  height: 100%;
-  width: ${calcRem(200)};
-  height: ${calcRem(100)};
+  /* width: 100%;
+  height: 100%; */
+  /* width: ${calcRem(staticWidth)}; */
+  height: ${calcRem(staticHeight)};
   /* background: linear-gradient(to right, #f7351f 0%, #f3ff18 50%, #12f912 100%); */
   background-color: #00a2ff;
   border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
@@ -54,7 +57,7 @@ const StaicProgressMeter = styled.div`
 
   /* Inner area */
   &::before {
-    content: "80 %";
+    content: '80%';
     text-align: center;
     position: absolute;
     bottom: 0;
@@ -62,9 +65,9 @@ const StaicProgressMeter = styled.div`
     z-index: 2;
 
     display: block;
-    width: ${calcRem(140)};
-    height: ${calcRem(70)};
-    margin-left: ${calcRem(-70)};
+    width: ${calcRem(staticWidth * .7)};
+    height: ${calcRem(staticHeight * .7)};
+    margin-left: ${calcRem(-175)};
 
     background: #ffffff;
 
@@ -73,14 +76,14 @@ const StaicProgressMeter = styled.div`
 
 `;
 
-
-const RotatingFiller = styled.div<RotatingFillerProps>`
+// Entire progress bar underneath actual filler
+const RotatingProgressBar = styled.div<RotatingFillerProps>`
   position: absolute;
   top: 0;
   left: 0;
 
-  width: ${calcRem(200)};
-  height: ${calcRem(200)};
+  width: ${calcRem(staticWidth)};
+  height: ${calcRem(staticHeight)};
 
   background: transparent;
 
@@ -89,7 +92,8 @@ const RotatingFiller = styled.div<RotatingFillerProps>`
   backface-visibility: hidden;
   transition: all .3s ease-in-out;
   /* Change percentage filled below - 180deg = 100%, 60def = 30%, ect */
-  transform: rotate(160deg) translate3d(0,0,0);
+
+  /* transform: rotate(90deg) translate3d(0,0,0); */
   &::before {
     content: "";
 
@@ -99,8 +103,8 @@ const RotatingFiller = styled.div<RotatingFillerProps>`
     z-index: 2;
 
     display: block;
-    width: ${calcRem(202)};
-    height: ${calcRem(102)};
+    width: ${calcRem(staticWidth + (staticWidth / 100))};
+    height: ${calcRem(staticHeight + (staticHeight / 50))};
     margin: -1px 0 0 -1px;
 
     background: #808080;
@@ -120,8 +124,8 @@ const GaugeMeter: React.FunctionComponent<IMeterProps> = ({percentFilled, labels
      <Container>
 
       <Gauge>
-        <StaicProgressMeter/>
-        <RotatingFiller percentFilled={30}/>
+        <StaticProgressMeter/>
+        <RotatingProgressBar percentFilled={30}/>
       </Gauge>
 
       
