@@ -123,11 +123,14 @@ const Title = styled.div<{titleFontSize: string}>`
   position: absolute;
   font-size: ${({titleFontSize})=> titleFontSize};
   /* background-color: blue; */
-  left: ${({titleFontSize})=> `calc(50% - ${titleFontSize})`};
-  top: 50%;
-  display: flex;
+  /* left: ${({titleFontSize})=> `calc(50% - ${titleFontSize})`}; */
+
+  /* If text is needed at bottom */
+  top: ${({titleFontSize})=> `calc(100% - ${titleFontSize})`};
+  display: block;
   /* justify-self: center; */
   z-index: 10;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   width: 100%;
   text-align: center;
 
@@ -150,7 +153,7 @@ const GaugeMeter: React.FunctionComponent<IMeterProps> = (
      progressBarColor = '#00a2ff', 
      labels, 
      guageInnerAreaSize = 80,
-     titleFontSize = '1.7rem'
+     titleFontSize = '2.2rem'
   }) => {
   const gaugeRef: React.MutableRefObject<HTMLDivElement | null> | null = React.useRef(null)
   const [maxValues, setMaxValues] = React.useState<{ maxHeight: number, maxWidth: number }>()
