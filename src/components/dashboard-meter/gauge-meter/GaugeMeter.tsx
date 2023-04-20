@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import type { labels, value, progressBarColor, titleFontSize } from '../types'
-
+import type { labels, value, progressBarColor, titleFontSize, maxValues } from '../types'
+import Container from './Container'
 
 interface RotatingProgressBarProps {
   percentFilled: number;
@@ -13,13 +13,8 @@ interface StaticProgressMeterProps {
   guageInnerAreaSize: number;
   progressBarColor: progressBarColor;
 }
-interface GaugeProps {
-  maxWidth?: number;
-}
 
-// Static values to calculate - Test with h/w from 100% of parent div using useref
-// const staticHeight = 250
-// const staticWidth = 500
+
 
 
 
@@ -29,17 +24,7 @@ const calcRem = (val: number, fontSizePx: number = 16) =>
 
 
 
-// Container for meter, labels, and title
-const Gauge = styled.div<GaugeProps>`
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  border: 2px solid white;
-  width: 100%;
-  height: ${({ maxWidth }) => maxWidth! / 2}px;
 
-  /* margin: ${calcRem(20)}; */
-`;
 
 // Filler for curved progress bar
 const StaticProgressMeter = styled.div<StaticProgressMeterProps>`
@@ -155,13 +140,15 @@ const GaugeMeter: React.FunctionComponent<IMeterProps> = (
      guageInnerAreaSize = 80,
      titleFontSize = '2.2rem'
   }) => {
-  const gaugeRef: React.MutableRefObject<HTMLDivElement | null> | null = React.useRef(null)
-  const [maxValues, setMaxValues] = React.useState<{ maxHeight: number, maxWidth: number }>()
+  const [maxValues, setMaxValues] = React.useState<maxValues>()
 
-  React.useEffect(() => {
-    gaugeRef.current && setMaxValues({ maxHeight: gaugeRef.current.clientHeight, maxWidth: gaugeRef?.current.clientWidth })
-    console.log(maxValues)
-  }, [gaugeRef]);
+
+  const handleMaxValues: (maxValues: maxValues)=> void = (maxValues: maxValues)=>{ 
+    setMaxValues(maxValues)
+  }
+
+
+
 
 
 
@@ -171,7 +158,7 @@ const GaugeMeter: React.FunctionComponent<IMeterProps> = (
 
 
   return (
-    <Gauge maxWidth={maxValues?.maxWidth} ref={gaugeRef}>
+    <Container handleMaxValues={handleMaxValues}  >
       {maxValues && <>
         <StaticProgressMeter
           progressBarColor={progressBarColor}
@@ -188,7 +175,7 @@ const GaugeMeter: React.FunctionComponent<IMeterProps> = (
 
       </>
       }
-    </Gauge>
+    </Container>
 
 
   );

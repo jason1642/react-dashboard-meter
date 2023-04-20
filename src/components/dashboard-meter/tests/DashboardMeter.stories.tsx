@@ -51,7 +51,7 @@ const meta: Meta<typeof GaugeMeter> = {
                borderRadius: '15px',
                 height: '70vh',
                 marginTop: '15px',
-                marginLeft: '150px',
+                marginLeft: '10px',
                  width: '70vw'
                  }
                  } >

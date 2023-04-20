@@ -1,4 +1,10 @@
 
+export interface maxValues {
+    maxHeight: number,
+    maxWidth: number;
+}
+
+
 export type value = number;
 export type type = 'linear' | 'gague';
 export type title = [string, string, string?] | string | undefined;
