@@ -1,6 +1,6 @@
-import * as React from 'react';
+import {FunctionComponent, useMemo, useState, useEffect} from 'react';
 import styled from 'styled-components';
-import type { labels, value, progressBarColor, titleFontSize, maxValues, range } from '../types'
+import type {  maxValues, GaugeMeterProps } from '../types'
 import Container from './Container'
 import ProgressBarFiller from './ProgressBarFiller';
 import ProgressBarCover from './ProgressBarCover';
@@ -24,18 +24,11 @@ const Title = styled.div<{titleFontSize: string}>`
 
 `;
 
-interface IMeterProps {
-  percentFilled: number;
-  labels: labels;
-  guageInnerAreaSize?: number;
-  progressBarColor: progressBarColor;
-  titleFontSize: titleFontSize;
-  range: range;
-}
 
 
-const GaugeMeter: React.FunctionComponent<IMeterProps> = (
+const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
   { 
+    value,
     percentFilled = 50,
      progressBarColor = '#00a2ff', 
      labels, 
@@ -43,17 +36,33 @@ const GaugeMeter: React.FunctionComponent<IMeterProps> = (
      guageInnerAreaSize = 80,
      titleFontSize = '2.2rem'
   }) => {
-  const [maxValues, setMaxValues] = React.useState<maxValues>()
-
+  const [maxValues, setMaxValues] = useState<maxValues>()
+    const [percentFilledState, setPercentFilledState] = useState<number>(percentFilled)
 
   const handleMaxValues: (maxValues: maxValues)=> void = (maxValues: maxValues)=>{ 
     setMaxValues(maxValues)
   }
 
 
+  const rangePercentFilled = useMemo<any>(()=>{
 
-  React.useEffect(() => {
+    if(typeof range === 'number'){
+      // ex 67 - (value / 67) * 100
+        setPercentFilledState((value / range) * 100)
+        }
+    else if(typeof range === 'object'){
+        // Max value - min value = difference
+        // Check if first item is less than second item
+        // value / different * 100 = new filled percent
+        
+        return 
+    }
+},[])
+
+
+useEffect(() => {
     console.log(maxValues)
+    rangePercentFilled()
   }, [maxValues]);
 
 
@@ -69,7 +78,7 @@ const GaugeMeter: React.FunctionComponent<IMeterProps> = (
 
           {/* Cover is the component that rotates */}
         <ProgressBarCover
-          range={range}
+         
           percentFilled={percentFilled}
           maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
         />

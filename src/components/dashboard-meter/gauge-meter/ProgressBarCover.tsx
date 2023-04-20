@@ -6,7 +6,7 @@ import type {maxValues, range} from '../types'
 interface RotatingProgressBarProps {
     percentFilled: number;
     maxValues: maxValues;
-    range?: range;
+
   }
 // Entire progress bar underneath actual filler
 const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
@@ -40,18 +40,16 @@ const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
 
 interface IProgressBarCoverProps {
     percentFilled: number;
-    range: range;
+
     maxValues: { maxHeight: number, maxWidth: number };
 }
 
-const ProgressBarCover: FunctionComponent<IProgressBarCoverProps> = ({percentFilled, maxValues, range}) => {
-    const rangePercentFilled = useMemo<number>(()=>{
-        if(typeof range)
-    },[])
+const ProgressBarCover: FunctionComponent<IProgressBarCoverProps> = ({percentFilled, maxValues, }) => {
+  
   
     return (
     <RotatingProgressBar
-    range={range}
+
     percentFilled={percentFilled}
     maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
   />
