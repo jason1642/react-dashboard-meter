@@ -10,6 +10,7 @@ interface RotatingProgressBarProps {
 
 interface StaticProgressMeterProps {
   maxValues: {maxHeight: number, maxWidth: number};
+  guageInnerAreaSize: number;
 
 }
 interface GaugeProps {
@@ -21,7 +22,7 @@ const Container = styled.div`
   background-color: green;
   padding: 10px;
   /* height: 760px; */
-  width: 450px;
+  width: 250px;
   /* padding: 5px; */
   /* border-radius: 50%; */
   position: relative;
@@ -78,10 +79,10 @@ const StaticProgressMeter = styled.div<StaticProgressMeterProps>`
     display: block;
 
     /* Values with * .x - Percent of entire semi-circle gauge covered by inner space */
-    width:${({maxValues: {maxWidth}}) =>calcRem(maxWidth * .7)};
-    height:${({maxValues: {maxWidth}}) =>calcRem(maxWidth * .35)};
+    width:${({maxValues: {maxWidth},guageInnerAreaSize}) =>calcRem(maxWidth * (guageInnerAreaSize / 100))};
+    height:${({maxValues: {maxWidth, maxHeight,},guageInnerAreaSize}) =>calcRem(maxHeight * (guageInnerAreaSize / 100))};
     /* Original margin-left = -70 */
-    margin-left: -${({maxValues: {maxWidth}}) =>calcRem(maxWidth * .35)};
+    margin-left: -${({maxValues: {maxWidth, maxHeight},guageInnerAreaSize}) =>calcRem(maxHeight * (guageInnerAreaSize / 100))};
 
     background: #ffffff;
 
@@ -134,10 +135,11 @@ const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
 interface IMeterProps {
   percentFilled: number;
   labels: labels;
+  guageInnerAreaSize?: number; 
 }
 
 
-const GaugeMeter: React.FunctionComponent<IMeterProps> = ({percentFilled, labels}) => {
+const GaugeMeter: React.FunctionComponent<IMeterProps> = ({percentFilled, labels,guageInnerAreaSize = 80}) => {
   const gaugeRef: React.MutableRefObject<HTMLDivElement | null> | null = React.useRef(null)
   const [maxValues, setMaxValues] = React.useState<{maxHeight: number, maxWidth: number}>()
 
@@ -156,7 +158,10 @@ const GaugeMeter: React.FunctionComponent<IMeterProps> = ({percentFilled, labels
 
       <Gauge maxWidth={maxValues?.maxWidth} ref={gaugeRef}>
         {maxValues && <>
-           <StaticProgressMeter maxValues={{maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth}}/>
+           <StaticProgressMeter
+             maxValues={{maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth}}
+             guageInnerAreaSize={guageInnerAreaSize}
+             />
         <RotatingProgressBar maxValues={{maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth}} percentFilled={30}/>
        
        </>

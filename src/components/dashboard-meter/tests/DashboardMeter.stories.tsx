@@ -9,7 +9,7 @@ const Container = styled.div`
   display:flex;
   position:relativve;
   background-color:#80a0fd;
-  padding: 70px;
+  padding: 0 70px;
   width: 100vw;
   height: 100vh;
 
