@@ -19,6 +19,8 @@ export interface LabelProps {
     fontSize?: string;
     appendedText?: string;
     range?: range;
+    containerWidth: number;
+    containerHeight: number;
 
 }
 

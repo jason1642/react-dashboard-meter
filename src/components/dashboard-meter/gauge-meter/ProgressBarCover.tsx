@@ -32,7 +32,7 @@ const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
     width: ${({ maxValues: { maxWidth } }) => calcRem(maxWidth + (maxWidth / 100))};
   height:${({ maxValues: { maxWidth } }) => calcRem((maxWidth / 2) + (maxWidth / 100))};
     /* 200w & 100h - Set proportional margins */
-    margin: -2px 0 0 -1px;
+    margin: -1px 0 0 -1px;
     background: #808080;
     border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
   }      

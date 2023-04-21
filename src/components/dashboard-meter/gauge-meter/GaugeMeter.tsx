@@ -45,8 +45,8 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
 
 
 useEffect(() => {
-    console.log(maxValues)
-    console.log(percentFilled)
+    // console.log(maxValues)
+    // console.log(percentFilled)
   }, [maxValues, percentFilled]);
 
 
