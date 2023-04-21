@@ -17,7 +17,9 @@ export type guageInnerAreaSize = number | undefined;
 export interface LabelProps {
     fixedLabels?: Array<string>;
     fontSize?: string;
-    
+    appendedText?: string;
+    range?: range;
+
 }
 
 
@@ -30,7 +32,7 @@ export interface GaugeMeterProps {
     type?: type;
     title: title;
     range?: range;
-    labels?: LabelProps;
+    labelOptions?: LabelProps;
     progressBarColor?: progressBarColor;
     titleFontSize?: string;
 }
@@ -40,6 +42,6 @@ export interface LinearMeterProps {
     type?: type;
     title: title;
     range?: range;
-    labels?: LabelProps;
+    labelOptions?: LabelProps;
     progressBarColor?: progressBarColor;
 }

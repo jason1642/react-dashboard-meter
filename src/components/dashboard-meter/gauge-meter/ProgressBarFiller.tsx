@@ -1,13 +1,14 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import type { labels, value, progressBarColor, titleFontSize, maxValues } from '../types'
+import type { value, progressBarColor, titleFontSize, maxValues, range } from '../types'
 import { calcRem } from './methods';
-
+import Labels from './Labels';
 
 interface StaticProgressMeterProps {
     maxValues: maxValues;
     guageInnerAreaSize: number;
     progressBarColor: progressBarColor;
+  
   }
 
 // Filler for curved progress bar
@@ -42,18 +43,26 @@ interface IProgressBarFillerProps {
     progressBarColor: string;
     maxValues: { maxHeight: number, maxWidth: number };
     guageInnerAreaSize: number;
+    range?: range;
 }
 
 
 
-const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = ({progressBarColor, maxValues,guageInnerAreaSize}) => {
+const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = (
+    {
+        progressBarColor, 
+        range,
+         maxValues,
+         guageInnerAreaSize
+    }) => {
+
   return (
     <StaticProgressMeter
     progressBarColor={progressBarColor}
     maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
     guageInnerAreaSize={guageInnerAreaSize}
   >
-
+    <Labels range={range || undefined}/>
   </StaticProgressMeter>    
   );
 };
