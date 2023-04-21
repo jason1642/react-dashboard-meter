@@ -45,12 +45,23 @@ interface IProgressBarFillerProps {
 }
 const Span = styled.span`
   display:flex;
+  /* border: 1px solid red; */
   position: absolute;
-  
-  font-size: 2rem;
+  z-index: 242;
+  /* overflow: visible; */
+  font-size: 1.2rem;
+  /* height: 1rem; */
+  /* Fontsize * 225%(2.25) */
+  left: calc(100% - 2.7rem);
+  /* width: 2rem; */
+  top: calc(100% - 1.2rem);
 `;
 
-const labels = ['0%', '50%', '100%']
+const labelsArray = [
+    '0%',
+    //  '50%', 
+     '100%'
+    ]
 
 
 const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = ({progressBarColor, maxValues,guageInnerAreaSize}) => {
@@ -61,10 +72,10 @@ const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = ({pr
     guageInnerAreaSize={guageInnerAreaSize}
   >
     {
-        labels.map(ele=>
+        labelsArray.map(ele=>
             <Span
                 style={{
-                    left: '-1rem'
+                    // left: '0rem'
                 }}
             >{ele}</Span>)
     }

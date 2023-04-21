@@ -1,13 +1,13 @@
-import {FunctionComponent, useMemo} from 'react';
+import { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { calcRem } from './methods';
-import type {maxValues, range} from '../types'
+import type { maxValues, range } from '../types'
 
 interface RotatingProgressBarProps {
     percentFilled: number;
     maxValues: maxValues;
+}
 
-  }
 // Entire progress bar underneath actual filler
 const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
   position: absolute;
@@ -32,7 +32,7 @@ const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
     width: ${({ maxValues: { maxWidth } }) => calcRem(maxWidth + (maxWidth / 100))};
   height:${({ maxValues: { maxWidth } }) => calcRem((maxWidth / 2) + (maxWidth / 100))};
     /* 200w & 100h - Set proportional margins */
-    margin: -1px 0 0 -1px;
+    margin: -2px 0 0 -1px;
     background: #808080;
     border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
   }      
@@ -44,16 +44,16 @@ interface IProgressBarCoverProps {
     maxValues: { maxHeight: number, maxWidth: number };
 }
 
-const ProgressBarCover: FunctionComponent<IProgressBarCoverProps> = ({percentFilled, maxValues, }) => {
-  
-  
-    return (
-    <RotatingProgressBar
+const ProgressBarCover: FunctionComponent<IProgressBarCoverProps> = ({ percentFilled, maxValues, }) => {
 
-    percentFilled={percentFilled}
-    maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
-  />
-  );
+
+    return (
+        <RotatingProgressBar
+
+            percentFilled={percentFilled}
+            maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
+        />
+    );
 };
 
 export default ProgressBarCover;

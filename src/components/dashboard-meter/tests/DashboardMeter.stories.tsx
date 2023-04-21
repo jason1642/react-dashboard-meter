@@ -20,7 +20,7 @@ const GaugeContainer = styled.div`
   display:flex;
   background-color: green;
   padding: 10px;
-  width: 600px;
+  width: 500px;
 
 
 
@@ -52,7 +52,7 @@ const meta: Meta<typeof GaugeMeter> = {
                 height: '70vh',
                 marginTop: '15px',
                 marginLeft: '10px',
-                 width: '70vw'
+                 width: '65vw'
                  }
                  } >
 

@@ -17,11 +17,12 @@ interface GaugeProps {
 // Container for meter, labels, and title
 const Container = styled.div<GaugeProps>`
   position: relative;
-  overflow: hidden;
+  overflow-y: clip;
+  overflow-x: visible;
   display: flex;
-  margin: 25px;
+  /* margin: 25px; */
   background: transparent;
-  border: 2px solid white;
+  /* border: 2px solid white; */
   width: 100%;
   height: ${({ maxWidth }) => maxWidth! / 2}px;
 
