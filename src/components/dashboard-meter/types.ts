@@ -21,8 +21,8 @@ export interface LabelProps {
     range: range;
     containerWidth: number;
     containerHeight: number;
-
-}
+    numberOfLabels?: number;
+}   
 
 
 
@@ -34,7 +34,7 @@ export interface GaugeMeterProps {
     type?: type;
     title: title;
     range?: range;
-    labelOptions?: LabelProps;
+    labelOptions?: Omit<LabelProps, "containerWidth" & "containerHeight">;
     progressBarColor?: progressBarColor;
     titleFontSize?: string;
 }
