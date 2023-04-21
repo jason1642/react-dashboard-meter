@@ -30,7 +30,7 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
     value = 25,
      progressBarColor = '#00a2ff', 
      labelOptions, 
-     range = [0, 130],
+     range = [0, 100],
      guageInnerAreaSize = 80,
      titleFontSize = '2.2rem'
   }) => {

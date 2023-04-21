@@ -43,7 +43,7 @@ interface IProgressBarFillerProps {
     progressBarColor: string;
     maxValues: { maxHeight: number, maxWidth: number };
     guageInnerAreaSize: number;
-    range?: range;
+    range: range;
 }
 
 
@@ -62,7 +62,7 @@ const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = (
     maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
     guageInnerAreaSize={guageInnerAreaSize}
   >
-    <Labels containerHeight={maxValues.maxHeight} containerWidth={maxValues.maxWidth} range={range || undefined}/>
+    <Labels containerHeight={maxValues.maxHeight} containerWidth={maxValues.maxWidth} range={range}/>
   </StaticProgressMeter>    
   );
 };

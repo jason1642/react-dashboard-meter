@@ -1,6 +1,16 @@
 import type { range } from "../types"
 
-export const positionLabelArray = (range: range, containerHeight: number,containerWidth:number)  =>{
+interface IPositionLabelArrayProps{
+    range: range;
+    containerHeight: number;
+    containerWidth: number;
+    fontSize: string;
+  }
+
+
+export const positionLabelsArray: (options: IPositionLabelArrayProps) => void = ({range, containerHeight,containerWidth, fontSize})  =>{
     
 
+
+    return []
 }

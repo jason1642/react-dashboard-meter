@@ -18,7 +18,7 @@ export interface LabelProps {
     fixedLabels?: Array<string>;
     fontSize?: string;
     appendedText?: string;
-    range?: range;
+    range: range;
     containerWidth: number;
     containerHeight: number;
 
