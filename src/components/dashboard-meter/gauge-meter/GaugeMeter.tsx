@@ -4,14 +4,13 @@ import type {  maxValues, GaugeMeterProps } from '../types'
 import Container from './Container'
 import ProgressBarFiller from './ProgressBarFiller';
 import ProgressBarCover from './ProgressBarCover';
-
+import { calculatePercentFilled } from './calculatePercentFilled';
 
 
 
 const Title = styled.div<{titleFontSize: string}>`
   position: absolute;
   font-size: ${({titleFontSize})=> titleFontSize};
-  /* background-color: blue; */
   /* left: ${({titleFontSize})=> `calc(50% - ${titleFontSize})`}; */
 
   /* If text is needed at bottom */
@@ -28,41 +27,31 @@ const Title = styled.div<{titleFontSize: string}>`
 
 const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
   { 
-    value,
-    percentFilled = 50,
+    value = 72,
+    percentFilled,
      progressBarColor = '#00a2ff', 
      labels, 
-     range = [25, 80],
+     range = [44, 100],
      guageInnerAreaSize = 80,
      titleFontSize = '2.2rem'
   }) => {
   const [maxValues, setMaxValues] = useState<maxValues>()
-    const [percentFilledState, setPercentFilledState] = useState<number>(percentFilled)
 
   const handleMaxValues: (maxValues: maxValues)=> void = (maxValues: maxValues)=>{ 
     setMaxValues(maxValues)
   }
 
 
-  const rangePercentFilled = useMemo<any>(()=>{
-
-    if(typeof range === 'number'){
-      // ex 67 - (value / 67) * 100
-        setPercentFilledState((value / range) * 100)
-        }
-    else if(typeof range === 'object'){
-        // Max value - min value = difference
-        // Check if first item is less than second item
-        // value / different * 100 = new filled percent
-        
-        return 
-    }
-},[])
+  const rangePercentFilled: number | undefined = useMemo(()=>calculatePercentFilled(value, range),[range,value])
 
 
 useEffect(() => {
+  console.log(rangePercentFilled)
+}, [rangePercentFilled]);
+
+useEffect(() => {
     console.log(maxValues)
-    rangePercentFilled()
+    
   }, [maxValues]);
 
 
@@ -77,11 +66,14 @@ useEffect(() => {
           />
 
           {/* Cover is the component that rotates */}
-        <ProgressBarCover
+          {rangePercentFilled !== undefined && 
+            <ProgressBarCover
          
-          percentFilled={percentFilled}
+          percentFilled={rangePercentFilled}
           maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
         />
+          }
+      
 
         <Title titleFontSize={titleFontSize}>
           80%
