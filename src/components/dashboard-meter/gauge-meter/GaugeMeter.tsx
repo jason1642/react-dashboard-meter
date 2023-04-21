@@ -27,11 +27,11 @@ const Title = styled.div<{titleFontSize: string}>`
 
 const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
   { 
-    value = 164,
+    value = 252,
     percentFilled,
      progressBarColor = '#00a2ff', 
      labels, 
-     range = [33, 100],
+     range = [0, 130],
      guageInnerAreaSize = 80,
      titleFontSize = '2.2rem'
   }) => {
@@ -55,7 +55,7 @@ useEffect(() => {
   }, [maxValues]);
 
 
-  return (
+  return rangePercentFilled !== undefined ? (
     <Container handleMaxValues={handleMaxValues}  >
       {maxValues &&  rangePercentFilled !== undefined  && <>
 
@@ -83,7 +83,7 @@ useEffect(() => {
     </Container>
 
 
-  );
+  ) : <></>
 };
 
 export default GaugeMeter;
