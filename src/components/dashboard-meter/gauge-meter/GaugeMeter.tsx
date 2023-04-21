@@ -27,11 +27,11 @@ const Title = styled.div<{titleFontSize: string}>`
 
 const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
   { 
-    value = 72,
+    value = 164,
     percentFilled,
      progressBarColor = '#00a2ff', 
      labels, 
-     range = [44, 100],
+     range = [33, 100],
      guageInnerAreaSize = 80,
      titleFontSize = '2.2rem'
   }) => {
@@ -57,7 +57,7 @@ useEffect(() => {
 
   return (
     <Container handleMaxValues={handleMaxValues}  >
-      {maxValues && <>
+      {maxValues &&  rangePercentFilled !== undefined  && <>
 
         <ProgressBarFiller 
         guageInnerAreaSize={guageInnerAreaSize}
@@ -66,13 +66,12 @@ useEffect(() => {
           />
 
           {/* Cover is the component that rotates */}
-          {rangePercentFilled !== undefined && 
             <ProgressBarCover
          
           percentFilled={rangePercentFilled}
           maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
         />
-          }
+
       
 
         <Title titleFontSize={titleFontSize}>
