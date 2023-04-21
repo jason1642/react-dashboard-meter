@@ -19,7 +19,6 @@ export type guageInnerAreaSize = number | undefined;
 export interface GaugeMeterProps {
     value: value;
     guageInnerAreaSize?: guageInnerAreaSize;
-    percentFilled?: percentFilled;
     type?: type;
     title: title;
     range?: range;

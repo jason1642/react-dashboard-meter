@@ -27,8 +27,7 @@ const Title = styled.div<{titleFontSize: string}>`
 
 const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
   { 
-    value = 252,
-    percentFilled,
+    value = 25,
      progressBarColor = '#00a2ff', 
      labels, 
      range = [0, 130],
@@ -42,22 +41,18 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
   }
 
 
-  const rangePercentFilled: number | undefined = useMemo(()=>calculatePercentFilled(value, range),[range,value])
+  const percentFilled: number | undefined = useMemo(()=>calculatePercentFilled(value, range),[range,value])
 
-
-useEffect(() => {
-  console.log(rangePercentFilled)
-}, [rangePercentFilled]);
 
 useEffect(() => {
     console.log(maxValues)
-    
-  }, [maxValues]);
+    console.log(percentFilled)
+  }, [maxValues, percentFilled]);
 
 
-  return rangePercentFilled !== undefined ? (
+  return percentFilled !== undefined ? (
     <Container handleMaxValues={handleMaxValues}  >
-      {maxValues &&  rangePercentFilled !== undefined  && <>
+      {maxValues &&  percentFilled !== undefined  && <>
 
         <ProgressBarFiller 
         guageInnerAreaSize={guageInnerAreaSize}
@@ -68,7 +63,7 @@ useEffect(() => {
           {/* Cover is the component that rotates */}
             <ProgressBarCover
          
-          percentFilled={rangePercentFilled}
+          percentFilled={percentFilled}
           maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
         />
 

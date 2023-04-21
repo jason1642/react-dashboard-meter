@@ -8,8 +8,7 @@ export const calculatePercentFilled: (value: value, range: range)=> number | und
     switch(typeof range){
 // If a range is not provided, and the value can be used in a 0 - 100% situation.
         case 'undefined': 
-            if(value >= 0 && value <= 100) {
-                return value}
+            if(value >= 0 && value <= 100) return value
             else{
                 console.error('Please provide a valid value between 0 - 100 if a range is not provided.')
                 return undefined
@@ -29,7 +28,7 @@ export const calculatePercentFilled: (value: value, range: range)=> number | und
 //Return a percentage calculation, or undefined if it breaks the rules 
         case 'object':
             if (range[0] > range[1] || range[0] === range[1]) {
-                console.error('First number in array must be smaller than the second number', {value, range})
+                console.error('First number in array must be smaller than the second number, or its possible they are the same value', {value, range})
                 return undefined
               } else if(value > range[1]){
                 console.error('The value is greater than the max number provided in range.', {value, range})
@@ -38,7 +37,7 @@ export const calculatePercentFilled: (value: value, range: range)=> number | und
               // Initial difference = maxNumber - minNumber
                 // Check if first item is less than second item
                 // value / (value - minNumber) * 100 = new filled percent
-                 return ((value - range[0]) / (range[1] - range[0])) * 100
+            return ((value - range[0]) / (range[1] - range[0])) * 100
         
     }
 

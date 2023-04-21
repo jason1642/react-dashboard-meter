@@ -19,6 +19,7 @@ const Container = styled.div<GaugeProps>`
   position: relative;
   overflow: hidden;
   display: flex;
+  margin: 25px;
   background: transparent;
   border: 2px solid white;
   width: 100%;

@@ -14,15 +14,11 @@ interface StaticProgressMeterProps {
 const StaticProgressMeter = styled.div<StaticProgressMeterProps>`
   display:block;
   position: relative;
-  /* width: 100%;
-  height: 100%; */
   width: ${({ maxValues: { maxWidth } }) => calcRem(maxWidth)};
   height:${({ maxValues: { maxHeight } }) => calcRem(maxHeight)};
   background: linear-gradient(to right, #f7351f 0%, #f3ff18 50%, #12f912 100%);
-  /* background: #00a2ff; */
   border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
-
-
+  overflow: visible;
   /* Inner area */
   &::before {
     content: '';
@@ -31,38 +27,48 @@ const StaticProgressMeter = styled.div<StaticProgressMeterProps>`
     bottom: 0;
     left: 50%;
     z-index: 3;
-
     display: flex;
-
     /* Values with * .x - Percent of entire semi-circle gauge covered by inner space */
     width:${({ maxValues: { maxWidth }, guageInnerAreaSize }) => calcRem(maxWidth * (guageInnerAreaSize / 100))};
     height:${({ maxValues: { maxWidth, maxHeight, }, guageInnerAreaSize }) => calcRem(maxHeight * (guageInnerAreaSize / 100))};
     /* Original margin-left = -70 */
     margin-left: -${({ maxValues: { maxWidth, maxHeight }, guageInnerAreaSize }) => calcRem(maxHeight * (guageInnerAreaSize / 100))};
-
     background: #ffffff;
-
     border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
   } 
-
-
-
-
 `;
-
 
 interface IProgressBarFillerProps {
     progressBarColor: string;
     maxValues: { maxHeight: number, maxWidth: number };
     guageInnerAreaSize: number;
 }
+const Span = styled.span`
+  display:flex;
+  position: absolute;
+  
+  font-size: 2rem;
+`;
+
+const labels = ['0%', '50%', '100%']
+
+
 const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = ({progressBarColor, maxValues,guageInnerAreaSize}) => {
   return (
     <StaticProgressMeter
     progressBarColor={progressBarColor}
     maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
     guageInnerAreaSize={guageInnerAreaSize}
-  />    
+  >
+    {
+        labels.map(ele=>
+            <Span
+                style={{
+                    left: '-1rem'
+                }}
+            >{ele}</Span>)
+    }
+  </StaticProgressMeter>    
   );
 };
 
