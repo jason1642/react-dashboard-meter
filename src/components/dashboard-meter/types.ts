@@ -22,6 +22,7 @@ export interface LabelProps {
     containerWidth: number;
     containerHeight: number;
     numberOfLabels?: number;
+    labelValueToFixed?: 0 | 1 | 2 | 3;
 }   
 
 
