@@ -1,4 +1,3 @@
-import React from "react";
 import { StoryObj, Meta } from "@storybook/react";
 import GaugeMeter from "../gauge-meter/GaugeMeter";
 // View component with this story, changes saved in the code editor automatically show on storybook
@@ -20,7 +19,7 @@ const GaugeContainer = styled.div`
   display:flex;
   background-color: green;
   padding: 10px;
-  width: 300px;
+  width: 500px;
 
 
 
