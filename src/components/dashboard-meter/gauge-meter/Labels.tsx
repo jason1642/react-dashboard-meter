@@ -38,23 +38,21 @@ const Labels: React.FunctionComponent<ILabelsProps> = ({
    containerWidth,
    containerHeight
 }) => {
+  const renderLabels = React.useMemo(()=>
+    positionLabelsArray({range, containerHeight, containerWidth, fontSize,fixedLabels, numberOfLabels:5}),
+    [])
   // If range is undefined, default range will be 0 - 100
   // If range is a single number, range wil be 0 - x
   // If range is a tuple, range will be min and max values
   // Make sure to create even splits to have symmetrical label positions
   console.log(containerHeight, containerWidth)
-  console.log(positionLabelsArray({range, containerHeight, containerWidth, fontSize,fixedLabels, numberOfLabels:5}))
+  console.log()
 
 
   return (
     <>
     {
-        labelsArray.map(ele=>
-            <Label
-                style={{
-                    // left: '0rem'
-                }}
-            >{ele}</Label>)
+        renderLabels
     }
     </>
   );
