@@ -1,6 +1,6 @@
 import type { range } from "../types"
 import styled from 'styled-components';
-import { horizontalLabelArchPositioner } from "./methods";
+import { horizontalLabelArchPositioner, verticalLabelArchPositioner } from "./methods";
 interface IPositionLabelArrayProps {
     range: range;
     containerHeight: number;
@@ -67,7 +67,7 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
                 progressFillerWidth={progressFillerWidth}
                 fontSize={fontCalc()}
 
-                top={'30%'}
+                top={verticalLabelArchPositioner(numberOfLabels, i, fontCalc(), containerWidth)}
                 left={horizontalLabelArchPositioner(numberOfLabels, i, fontCalc())}
 
             >{Number((intervalAmount * i).toFixed(labelValueToFixed))}%</Label>)
@@ -78,6 +78,7 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
         progressFillerWidth={progressFillerWidth} 
         fontSize={fontCalc()} 
         top={`calc(100% - (${fontCalc()} * 1.25))`}
+
         left={`calc((${fontCalc()} / 4) + (${containerWidth / 100}px))`}
     >{range[0]}%</Label>)
 
