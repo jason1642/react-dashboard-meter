@@ -40,7 +40,17 @@ const Labels: React.FunctionComponent<ILabelsProps> = ({
    progressFillerWidth
 }) => {
   const renderLabels = React.useMemo(()=>
-    positionLabelsArray({range,progressFillerWidth, labelValueToFixed: 0,containerHeight, containerWidth, fontSize,fixedLabels, numberOfLabels:8}),
+    positionLabelsArray(
+      {
+        range,
+        progressFillerWidth,
+         labelValueToFixed: 0,
+         containerHeight,
+          containerWidth, 
+          fontSize,
+          fixedLabels,
+          //  numberOfLabels
+          }),
     [])
   // If range is undefined, default range will be 0 - 100
   // If range is a single number, range wil be 0 - x

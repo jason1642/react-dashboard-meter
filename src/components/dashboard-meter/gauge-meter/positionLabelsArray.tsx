@@ -1,5 +1,6 @@
 import type { range } from "../types"
 import styled from 'styled-components';
+import { horizontalLabelArchPositioner } from "./methods";
 interface IPositionLabelArrayProps {
     range: range;
     containerHeight: number;
@@ -37,15 +38,14 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
         fixedLabels,
         fontSize = '1rem',
         labelValueToFixed,
-        numberOfLabels = 0
+        numberOfLabels = 5
     }) => {
     // progressFillWidth is space between inner semi circle outer border and outer progress bar outer border. 
     // Responsive calc to get font size that fills in space if there are 4 or less characters based on .9rem
     // Change the decimal number that is multpliying progressFillerWidth to change scale of font but stay responsive
-    function fontCalc(fontSize?: string): string {
-        return `calc(${progressFillerWidth * .33}px)`;
-    }
-    console.log(fontCalc)
+    const fontCalc = (fontSize?: string): string => `calc(${progressFillerWidth * .33}px)`;
+    
+    console.log(fontCalc())
     // Check range to see if its an appropriate amount of numbers for the default number of labels
     // Create an array of numbers (from the range) to be represented in each label.
     if (typeof range === 'number') range = [0, range]
@@ -59,8 +59,18 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
     let labelIncrementalValues: Array<React.ReactNode> = []
     // CURRENT SCENARIO - No fixed labels provided, range is default (0 - 100), numberOfLabels is default (5)
     const intervalAmount: number = range[1] / (numberOfLabels - 1)
+    
     for (let i = 1; i < numberOfLabels - 1; i++) {
-        labelIncrementalValues.push(<Label progressFillerWidth={progressFillerWidth} fontSize={fontSize} top={100} left={0}>{Number((intervalAmount * i).toFixed(labelValueToFixed))}%</Label>)
+       console.log(range[1] / intervalAmount)
+        labelIncrementalValues.push(
+            <Label
+                progressFillerWidth={progressFillerWidth}
+                fontSize={fontCalc()}
+
+                top={`calc(100% - (${fontCalc()} * 1.25))`}
+                left={horizontalLabelArchPositioner(numberOfLabels, i, fontCalc())}
+
+            >{Number((intervalAmount * i).toFixed(labelValueToFixed))}%</Label>)
     }
 
     // 0% or first label
