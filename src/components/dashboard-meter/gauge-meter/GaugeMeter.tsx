@@ -31,6 +31,7 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
     labelOptions,
      progressBarFillerColor = 'linear-gradient(to right, #f7351f 0%, #f3ff18 50%, #12f912 100%)', 
      progressBarContainerColor = 'grey', 
+     innerAreaBackgroundColor = 'white',
      range = [0, 40],
      guageInnerAreaSize = 79,
      titleFontSize = '2.2rem'
@@ -58,6 +59,7 @@ useEffect(() => {
         <ProgressBarFiller 
         guageInnerAreaSize={guageInnerAreaSize}
           maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
+          innerAreaBackgroundColor={innerAreaBackgroundColor}
           progressBarFillerColor={progressBarFillerColor}
           range={range}
           labelOptions={{...defaultLabelOptions, ...labelOptions}}

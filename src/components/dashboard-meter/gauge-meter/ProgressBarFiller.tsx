@@ -8,6 +8,7 @@ interface StaticProgressMeterProps {
     maxValues: maxValues;
     guageInnerAreaSize: number;
     background: progressBarColor;
+    innerAreaBackground:string;
   }
 
 // Filler for curved progress bar
@@ -34,7 +35,7 @@ const StaticProgressMeter = styled.div<StaticProgressMeterProps>`
     height:${({ maxValues: { maxWidth, maxHeight, }, guageInnerAreaSize }) => calcRem(maxHeight * (guageInnerAreaSize / 100))};
     /* Original margin-left = -70 */
     margin-left: -${({ maxValues: { maxWidth, maxHeight }, guageInnerAreaSize }) => calcRem(maxHeight * (guageInnerAreaSize / 100))};
-    background: #ffffff;
+    background: ${({innerAreaBackground})=>innerAreaBackground};
     border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
   } 
 `;
@@ -45,7 +46,7 @@ interface IProgressBarFillerProps {
     guageInnerAreaSize: number;
     range: range;
     labelOptions: LabelOptions;
-
+    innerAreaBackgroundColor: string;
 }
 
 
@@ -56,7 +57,8 @@ const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = (
         labelOptions,
         range,
          maxValues,
-         guageInnerAreaSize
+         guageInnerAreaSize,
+         innerAreaBackgroundColor
     }) => {
         const progressFillerRef: React.MutableRefObject<HTMLDivElement | null> | null = React.useRef(null)
         const [progressFillerWidth, setProgressFillerWidth] = React.useState<number>()
@@ -68,6 +70,7 @@ const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = (
   return (
     <StaticProgressMeter
     ref={progressFillerRef}
+    innerAreaBackground={innerAreaBackgroundColor}
     background={progressBarFillerColor}
     maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
     guageInnerAreaSize={guageInnerAreaSize}
