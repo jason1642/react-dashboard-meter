@@ -1,11 +1,16 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import type {LabelComponentProps, range} from '../types'
+import type {LabelComponentProps, LabelOptions, range} from '../types'
 import { positionLabelsArray } from './positionLabelsArray';
 interface ILabelComponentProps extends LabelComponentProps {
 }
 
-
+export const defaultLabelOptions: LabelOptions = {
+  fixedLabels: undefined,
+  size: 'default',
+  appendedText: '%',
+  labelValueToFixed: 0
+}
 
 const Labels: React.FunctionComponent<ILabelComponentProps> = ({
   labelOptions,

@@ -15,16 +15,24 @@ export type  percentFilled =  number | undefined;
 export type guageInnerAreaSize = number | undefined;
 
 
-export interface LabelOptions {
-    fixedLabels?: [any, any, any, any, any];
-    size: 'small' | 'default' | 'large';
-    appendedText: string | boolean;
 
+
+// Label Options Types
+export type fixedLabels = [any, any, any, any, any] | undefined;
+export type labelSize = 'small' | 'default' | 'large';
+export type appendedText = string | boolean;
+export type labelValueToFixed =  0 | 1 | 2 | 3;
+
+export interface LabelOptions {
+    fixedLabels?: fixedLabels;
+    size: labelSize;
+    appendedText: appendedText;
+    labelValueToFixed?: labelValueToFixed;
 }
 
 
 export interface LabelComponentProps {
-    labelOptions?: LabelOptions; 
+    labelOptions: LabelOptions; 
     fixedLabels?: [any, any, any, any, any];
     fontSize?: string;
     appendedText?: string;
@@ -35,6 +43,7 @@ export interface LabelComponentProps {
     labelValueToFixed?: 0 | 1 | 2 | 3;
     progressFillerWidth: number;
 }   
+
 
 export interface GaugeMeterProps {
     value: value;

@@ -5,7 +5,7 @@ import Container from './Container'
 import ProgressBarFiller from './ProgressBarFiller';
 import ProgressBarCover from './ProgressBarCover';
 import { calculatePercentFilled } from './calculatePercentFilled';
-
+import { defaultLabelOptions } from './Labels';
 
 
 const Title = styled.div<{titleFontSize: string}>`
@@ -59,6 +59,7 @@ useEffect(() => {
           maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
           progressBarColor={progressBarColor}
           range={range}
+          labelOptions={{...defaultLabelOptions, ...labelOptions}}
           />
 
           {/* Cover is the component that rotates */}
