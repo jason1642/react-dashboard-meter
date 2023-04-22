@@ -41,7 +41,8 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
     }) => {
     // progressFillWidth is space between inner semi circle outer border and outer progress bar outer border. 
     // Responsive calc to get font size that fills in space if there are 4 or less characters based on .9rem
-    function fontCalc(fontSize: string) {
+    // Change the decimal number that is multpliying progressFillerWidth to change scale of font but stay responsive
+    function fontCalc(fontSize?: string): string {
         return `calc(${progressFillerWidth * .33}px)`;
     }
     console.log(fontCalc)
@@ -65,18 +66,18 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
     // 0% or first label
     labelIncrementalValues.unshift(<Label 
         progressFillerWidth={progressFillerWidth} 
-        fontSize={fontCalc(fontSize)} 
-        top={`calc(100% - (${fontCalc(fontSize)} * 1.25))`}
-        left={`calc((${fontCalc(fontSize)} / 4) + (${containerWidth / 100}px))`}
+        fontSize={fontCalc()} 
+        top={`calc(100% - (${fontCalc()} * 1.25))`}
+        left={`calc((${fontCalc()} / 4) + (${containerWidth / 100}px))`}
     >{range[0]}%</Label>)
 
 
     // 100% or last label
     labelIncrementalValues.push(<Label
         progressFillerWidth={progressFillerWidth} 
-        fontSize={fontCalc(fontSize)}
-        top={`calc(100% - (${fontCalc(fontSize)} * 1.25))`}
-        left={`calc(100% - (${fontCalc(fontSize)} * 2.5) )`}
+        fontSize={fontCalc()}
+        top={`calc(100% - (${fontCalc()} * 1.25))`}
+        left={`calc(100% - (${fontCalc()} * 2.5) )`}
     >{range[1]}%</Label>)
 
 
