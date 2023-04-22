@@ -35,12 +35,15 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
         containerHeight,
         containerWidth,
         fixedLabels,
-        fontSize = '.9rem',
+        fontSize = '1rem',
         labelValueToFixed,
         numberOfLabels = 0
     }) => {
-    
-    const fontCalc = (fontSize: string) => `calc(${fontSize} + ${progressFillerWidth * .146}px)`
+    // progressFillWidth is space between inner semi circle outer border and outer progress bar outer border. 
+    // Responsive calc to get font size that fills in space if there are 4 or less characters based on .9rem
+    function fontCalc(fontSize: string) {
+        return `calc(${progressFillerWidth * .33}px)`;
+    }
     console.log(fontCalc)
     // Check range to see if its an appropriate amount of numbers for the default number of labels
     // Create an array of numbers (from the range) to be represented in each label.
