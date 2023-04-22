@@ -55,9 +55,16 @@ const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = (
          maxValues,
          guageInnerAreaSize
     }) => {
+        const progressFillerRef: React.MutableRefObject<HTMLDivElement | null> | null = React.useRef(null)
+        const [progressFillerWidth, setProgressFillerWidth] = React.useState<number>()
 
+
+        React.useEffect(() => {
+            progressFillerRef && setProgressFillerWidth(progressFillerRef?.current?.clientWidth)
+        }, [progressFillerRef]);
   return (
     <StaticProgressMeter
+    ref={progressFillerRef}
     progressBarColor={progressBarColor}
     maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
     guageInnerAreaSize={guageInnerAreaSize}
