@@ -58,9 +58,9 @@ const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = (
         const progressFillerRef: React.MutableRefObject<HTMLDivElement | null> | null = React.useRef(null)
         const [progressFillerWidth, setProgressFillerWidth] = React.useState<number>()
 
-
         React.useEffect(() => {
-            progressFillerRef && setProgressFillerWidth(progressFillerRef?.current?.clientWidth)
+            const widthDifferenceRadius = (maxValues.maxWidth - (maxValues.maxWidth * (guageInnerAreaSize / 100))) / 2
+            progressFillerRef && setProgressFillerWidth(widthDifferenceRadius)
         }, [progressFillerRef]);
   return (
     <StaticProgressMeter
@@ -69,7 +69,16 @@ const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = (
     maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
     guageInnerAreaSize={guageInnerAreaSize}
   >
-    <Labels containerHeight={maxValues.maxHeight} containerWidth={maxValues.maxWidth} range={range}/>
+    {
+        progressFillerWidth &&
+            <Labels 
+            progressFillerWidth={progressFillerWidth}
+            containerHeight={maxValues.maxHeight} 
+            containerWidth={maxValues.maxWidth} 
+            range={range}
+            />
+
+    }
   </StaticProgressMeter>    
   );
 };
