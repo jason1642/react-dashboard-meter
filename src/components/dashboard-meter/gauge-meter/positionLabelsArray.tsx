@@ -4,7 +4,7 @@ interface IPositionLabelArrayProps{
     range: range;
     containerHeight: number;
     containerWidth: number;
-    fontSize: string;
+    fontSize?: string;
     fixedLabels?: Array<string>;
     numberOfLabels?: number;
     labelValueToFixed?: 0|1|2|3;
@@ -19,6 +19,7 @@ interface IPositionLabelArrayProps{
     text-align: center;
     position: absolute;
     font-size: ${({fontSize})=>fontSize};
+    /* font-size: calc(1rem + 1vw); */
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     z-index: 33;
     left: ${({left})=>left};
@@ -36,6 +37,7 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
           numberOfLabels = 0
         })  =>{
             console.log(containerHeight, containerWidth)
+        const fontCalc = (fontSize: string)=> `calc(${fontSize} + 1vw)`
     // Check range to see if its an appropriate amount of numbers for the default number of labels
     // Create an array of numbers (from the range) to be represented in each label.
         if(typeof range === 'number') range = [0, range]
@@ -54,9 +56,9 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
         }
 
         // 0% or first label
-        labelIncrementalValues.unshift(<Label fontSize={fontSize} top={`calc(100% - ${fontSize})`}  left={`calc(100% / 48)`}>{range[0]}%</Label>)
+        labelIncrementalValues.unshift(<Label fontSize={fontCalc(fontSize)} top={`calc(100% - ${fontCalc(fontSize)})`}  left={`calc((${fontCalc(fontSize)} / 2) + (${containerWidth / 100}px))`}>{range[0]}%</Label>)
         // 100% or last label
-        labelIncrementalValues.push(<Label fontSize={fontSize} top={`calc(100% - ${fontSize})`}  left={`calc(100% - (${'41.18px'}))`}>{range[1]}%</Label>)
+        labelIncrementalValues.push(<Label fontSize={fontCalc(fontSize)} top={`calc(100% - ${fontSize})`}  left={`calc(100% - (${'41.18px'}))`}>{range[1]}%</Label>)
 
 
 

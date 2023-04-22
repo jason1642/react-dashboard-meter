@@ -32,7 +32,7 @@ const Label = styled.span`
 
 const Labels: React.FunctionComponent<ILabelsProps> = ({
   fixedLabels,
-  fontSize = '1rem',
+  fontSize,
   appendedText,
    range,
    containerWidth,
