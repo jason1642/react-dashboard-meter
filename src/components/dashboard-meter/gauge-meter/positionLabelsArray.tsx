@@ -67,7 +67,7 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
                 progressFillerWidth={progressFillerWidth}
                 fontSize={fontCalc()}
 
-                top={`calc(100% - (${fontCalc()} * 1.25))`}
+                top={'30%'}
                 left={horizontalLabelArchPositioner(numberOfLabels, i, fontCalc())}
 
             >{Number((intervalAmount * i).toFixed(labelValueToFixed))}%</Label>)
