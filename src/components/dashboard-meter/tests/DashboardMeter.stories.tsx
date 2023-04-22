@@ -8,7 +8,7 @@ const Container = styled.div`
   display:flex;
   position:relativve;
   background-color:#80a0fd;
-  padding: 0 70px;
+  padding: 0 0px;
   width: 100vw;
   height: 100vh;
 
@@ -19,7 +19,7 @@ const GaugeContainer = styled.div`
   display:flex;
   background-color: green;
   padding: 10px;
-  width: 500px;
+  width: 700px;
 
 
 

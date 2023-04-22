@@ -13,12 +13,16 @@ interface IPositionLabelArrayProps{
 
   const Label = styled.span<{top:number | string, left:number | string, fontSize: string}>`
     display:flex;
+    justify-content: center;
+    align-items: center;
+    background-color: blue;
+    text-align: center;
     position: absolute;
     font-size: ${({fontSize})=>fontSize};
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     z-index: 33;
-    left: ${({top, left})=>left};
-    top: ${({top, left})=>top};
+    left: ${({left})=>left};
+    top: ${({top})=>top};
   `;
 
 export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.ReactNode = (
@@ -27,10 +31,11 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
          containerHeight, 
          containerWidth,
          fixedLabels,
-          fontSize = '5rem',
+          fontSize = '1rem',
           labelValueToFixed,
           numberOfLabels = 0
         })  =>{
+            console.log(containerHeight, containerWidth)
     // Check range to see if its an appropriate amount of numbers for the default number of labels
     // Create an array of numbers (from the range) to be represented in each label.
         if(typeof range === 'number') range = [0, range]
@@ -49,9 +54,9 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
         }
 
         // 0% or first label
-        labelIncrementalValues.unshift(<Label fontSize={fontSize} top={`calc(100% - ${fontSize})`}  left={`calc(0% + (${fontSize} / 2 ))`}>{range[0]}%</Label>)
+        labelIncrementalValues.unshift(<Label fontSize={fontSize} top={`calc(100% - ${fontSize})`}  left={`calc(0% + (100vw / ${fontSize}))`}>{range[0]}%</Label>)
         // 100% or last label
-        labelIncrementalValues.push(<Label fontSize={fontSize} top={`calc(100% - ${fontSize})`}  left={`calc(100% - (${fontSize}) * 2)`}>{range[1]}%</Label>)
+        labelIncrementalValues.push(<Label fontSize={fontSize} top={`calc(100% - ${fontSize})`}  left={`calc(100% - (${'41.18px'}))`}>{range[1]}%</Label>)
 
 
 
