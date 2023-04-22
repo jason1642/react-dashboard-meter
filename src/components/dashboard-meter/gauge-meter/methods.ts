@@ -4,7 +4,7 @@ export const calcRem: (val:number, fontSizePx?: number) => string = (val, fontSi
   `${(val) / fontSizePx}rem`
 
 
-export const horizontalLabelArchPositioner = (numLabels: number, index: number, fontSize: string)=> {
+export const horizontalLabelArchPositioner = (numLabels: number, index: number, fontSize: string, progressFillerWidth: number)=> {
   // console.log(numLabels / index === 2.5, numLabels, index)
   switch (numLabels){
 
@@ -12,7 +12,7 @@ export const horizontalLabelArchPositioner = (numLabels: number, index: number, 
         return `calc(100% - ${index * 50}%)`
       
       case 5:
-        return `calc((100% - ${(--numLabels - index)  * 25}%) ${index === 2 ?  `- ${fontSize}` : index === 1 ? `- calc(${fontSize} * 2.5)`: `+ calc(${fontSize}) * .5`})`
+        return `calc((100% - ${(--numLabels - index)  * 25}%) ${index === 2 ?  `- ${fontSize}` : index === 1 ? `- ${progressFillerWidth}px`: ` `})`
       case 7:
         return `calc((100% - ${(--numLabels - index)  * 20}%) - ${fontSize})`
 

@@ -10,15 +10,16 @@ interface IPositionLabelArrayProps {
     numberOfLabels?: number;
     labelValueToFixed?: 0 | 1 | 2 | 3;
     progressFillerWidth: number;
+    appendedText?: string | false;
 }
 
 const Label = styled.span<{ top: number | string, left: number | string, progressFillerWidth: number, fontSize: string }>`
     display:flex;
     justify-content: center;
     align-items: center;
-    max-width: ${({progressFillerWidth})=>progressFillerWidth}px;
+    width: ${({progressFillerWidth})=>progressFillerWidth}px;
     
-    /* background-color: blue; */
+    background-color: blue;
     text-align: center;
     position: absolute;
     font-size: ${({ fontSize }) => fontSize};
@@ -34,6 +35,7 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
         range,
         progressFillerWidth,
         containerHeight,
+        appendedText = '%',
         containerWidth,
         fixedLabels,
         fontSize = '1rem',
@@ -43,7 +45,7 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
     // progressFillWidth is space between inner semi circle outer border and outer progress bar outer border. 
     // Responsive calc to get font size that fills in space if there are 4 or less characters based on .9rem
     // Change the decimal number that is multpliying progressFillerWidth to change scale of font but stay responsive
-    const fontCalc = (fontSize?: string): string => `calc(${progressFillerWidth * .33}px)`;
+    const fontCalc = (fontSize?: string): string => `calc(${progressFillerWidth * .38}px)`;
     
     console.log(fontCalc())
     // Check range to see if its an appropriate amount of numbers for the default number of labels
@@ -66,11 +68,10 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
             <Label
                 progressFillerWidth={progressFillerWidth}
                 fontSize={fontCalc()}
-
                 top={verticalLabelArchPositioner(numberOfLabels, i, fontCalc(), containerWidth)}
-                left={horizontalLabelArchPositioner(numberOfLabels, i, fontCalc())}
+                left={horizontalLabelArchPositioner(numberOfLabels, i, fontCalc(), progressFillerWidth)}
 
-            >{Number((intervalAmount * i).toFixed(labelValueToFixed))}%</Label>)
+            >{Number((intervalAmount * i).toFixed(labelValueToFixed))}{appendedText || appendedText}</Label>)
     }
 
     // 0% or first label
@@ -78,9 +79,9 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
         progressFillerWidth={progressFillerWidth} 
         fontSize={fontCalc()} 
         top={`calc(100% - (${fontCalc()} * 1.25))`}
-
-        left={`calc((${fontCalc()} / 4) + (${containerWidth / 100}px))`}
-    >{range[0]}%</Label>)
+        // left={`calc((${fontCalc()} / 4) + (${containerWidth / 100}px))`}
+        left={''}
+    >{range[0]}{appendedText}</Label>)
 
 
     // 100% or last label
@@ -88,8 +89,8 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
         progressFillerWidth={progressFillerWidth} 
         fontSize={fontCalc()}
         top={`calc(100% - (${fontCalc()} * 1.25))`}
-        left={`calc(100% - (${fontCalc()} * 2.5) )`}
-    >{range[1]}%</Label>)
+        left={`calc(100% - ${progressFillerWidth}px)`}
+    >{range[1]}{appendedText}</Label>)
 
 
 
