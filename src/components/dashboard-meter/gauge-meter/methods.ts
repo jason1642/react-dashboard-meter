@@ -22,14 +22,14 @@ export const horizontalLabelArchPositioner = (numLabels: number, index: number, 
 }
 
 
-export const verticalLabelArchPositioner = (numLabels: number, index: number, fontSize: string, containerWidth: number)=> {
+export const verticalLabelArchPositioner = (numLabels: number, index: number, fontSize: string, progressFillerWidth: number)=> {
   console.log(index === 2)
   switch(numLabels){
     case 3: 
-      return `calc(${containerWidth})`
+      return `calc(${progressFillerWidth})`
 
     case 5: 
-      return index === 2 ? `calc(0% + ${fontSize})` : `30%`
+      return index === 2 ? `calc(0% + ${progressFillerWidth * .33}px)` : `30%`
 
       default: 
         return ''

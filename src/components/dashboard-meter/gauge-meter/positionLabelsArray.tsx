@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import { horizontalLabelArchPositioner, verticalLabelArchPositioner } from "./methods";
 interface IPositionLabelArrayProps {
     range: range;
-    containerHeight: number;
-    containerWidth: number;
+
     fontSize?: string;
     fixedLabels?: Array<string>;
     numberOfLabels?: number;
@@ -19,7 +18,7 @@ const Label = styled.span<{ top: number | string, left: number | string, progres
     align-items: center;
     width: ${({progressFillerWidth})=>progressFillerWidth}px;
     
-    background-color: blue;
+    /* background-color: blue; */
     text-align: center;
     position: absolute;
     font-size: ${({ fontSize }) => fontSize};
@@ -34,11 +33,9 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
     {
         range,
         progressFillerWidth,
-        containerHeight,
         appendedText = '%',
-        containerWidth,
         fixedLabels,
-        fontSize = '1rem',
+        size =  'default',
         labelValueToFixed,
         numberOfLabels = 5
     }) => {
@@ -68,7 +65,7 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
             <Label
                 progressFillerWidth={progressFillerWidth}
                 fontSize={fontCalc()}
-                top={verticalLabelArchPositioner(numberOfLabels, i, fontCalc(), containerWidth)}
+                top={verticalLabelArchPositioner(numberOfLabels, i, fontCalc(), progressFillerWidth)}
                 left={horizontalLabelArchPositioner(numberOfLabels, i, fontCalc(), progressFillerWidth)}
 
             >{Number((intervalAmount * i).toFixed(labelValueToFixed))}{appendedText || appendedText}</Label>)

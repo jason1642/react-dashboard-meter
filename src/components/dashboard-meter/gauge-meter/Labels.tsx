@@ -23,8 +23,6 @@ const Labels: React.FunctionComponent<ILabelsProps> = ({
         appendedText: '%',
         progressFillerWidth,
          labelValueToFixed: 0,
-         containerHeight,
-          containerWidth, 
           fontSize,
           fixedLabels,
           //  numberOfLabels
