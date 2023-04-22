@@ -1,16 +1,14 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import type {LabelProps, range} from '../types'
+import type {LabelComponentProps, range} from '../types'
 import { positionLabelsArray } from './positionLabelsArray';
-interface ILabelsProps extends LabelProps {
+interface ILabelComponentProps extends LabelComponentProps {
 }
 
 
 
-const Labels: React.FunctionComponent<ILabelsProps> = ({
-  fixedLabels,
-  fontSize,
-  appendedText,
+const Labels: React.FunctionComponent<ILabelComponentProps> = ({
+  labelOptions,
    range,
    containerWidth,
    containerHeight,
@@ -22,9 +20,8 @@ const Labels: React.FunctionComponent<ILabelsProps> = ({
         range,
         appendedText: '%',
         progressFillerWidth,
-         labelValueToFixed: 0,
-          fontSize,
-          fixedLabels,
+        labelValueToFixed: 0,
+        labelOptions
           //  numberOfLabels
           }),
     [])

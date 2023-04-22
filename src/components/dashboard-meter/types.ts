@@ -14,8 +14,18 @@ export type titleFontSize = string | undefined;
 export type  percentFilled =  number | undefined;
 export type guageInnerAreaSize = number | undefined;
 
-export interface LabelProps {
-    fixedLabels?: Array<string>;
+
+export interface LabelOptions {
+    fixedLabels?: [any, any, any, any, any];
+    size: 'small' | 'default' | 'large';
+    appendedText: string | boolean;
+
+}
+
+
+export interface LabelComponentProps {
+    labelOptions?: LabelOptions; 
+    fixedLabels?: [any, any, any, any, any];
     fontSize?: string;
     appendedText?: string;
     range: range;
@@ -26,17 +36,13 @@ export interface LabelProps {
     progressFillerWidth: number;
 }   
 
-
-
-
-
 export interface GaugeMeterProps {
     value: value;
     guageInnerAreaSize?: guageInnerAreaSize;
     type?: type;
     title: title;
     range?: range;
-    labelOptions?: Omit<LabelProps, "containerWidth" & "containerHeight">;
+    labelOptions?: LabelOptions;
     progressBarColor?: progressBarColor;
     titleFontSize?: string;
 }
@@ -46,6 +52,6 @@ export interface LinearMeterProps {
     type?: type;
     title: title;
     range?: range;
-    labelOptions?: LabelProps;
+    labelOptions?: LabelOptions;
     progressBarColor?: progressBarColor;
 }

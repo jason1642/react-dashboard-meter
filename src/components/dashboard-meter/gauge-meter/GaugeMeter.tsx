@@ -28,8 +28,8 @@ const Title = styled.div<{titleFontSize: string}>`
 const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
   { 
     value = 25,
-     progressBarColor = '#00a2ff', 
-     labelOptions, 
+    labelOptions,
+     progressBarColor = '#00a2ff',  
      range = [0, 40],
      guageInnerAreaSize = 79,
      titleFontSize = '2.2rem'

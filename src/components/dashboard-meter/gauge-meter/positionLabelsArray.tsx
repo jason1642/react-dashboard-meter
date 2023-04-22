@@ -1,9 +1,9 @@
-import type { range } from "../types"
+import type { LabelOptions, range } from "../types"
 import styled from 'styled-components';
 import { horizontalLabelArchPositioner, verticalLabelArchPositioner } from "./methods";
 interface IPositionLabelArrayProps {
     range: range;
-
+    labelOptions: LabelOptions;
     fontSize?: string;
     fixedLabels?: Array<string>;
     numberOfLabels?: number;
@@ -31,11 +31,14 @@ const Label = styled.span<{ top: number | string, left: number | string, progres
 
 export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.ReactNode = (
     {
+        labelOptions: {
+            fixedLabels,
+            size = 'default',
+            appendedText = '%',
+        },
         range,
         progressFillerWidth,
-        appendedText = '%',
-        fixedLabels,
-        size =  'default',
+      
         labelValueToFixed,
         numberOfLabels = 5
     }) => {
