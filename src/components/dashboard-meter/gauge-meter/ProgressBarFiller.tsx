@@ -7,7 +7,7 @@ import Labels from './Labels';
 interface StaticProgressMeterProps {
     maxValues: maxValues;
     guageInnerAreaSize: number;
-    progressBarColor: progressBarColor;
+    background: progressBarColor;
   }
 
 // Filler for curved progress bar
@@ -16,7 +16,8 @@ const StaticProgressMeter = styled.div<StaticProgressMeterProps>`
   position: relative;
   width: ${({ maxValues: { maxWidth } }) => calcRem(maxWidth)};
   height:${({ maxValues: { maxHeight } }) => calcRem(maxHeight)};
-  background: linear-gradient(to right, #f7351f 0%, #f3ff18 50%, #12f912 100%);
+  background: ${({background})=>background};
+  /* background: linear-gradient(to right, #f7351f 0%, #f3ff18 50%, #12f912 100%); */
   border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
   overflow: visible;
   /* Inner area */
@@ -67,7 +68,7 @@ const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = (
   return (
     <StaticProgressMeter
     ref={progressFillerRef}
-    progressBarColor={progressBarFillerColor}
+    background={progressBarFillerColor}
     maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
     guageInnerAreaSize={guageInnerAreaSize}
   >
