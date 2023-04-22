@@ -1,46 +1,46 @@
 import type { range } from "../types"
 import styled from 'styled-components';
-interface IPositionLabelArrayProps{
+interface IPositionLabelArrayProps {
     range: range;
     containerHeight: number;
     containerWidth: number;
     fontSize?: string;
     fixedLabels?: Array<string>;
     numberOfLabels?: number;
-    labelValueToFixed?: 0|1|2|3;
+    labelValueToFixed?: 0 | 1 | 2 | 3;
 
-  }
+}
 
-  const Label = styled.span<{top:number | string, left:number | string, fontSize: string}>`
+const Label = styled.span<{ top: number | string, left: number | string, fontSize: string }>`
     display:flex;
     justify-content: center;
     align-items: center;
     /* background-color: blue; */
     text-align: center;
     position: absolute;
-    font-size: ${({fontSize})=>fontSize};
+    font-size: ${({ fontSize }) => fontSize};
     /* font-size: calc(1rem + 1vw); */
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     z-index: 33;
-    left: ${({left})=>left};
-    top: ${({top})=>top};
+    left: ${({ left }) => left};
+    top: ${({ top }) => top};
   `;
 
 export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.ReactNode = (
     {
         range,
-         containerHeight, 
-         containerWidth,
-         fixedLabels,
-          fontSize = '1rem',
-          labelValueToFixed,
-          numberOfLabels = 0
-        })  =>{
-            console.log(containerHeight, containerWidth)
-        const fontCalc = (fontSize: string)=> `calc(${fontSize} + 1vw)`
+        containerHeight,
+        containerWidth,
+        fixedLabels,
+        fontSize = '1rem',
+        labelValueToFixed,
+        numberOfLabels = 0
+    }) => {
+    console.log(containerHeight, containerWidth)
+    const fontCalc = (fontSize: string) => `calc(${fontSize} + 1vw)`
     // Check range to see if its an appropriate amount of numbers for the default number of labels
     // Create an array of numbers (from the range) to be represented in each label.
-        if(typeof range === 'number') range = [0, range]
+    if (typeof range === 'number') range = [0, range]
     // 3 labels = 0% 50% 100% 
     // 5 labels = 0% 25% 50% 75% 100%
     // 6 labels = 0% 20% 40% 60% 80% 100%
@@ -48,17 +48,26 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
     // 6 labels ^ - 100 / 5 = 20% increments
     // 9 labels = 100 / 8 = 11.11% increments (round it)
     // Default amount of labels is 5
-        let labelIncrementalValues: Array<React.ReactNode> = []        
+    let labelIncrementalValues: Array<React.ReactNode> = []
     // CURRENT SCENARIO - No fixed labels provided, range is default (0 - 100), numberOfLabels is default (5)
-        const intervalAmount:number = range[1] / (numberOfLabels - 1) 
-        for(let i = 1; i < numberOfLabels - 1; i++){
-            labelIncrementalValues.push(<Label fontSize={fontSize} top={100}  left={0}>{Number((intervalAmount * i).toFixed(labelValueToFixed))}%</Label>)
-        }
+    const intervalAmount: number = range[1] / (numberOfLabels - 1)
+    for (let i = 1; i < numberOfLabels - 1; i++) {
+        labelIncrementalValues.push(<Label fontSize={fontSize} top={100} left={0}>{Number((intervalAmount * i).toFixed(labelValueToFixed))}%</Label>)
+    }
 
-        // 0% or first label
-        labelIncrementalValues.unshift(<Label fontSize={fontCalc(fontSize)} top={`calc(100% - ${fontCalc(fontSize)})`}  left={`calc((${fontCalc(fontSize)} / 2) + (${containerWidth / 100}px))`}>{range[0]}%</Label>)
-        // 100% or last label
-        labelIncrementalValues.push(<Label fontSize={fontCalc(fontSize)} top={`calc(100% - ${fontSize})`}  left={`calc(100% - (${'41.18px'}))`}>{range[1]}%</Label>)
+    // 0% or first label
+    labelIncrementalValues.unshift(<Label
+        fontSize={fontCalc(fontSize)} top={`calc(100% - ${fontCalc(fontSize)})`}
+        left={`calc((${fontCalc(fontSize)} / 3) + (${containerWidth / 100}px))`}
+    >{range[0]}%</Label>)
+
+
+    // 100% or last label
+    labelIncrementalValues.push(<Label
+        fontSize={fontCalc(fontSize)}
+        top={`calc(100% - ${fontCalc(fontSize)})`}
+        left={`calc(100% - (${fontCalc(fontSize)} * 2.3) )`}
+    >{range[1]}%</Label>)
 
 
 
