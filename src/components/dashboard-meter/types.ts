@@ -30,7 +30,6 @@ export interface LabelOptions {
     labelValueToFixed?: labelValueToFixed;
 }
 
-
 export interface LabelComponentProps {
     labelOptions: LabelOptions; 
     fixedLabels?: [any, any, any, any, any];
@@ -45,6 +44,10 @@ export interface LabelComponentProps {
 }   
 
 
+
+
+
+// Main Components Props
 export interface GaugeMeterProps {
     value: value;
     guageInnerAreaSize?: guageInnerAreaSize;
@@ -52,7 +55,8 @@ export interface GaugeMeterProps {
     title: title;
     range?: range;
     labelOptions?: LabelOptions;
-    progressBarColor?: progressBarColor;
+    progressBarFillerColor?: progressBarColor;
+    progressBarContainerColor?: string;
     titleFontSize?: string;
 }
 

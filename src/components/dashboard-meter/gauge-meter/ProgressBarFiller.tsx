@@ -39,7 +39,7 @@ const StaticProgressMeter = styled.div<StaticProgressMeterProps>`
 `;
 
 interface IProgressBarFillerProps {
-    progressBarColor: string;
+    progressBarFillerColor: string;
     maxValues: { maxHeight: number, maxWidth: number };
     guageInnerAreaSize: number;
     range: range;
@@ -51,7 +51,7 @@ interface IProgressBarFillerProps {
 
 const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = (
     {
-        progressBarColor, 
+        progressBarFillerColor, 
         labelOptions,
         range,
          maxValues,
@@ -67,7 +67,7 @@ const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = (
   return (
     <StaticProgressMeter
     ref={progressFillerRef}
-    progressBarColor={progressBarColor}
+    progressBarColor={progressBarFillerColor}
     maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
     guageInnerAreaSize={guageInnerAreaSize}
   >

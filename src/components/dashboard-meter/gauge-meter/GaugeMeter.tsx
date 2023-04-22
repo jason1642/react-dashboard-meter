@@ -29,7 +29,8 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
   { 
     value = 25,
     labelOptions,
-     progressBarColor = '#00a2ff',  
+     progressBarFillerColor = '#00a2ff', 
+     progressBarContainerColor = 'grey', 
      range = [0, 40],
      guageInnerAreaSize = 79,
      titleFontSize = '2.2rem'
@@ -57,14 +58,14 @@ useEffect(() => {
         <ProgressBarFiller 
         guageInnerAreaSize={guageInnerAreaSize}
           maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
-          progressBarColor={progressBarColor}
+          progressBarFillerColor={progressBarFillerColor}
           range={range}
           labelOptions={{...defaultLabelOptions, ...labelOptions}}
           />
 
           {/* Cover is the component that rotates */}
             <ProgressBarCover
-         
+         progressBarContainerColor={progressBarContainerColor}
           percentFilled={percentFilled}
           maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
         />

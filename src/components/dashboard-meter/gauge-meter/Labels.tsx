@@ -12,6 +12,8 @@ export const defaultLabelOptions: LabelOptions = {
   labelValueToFixed: 0
 }
 
+
+
 const Labels: React.FunctionComponent<ILabelComponentProps> = ({
   labelOptions,
    range,

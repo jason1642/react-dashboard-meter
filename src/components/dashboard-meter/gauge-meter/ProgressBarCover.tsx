@@ -6,6 +6,7 @@ import type { maxValues, range } from '../types'
 interface RotatingProgressBarProps {
     percentFilled: number;
     maxValues: maxValues;
+    backgroundColor: string;
 }
 
 // Entire progress bar underneath actual filler
@@ -33,23 +34,23 @@ const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
   height:${({ maxValues: { maxWidth } }) => calcRem((maxWidth / 2) + (maxWidth / 100))};
     /* 200w & 100h - Set proportional margins */
     margin: -1px 0 0 -1px;
-    background: #808080;
+    background: ${({backgroundColor})=>backgroundColor};
     border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
   }      
 `;
 
 interface IProgressBarCoverProps {
     percentFilled: number;
-
+    progressBarContainerColor: string;
     maxValues: { maxHeight: number, maxWidth: number };
 }
 
-const ProgressBarCover: FunctionComponent<IProgressBarCoverProps> = ({ percentFilled, maxValues, }) => {
+const ProgressBarCover: FunctionComponent<IProgressBarCoverProps> = ({ progressBarContainerColor, percentFilled, maxValues, }) => {
 
 
     return (
         <RotatingProgressBar
-
+        backgroundColor={progressBarContainerColor}
             percentFilled={percentFilled}
             maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
         />
