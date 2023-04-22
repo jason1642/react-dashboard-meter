@@ -15,7 +15,7 @@ interface IPositionLabelArrayProps{
     display:flex;
     justify-content: center;
     align-items: center;
-    background-color: blue;
+    /* background-color: blue; */
     text-align: center;
     position: absolute;
     font-size: ${({fontSize})=>fontSize};
@@ -54,7 +54,7 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
         }
 
         // 0% or first label
-        labelIncrementalValues.unshift(<Label fontSize={fontSize} top={`calc(100% - ${fontSize})`}  left={`calc(100% / ${fontSize})`}>{range[0]}%</Label>)
+        labelIncrementalValues.unshift(<Label fontSize={fontSize} top={`calc(100% - ${fontSize})`}  left={`calc(100% / 48)`}>{range[0]}%</Label>)
         // 100% or last label
         labelIncrementalValues.push(<Label fontSize={fontSize} top={`calc(100% - ${fontSize})`}  left={`calc(100% - (${'41.18px'}))`}>{range[1]}%</Label>)
 
