@@ -54,7 +54,7 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
         }
 
         // 0% or first label
-        labelIncrementalValues.unshift(<Label fontSize={fontSize} top={`calc(100% - ${fontSize})`}  left={`calc(0% + (100vw / ${fontSize}))`}>{range[0]}%</Label>)
+        labelIncrementalValues.unshift(<Label fontSize={fontSize} top={`calc(100% - ${fontSize})`}  left={`calc(100% / ${fontSize})`}>{range[0]}%</Label>)
         // 100% or last label
         labelIncrementalValues.push(<Label fontSize={fontSize} top={`calc(100% - ${fontSize})`}  left={`calc(100% - (${'41.18px'}))`}>{range[1]}%</Label>)
 
