@@ -21,7 +21,7 @@ const Container = styled.div<GaugeProps>`
   overflow-x: visible;
   display: flex;
   /* margin: 25px; */
-  background: #d478ff;
+  background: transparent;
   /* border: 1px solid white; */
   width: 100%;
   height: ${({ maxWidth }) => maxWidth! / 2}px;

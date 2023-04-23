@@ -52,7 +52,7 @@ const Title: React.FunctionComponent<ITitleProps> = (
         containerWidth
     }) => {
         
-    const fontCalc = (fontSize?: string): string => `calc(${containerWidth / 8}px )`;
+    const fontCalc = (fontSize?: string): string => `calc(${containerWidth / 10}px )`;
         console.log(fontCalc())
         if (typeof range === 'number') range = [0, range]
 

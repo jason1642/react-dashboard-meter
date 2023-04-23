@@ -28,14 +28,14 @@ const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
     position: absolute;
     top: 0;
     left: 0%;
-    z-index: 2;
+    /* z-index: 0; */
     display: flex;
     width: ${({ maxValues: { maxWidth } }) => calcRem(maxWidth + (maxWidth / 100))};
   height:${({ maxValues: { maxWidth } }) => calcRem((maxWidth / 2) + (maxWidth / 100))};
     /* 200w & 100h - Set proportional margins */
     margin: -1px 0 0 -1px;
     background: ${({background})=>background};
-    border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
+    border-radius: 50% 50% 50% 50% / 100% 100% 1% 0% ;
   }      
 `;
 

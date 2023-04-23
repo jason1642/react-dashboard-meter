@@ -14,13 +14,15 @@ import Title, { defaultTitleOptions } from './Title';
 
 const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
   {
-    value = 25,
+    value = 60,
     titleOptions,
     labelOptions,
-    progressBarFillerColor = 'linear-gradient(to right, #f7351f 0%, #f3ff18 50%, #12f912 100%)',
+    progressBarFillerColor = 'blue',
+    // progressBarFillerColor = 'linear-gradient(to right, #f7351f 0%, #f3ff18 50%, #12f912 100%)',
+
     progressBarContainerColor = 'grey',
     innerAreaBackgroundColor = 'white',
-    range = [0, 40],
+    range = [0, 100],
     guageInnerAreaSize = 79,
 
   }) => {

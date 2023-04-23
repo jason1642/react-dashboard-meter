@@ -45,11 +45,13 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
     // Responsive calc to get font size that fills in space if there are 4 or less characters based on .9rem
     // Change the decimal number that is multpliying progressFillerWidth to change scale of font but stay responsive
     const fontCalc = (fontSize?: string): string => `calc(${progressFillerWidth * .38}px)`;
-    
     console.log(fontCalc())
     // Check range to see if its an appropriate amount of numbers for the default number of labels
     // Create an array of numbers (from the range) to be represented in each label.
     if (typeof range === 'number') range = [0, range]
+    const appendedTextFormula = appendedText ? appendedText : range[0] === 0 && range[1] ===  100 ? '%' : ''
+
+
     // 3 labels = 0% 50% 100% 
     // 5 labels = 0% 25% 50% 75% 100%
     // 6 labels = 0% 20% 40% 60% 80% 100%
@@ -61,6 +63,7 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
     // CURRENT SCENARIO - No fixed labels provided, range is default (0 - 100), numberOfLabels is default (5)
     const intervalAmount: number = range[1] / (numberOfLabels - 1)
     
+
     for (let i = 1; i < numberOfLabels - 1; i++) {
        console.log(range)
         labelIncrementalValues.push(
@@ -70,7 +73,7 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
                 top={verticalLabelArchPositioner(numberOfLabels, i, fontCalc(), progressFillerWidth)}
                 left={horizontalLabelArchPositioner(numberOfLabels, i, fontCalc(), progressFillerWidth)}
 
-            >{Number((intervalAmount * i).toFixed(labelValueToFixed))}{appendedText ? appendedText : range[0] === 0 && range[1] ===  100 ? '%' : ''}</Label>)
+            >{Number((intervalAmount * i).toFixed(labelValueToFixed))}{appendedTextFormula}</Label>)
     }
 
     // 0% or first label
@@ -80,7 +83,7 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
         top={`calc(100% - (${fontCalc()} * 1.25))`}
         // left={`calc((${fontCalc()} / 4) + (${containerWidth / 100}px))`}
         left={''}
-    >{range[0]}{appendedText}</Label>)
+    >{range[0]}{appendedTextFormula}</Label>)
 
 
     // 100% or last label
@@ -89,7 +92,7 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
         fontSize={fontCalc()}
         top={`calc(100% - (${fontCalc()} * 1.25))`}
         left={`calc(100% - ${progressFillerWidth}px)`}
-    >{range[1]}{appendedText}</Label>)
+    >{range[1]}{appendedTextFormula}</Label>)
 
 
 
