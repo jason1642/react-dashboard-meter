@@ -1,10 +1,12 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { TitleOptionProps } from '../types';
+import { TitleOptionProps, range } from '../types';
 
 
 interface ITitleProps {
     titleOptions: TitleOptionProps;
+    value: number;
+    range: range;
 }
 
 
@@ -12,6 +14,7 @@ export const defaultTitleOptions = {
     // styles: undefined,
     fontSize: '2rem',
     color: 'black',
+    appenededText: undefined,
     reactNode: undefined,
     marginBottom: undefined,
     verticalPosition: 'bottom'
@@ -31,18 +34,22 @@ const Title: React.FunctionComponent<ITitleProps> = (
     {
         titleOptions: {
             styles,
-            fontSize,
-            color,
             reactNode,
-            marginBottom,
+            appendedText,
             verticalPosition
-        }
+        },
+        value,
+        range
     }) => {
-  return (
-    <Container>
-        80%
-    </Container>
-  );
+
+        if (typeof range === 'number') range = [0, range]
+
+
+    return reactNode ? reactNode : (
+        <Container style={{...styles}}>
+            {value}{appendedText ? appendedText : range[0] === 0 && range[1] === 100 ? '%' : '' }
+        </Container>
+    );
 };
 
 export default Title;

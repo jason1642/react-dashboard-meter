@@ -20,7 +20,7 @@ export type guageInnerAreaSize = number | undefined;
 // Label Options Types
 export type fixedLabels = [any, any, any, any, any] | undefined;
 export type labelSize = 'small' | 'default' | 'large';
-export type appendedText = string | boolean;
+export type appendedText = string | boolean | undefined;
 export type labelValueToFixed =  0 | 1 | 2 | 3;
 
 export interface LabelOptions {
@@ -34,7 +34,6 @@ export interface LabelComponentProps {
     labelOptions: LabelOptions; 
     fixedLabels?: [any, any, any, any, any];
     fontSize?: string;
-    appendedText?: string;
     range: range;
     containerWidth: number;
     containerHeight: number;
@@ -46,11 +45,14 @@ export interface LabelComponentProps {
 
 
 export interface TitleOptionProps {
-    styles?: any;
-    fontSize: string;
-    color: string;
-    reactNode?: React.ReactNode;
-    marginBottom?: string;
+    styles?: {
+        fontSize?: string;
+        color?: string;
+        marginBottom?:string;
+
+    };
+    reactNode?: React.ReactElement;
+    appendedText?: string;
     verticalPosition: 'center' | 'bottom' | 'top';
 }
 

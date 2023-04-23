@@ -9,7 +9,6 @@ interface IPositionLabelArrayProps {
     numberOfLabels?: number;
     labelValueToFixed?: 0 | 1 | 2 | 3;
     progressFillerWidth: number;
-    appendedText?: string | false;
 }
 
 const Label = styled.span<{ top: number | string, left: number | string, progressFillerWidth: number, fontSize: string }>`
@@ -33,8 +32,8 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
     {
         labelOptions: {
             fixedLabels,
-            size = 'default',
-            appendedText = '%',
+            size,
+            appendedText,
         },
         range,
         progressFillerWidth,
@@ -63,7 +62,7 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
     const intervalAmount: number = range[1] / (numberOfLabels - 1)
     
     for (let i = 1; i < numberOfLabels - 1; i++) {
-       console.log(range[1] / intervalAmount)
+       console.log(range)
         labelIncrementalValues.push(
             <Label
                 progressFillerWidth={progressFillerWidth}
@@ -71,7 +70,7 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
                 top={verticalLabelArchPositioner(numberOfLabels, i, fontCalc(), progressFillerWidth)}
                 left={horizontalLabelArchPositioner(numberOfLabels, i, fontCalc(), progressFillerWidth)}
 
-            >{Number((intervalAmount * i).toFixed(labelValueToFixed))}{appendedText || appendedText}</Label>)
+            >{Number((intervalAmount * i).toFixed(labelValueToFixed))}{appendedText ? appendedText : range[0] === 0 && range[1] ===  100 ? '%' : ''}</Label>)
     }
 
     // 0% or first label

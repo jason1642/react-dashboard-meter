@@ -7,7 +7,7 @@ interface ILabelComponentProps extends LabelComponentProps {
 export const defaultLabelOptions: LabelOptions = {
   fixedLabels: undefined,
   size: 'default',
-  appendedText: '%',
+  appendedText: undefined,
   labelValueToFixed: 0
 }
 
@@ -24,7 +24,6 @@ const Labels: React.FunctionComponent<ILabelComponentProps> = ({
     positionLabelsArray(
       {
         range,
-        appendedText: '%',
         progressFillerWidth,
         labelValueToFixed: 0,
         labelOptions
