@@ -1,5 +1,5 @@
 {
-  "name": "react-dashboard-meter",
+  "name": "@jason1642/react-dashboard-meter",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
@@ -23,7 +23,6 @@
     "react-component"
   ],
   "version": "0.0.9",
-  "private": true,
   "devDependencies": {
     "@babel/preset-env": "^7.21.4",
     "@babel/preset-react": "^7.18.6",

@@ -30,6 +30,11 @@
    "exclude": 
       [
         "./dist",
+        "./.storybook",
+        "./public",
+        "**/stories",
+        "**/react-app-env.d.ts",
+        "./tutorial-screenshots",
         // "./node_modules",
         // "node_modules/styled-components",
         "**/*.stories.tsx",
