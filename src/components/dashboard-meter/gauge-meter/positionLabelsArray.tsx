@@ -16,7 +16,7 @@ const Label = styled.span<{ top: number | string, left: number | string, progres
     justify-content: center;
     align-items: center;
     width: ${({progressFillerWidth})=>progressFillerWidth}px;
-    
+    font-weight: 500;
     /* background-color: blue; */
     text-align: center;
     position: absolute;
@@ -31,7 +31,7 @@ const Label = styled.span<{ top: number | string, left: number | string, progres
 
 const AppendedTextSpan = styled.span<{fontCalc:string}>`
   display:flex;
-  font-size: ${({fontCalc})=>`calc(${fontCalc} * .8)`};
+  font-size: ${({fontCalc})=>`calc(${fontCalc} * .75)`};
 `;
 export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.ReactNode = (
     {
@@ -78,7 +78,9 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
                 top={verticalLabelArchPositioner(numberOfLabels, i, fontCalc, progressFillerWidth)}
                 left={horizontalLabelArchPositioner(numberOfLabels, i, fontCalc, progressFillerWidth)}
 
-            >{Number((intervalAmount * i).toFixed(labelValueToFixed))}<AppendedTextSpan fontCalc={fontCalc}>{appendedTextFormula}</AppendedTextSpan></Label>)
+            >{Number((intervalAmount * i).toFixed(labelValueToFixed))}
+            <AppendedTextSpan fontCalc={fontCalc}>{appendedTextFormula}</AppendedTextSpan>
+            </Label>)
     }
 
     // 0% or first label
@@ -88,7 +90,7 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
         top={`calc(100% - (${fontCalc} * 1.25))`}
         // left={`calc((${fontCalc} / 4) + (${containerWidth / 100}px))`}
         left={''}
-    >{range[0]}{appendedTextFormula}</Label>)
+    >{range[0]}<AppendedTextSpan fontCalc={fontCalc}>{appendedTextFormula}</AppendedTextSpan></Label>)
 
 
     // 100% or last label
@@ -97,7 +99,9 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
         fontSize={fontCalc}
         top={`calc(100% - (${fontCalc} * 1.25))`}
         left={`calc(100% - ${progressFillerWidth}px)`}
-    >{range[1]}{appendedTextFormula}</Label>)
+    >{range[1]}
+    <AppendedTextSpan fontCalc={fontCalc}>{appendedTextFormula}</AppendedTextSpan>
+    </Label>)
 
 
 
