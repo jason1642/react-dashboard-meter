@@ -46,6 +46,7 @@ interface IProgressBarFillerProps {
     guageInnerAreaSize: number;
     range: range;
     labelOptions: LabelOptions;
+    progressFillerWidth: number;
     innerAreaBackgroundColor: string;
 }
 
@@ -58,15 +59,12 @@ const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = (
         range,
          maxValues,
          guageInnerAreaSize,
-         innerAreaBackgroundColor
+         innerAreaBackgroundColor,
+         progressFillerWidth
     }) => {
         const progressFillerRef: React.MutableRefObject<HTMLDivElement | null> | null = React.useRef(null)
-        const [progressFillerWidth, setProgressFillerWidth] = React.useState<number>()
 
-        React.useEffect(() => {
-            const widthDifferenceRadius = (maxValues.maxWidth - (maxValues.maxWidth * (guageInnerAreaSize / 100))) / 2
-            progressFillerRef && setProgressFillerWidth(widthDifferenceRadius)
-        }, [progressFillerRef]);
+      
   return (
     <StaticProgressMeter
     ref={progressFillerRef}

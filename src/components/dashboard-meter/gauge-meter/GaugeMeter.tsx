@@ -34,17 +34,19 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
 
 
   const percentFilled: number | undefined = useMemo(() => calculatePercentFilled(value, range), [range, value])
+  const [progressFillerWidth, setProgressFillerWidth] = useState<number>()
 
 
   useEffect(() => {
     // console.log(maxValues)
     // console.log(percentFilled)
+    maxValues && setProgressFillerWidth((maxValues.maxWidth - (maxValues.maxWidth * (guageInnerAreaSize / 100))) / 2)
   }, [maxValues, percentFilled]);
 
 
   return percentFilled !== undefined ? (
     <Container handleMaxValues={handleMaxValues}  >
-      {maxValues && percentFilled !== undefined && <>
+      {maxValues && percentFilled !== undefined && progressFillerWidth &&  <>
 
         <ProgressBarFiller
           guageInnerAreaSize={guageInnerAreaSize}
@@ -52,6 +54,7 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
           innerAreaBackgroundColor={innerAreaBackgroundColor}
           progressBarFillerColor={progressBarFillerColor}
           range={range}
+          progressFillerWidth={progressFillerWidth}
           labelOptions={{ ...defaultLabelOptions, ...labelOptions }}
         />
 
@@ -66,6 +69,7 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
 
         <Title
           containerWidth={maxValues.maxWidth}
+          progressFillerWidth={progressFillerWidth}
           range={range}
           titleOptions={{ ...defaultTitleOptions, ...titleOptions }}
           value={value}
