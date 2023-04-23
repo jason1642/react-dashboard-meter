@@ -43,17 +43,23 @@ export interface LabelComponentProps {
 }   
 
 
+// Title Options Types
+export type verticalPosition = 'center' | 'bottom' | 'top';
+
+
 
 export interface TitleOptionProps {
     styles?: {
         fontSize?: string;
         color?: string;
         marginBottom?:string;
+        fontWeight?:string;
+        fontFamily?: string;
 
     };
     reactNode?: React.ReactElement;
     appendedText?: string;
-    verticalPosition: 'center' | 'bottom' | 'top';
+    verticalPosition: verticalPosition;
 }
 
 // Main Components Props

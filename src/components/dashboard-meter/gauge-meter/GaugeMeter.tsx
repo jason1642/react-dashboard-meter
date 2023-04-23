@@ -63,6 +63,7 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
 
 
         <Title
+          containerWidth={maxValues.maxWidth}
           range={range}
           titleOptions={{ ...defaultTitleOptions, ...titleOptions }}
           value={value}
