@@ -14,7 +14,7 @@ import Title, { defaultTitleOptions } from './Title';
 
 const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
   {
-    value = 60,
+    value = 25,
     titleOptions,
     labelOptions,
     progressBarFillerColor = 'blue',

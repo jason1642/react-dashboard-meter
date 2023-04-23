@@ -50,7 +50,8 @@ const ProgressBarCover: FunctionComponent<IProgressBarCoverProps> = ({ progressB
 
     return (
         <RotatingProgressBar
-        background={progressBarContainerColor}
+          style={{marginTop: percentFilled === 100 ? '100%' : '-1px'}}
+          background={progressBarContainerColor}
             percentFilled={percentFilled}
             maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
         />
