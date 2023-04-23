@@ -28,6 +28,11 @@ const Label = styled.span<{ top: number | string, left: number | string, progres
     top: ${({ top }) => top};
   `;
 
+
+const AppendedTextSpan = styled.span<{fontCalc:string}>`
+  display:flex;
+  font-size: ${({fontCalc})=>`calc(${fontCalc} * .8)`};
+`;
 export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.ReactNode = (
     {
         labelOptions: {
@@ -44,8 +49,8 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
     // progressFillWidth is space between inner semi circle outer border and outer progress bar outer border. 
     // Responsive calc to get font size that fills in space if there are 4 or less characters based on .9rem
     // Change the decimal number that is multpliying progressFillerWidth to change scale of font but stay responsive
-    const fontCalc = (fontSize?: string): string => `calc(${progressFillerWidth * .38}px)`;
-    console.log(fontCalc())
+    const fontCalc: string = `calc(${progressFillerWidth * .38}px)`;
+    console.log(fontCalc)
     // Check range to see if its an appropriate amount of numbers for the default number of labels
     // Create an array of numbers (from the range) to be represented in each label.
     if (typeof range === 'number') range = [0, range]
@@ -69,19 +74,19 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
         labelIncrementalValues.push(
             <Label
                 progressFillerWidth={progressFillerWidth}
-                fontSize={fontCalc()}
-                top={verticalLabelArchPositioner(numberOfLabels, i, fontCalc(), progressFillerWidth)}
-                left={horizontalLabelArchPositioner(numberOfLabels, i, fontCalc(), progressFillerWidth)}
+                fontSize={fontCalc}
+                top={verticalLabelArchPositioner(numberOfLabels, i, fontCalc, progressFillerWidth)}
+                left={horizontalLabelArchPositioner(numberOfLabels, i, fontCalc, progressFillerWidth)}
 
-            >{Number((intervalAmount * i).toFixed(labelValueToFixed))}{appendedTextFormula}</Label>)
+            >{Number((intervalAmount * i).toFixed(labelValueToFixed))}<AppendedTextSpan fontCalc={fontCalc}>{appendedTextFormula}</AppendedTextSpan></Label>)
     }
 
     // 0% or first label
     labelIncrementalValues.unshift(<Label 
         progressFillerWidth={progressFillerWidth} 
-        fontSize={fontCalc()} 
-        top={`calc(100% - (${fontCalc()} * 1.25))`}
-        // left={`calc((${fontCalc()} / 4) + (${containerWidth / 100}px))`}
+        fontSize={fontCalc} 
+        top={`calc(100% - (${fontCalc} * 1.25))`}
+        // left={`calc((${fontCalc} / 4) + (${containerWidth / 100}px))`}
         left={''}
     >{range[0]}{appendedTextFormula}</Label>)
 
@@ -89,8 +94,8 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
     // 100% or last label
     labelIncrementalValues.push(<Label
         progressFillerWidth={progressFillerWidth} 
-        fontSize={fontCalc()}
-        top={`calc(100% - (${fontCalc()} * 1.25))`}
+        fontSize={fontCalc}
+        top={`calc(100% - (${fontCalc} * 1.25))`}
         left={`calc(100% - ${progressFillerWidth}px)`}
     >{range[1]}{appendedTextFormula}</Label>)
 

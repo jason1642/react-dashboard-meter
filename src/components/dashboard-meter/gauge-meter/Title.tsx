@@ -8,6 +8,7 @@ interface ITitleProps {
     value: number;
     range: range;
     containerWidth: number;
+    progressFillerWidth: number;
 }
 
 
@@ -16,22 +17,24 @@ export const defaultTitleOptions = {
     styles: {
         color: 'black',
         marginBottom: undefined,
+        // marginTop: '20px'
     },
     appenededText: undefined,
     reactNode: undefined,
-    verticalPosition: 'top'
+    verticalPosition: 'center'
 }
 
 interface SCContainerProps {
     verticalPosition: verticalPosition;
     fontSize: string;
+    progressFillerWidth: number;
 }
 const Container = styled.div<SCContainerProps>`
   display:flex;
   font-weight: 300;
   font-size: ${({fontSize})=>fontSize};
   position: absolute;
-  top: ${({verticalPosition, fontSize})=>`calc(${verticalPosition === 'center' ? '50%' : verticalPosition === 'bottom' ? `100% - ${fontSize}` : `${fontSize}`})`};
+  top: ${({verticalPosition, progressFillerWidth})=>`calc(${verticalPosition === 'center' ? `50%` : verticalPosition === 'bottom' ? `100% - ${progressFillerWidth * .80}px` : `${progressFillerWidth}px`})`};
   display: block;
   z-index: 10;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -49,7 +52,8 @@ const Title: React.FunctionComponent<ITitleProps> = (
         },
         value,
         range,
-        containerWidth
+        containerWidth,
+        progressFillerWidth
     }) => {
         
     const fontCalc = (fontSize?: string): string => `calc(${containerWidth / 12}px )`;
@@ -59,6 +63,7 @@ const Title: React.FunctionComponent<ITitleProps> = (
 
     return reactNode ? reactNode : (
         <Container 
+        progressFillerWidth={progressFillerWidth}
             fontSize={fontCalc()}
             verticalPosition={verticalPosition}
             style={{fontSize: fontCalc(),...styles}}>

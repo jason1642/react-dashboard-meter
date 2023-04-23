@@ -36,7 +36,7 @@ const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
     
     margin: -1px 0 0 -1px;
     background: ${({background})=>background};
-    border-radius: 50% 50% 50% 50% / 100% 100% 1% 0% ;
+    border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
   }      
 `;
 

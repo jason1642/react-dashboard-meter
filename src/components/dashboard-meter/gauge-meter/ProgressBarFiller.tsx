@@ -26,6 +26,7 @@ const StaticProgressMeter = styled.div<StaticProgressMeterProps>`
     content: '';
     text-align: center;
     position: absolute;
+    
     bottom: 0;
     left: 50%;
     z-index: 3;

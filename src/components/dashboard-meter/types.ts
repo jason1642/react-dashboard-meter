@@ -55,6 +55,7 @@ export interface TitleOptionProps {
         marginBottom?:string;
         fontWeight?:string;
         fontFamily?: string;
+        marginTop?:string;
 
     };
     reactNode?: React.ReactElement;
