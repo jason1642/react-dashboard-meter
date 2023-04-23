@@ -1,26 +1,40 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "target": "ES6", 
+    "typeRoots": ["node_modules/@types", "esm/types"],
+    "esModuleInterop": true, 
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
+    "strict": true, 
+    "skipLibCheck": true,
+"resolveJsonModule": true,
+    "jsx": "react-jsx", 
+    "module": "ESNext",
+    "declaration": true,
+    "declarationDir": "./types",
+    "sourceMap": true, 
+    // "inlineSources": false,
+    "outDir": "types",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    "allowSyntheticDefaultImports": true, 
+    "emitDeclarationOnly": true,
+    // "rootDir": "src",
+    "sourceRoot": "src",
+        // "paths": {
+    //   "common": ["./src/*"],
+    //   "components": ["./src/components/*"]
+    // }
   },
-  "include": [
-    "src"
-  ]
+  // "include": [
+  //   "src/"
+  // ],
+   "exclude": 
+      [
+        "./dist",
+        // "./node_modules",
+        // "node_modules/styled-components",
+        "**/*.stories.tsx",
+        "**/*.test.tsx",
+        "**/tests",
+        "**/setupTests.ts"
+      ]           
 }
