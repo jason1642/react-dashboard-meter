@@ -15,7 +15,7 @@
     // "inlineSources": false,
     "outDir": "types",
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true, 
+    "allowSyntheticDefaultImports": true,  
     "emitDeclarationOnly": true,
     // "rootDir": "src",
     "sourceRoot": "src",

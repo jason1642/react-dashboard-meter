@@ -5,7 +5,7 @@ import dts from "rollup-plugin-dts";
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import postcss from "rollup-plugin-postcss";
 import terser from "@rollup/plugin-terser";
-import pkg from './package.json'  assert { type: "json" };
+import pkg from './package.json'
 import url from '@rollup/plugin-url' 
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import babel from '@rollup/plugin-babel'

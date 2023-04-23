@@ -1,6 +1,28 @@
 {
   "name": "react-dashboard-meter",
-  "version": "0.1.0",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "description": "UI component gauge meter, allowing for thorough customization.",
+  "author": {
+    "name": "Jason Cruz"
+  },
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jason1642/react-dashboard-meter.git"
+  },
+  "keywords": [
+    "component",
+    "UI",
+    "progress bar",
+    "dashboard",
+    "gauge",
+    "meter",
+    "react-component"
+  ],
+  "version": "0.0.9",
   "private": true,
   "devDependencies": {
     "@babel/preset-env": "^7.21.4",
@@ -47,6 +69,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "rollup": "rollup -c",
     "eject": "react-scripts eject",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
