@@ -6,35 +6,23 @@ import ProgressBarFiller from './ProgressBarFiller';
 import ProgressBarCover from './ProgressBarCover';
 import { calculatePercentFilled } from './calculatePercentFilled';
 import { defaultLabelOptions } from './Labels';
+import Title, {defaultTitleOptions} from './Title';
 
 
-const Title = styled.div<{titleFontSize: string}>`
-  position: absolute;
-  font-size: ${({titleFontSize})=> titleFontSize};
-  /* left: ${({titleFontSize})=> `calc(50% - ${titleFontSize})`}; */
-
-  /* If text is needed at bottom */
-  top: ${({titleFontSize})=> `calc(100% - ${titleFontSize})`};
-  display: block;
-  z-index: 10;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  width: 100%;
-  text-align: center;
-
-`;
 
 
 
 const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
   { 
     value = 25,
+    titleOptions,
     labelOptions,
      progressBarFillerColor = 'linear-gradient(to right, #f7351f 0%, #f3ff18 50%, #12f912 100%)', 
      progressBarContainerColor = 'grey', 
      innerAreaBackgroundColor = 'white',
      range = [0, 40],
      guageInnerAreaSize = 79,
-     titleFontSize = '2.2rem'
+    
   }) => {
   const [maxValues, setMaxValues] = useState<maxValues>()
 
@@ -74,10 +62,8 @@ useEffect(() => {
 
       
 
-        <Title titleFontSize={titleFontSize}>
-          80%
-        </Title>
-
+        <Title titleOptions={{...defaultTitleOptions, ...titleOptions}} />
+ 
       </>
       }
     </Container>

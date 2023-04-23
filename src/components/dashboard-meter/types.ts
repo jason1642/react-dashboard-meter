@@ -45,7 +45,14 @@ export interface LabelComponentProps {
 
 
 
-
+export interface TitleOptionProps {
+    styles?: any;
+    fontSize: string;
+    color: string;
+    reactNode?: React.ReactNode;
+    marginBottom?: string;
+    verticalPosition: 'center' | 'bottom' | 'top';
+}
 
 // Main Components Props
 export interface GaugeMeterProps {
@@ -58,7 +65,8 @@ export interface GaugeMeterProps {
     progressBarFillerColor?: progressBarColor;
     progressBarContainerColor?: string;
     innerAreaBackgroundColor: string;
-    titleFontSize?: string;
+   
+    titleOptions: TitleOptionProps;
 }
 
 export interface LinearMeterProps {

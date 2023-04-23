@@ -1,5 +1,4 @@
 import * as React from 'react';
-import styled from 'styled-components';
 import type {LabelComponentProps, LabelOptions, range} from '../types'
 import { positionLabelsArray } from './positionLabelsArray';
 interface ILabelComponentProps extends LabelComponentProps {
@@ -37,7 +36,6 @@ const Labels: React.FunctionComponent<ILabelComponentProps> = ({
   // If range is a tuple, range will be min and max values
   // Make sure to create even splits to have symmetrical label positions
   console.log(containerHeight, containerWidth)
-  console.log()
 
 
   return (
