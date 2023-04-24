@@ -22,23 +22,24 @@ export type fixedLabels = [any, any, any, any, any] | undefined;
 export type labelSize = 'small' | 'default' | 'large' | undefined;
 export type appendedText = string | boolean | undefined;
 export type labelValueToFixed =  0 | 1 | 2 | 3;
+export type labelPosition = 'inward' | 'inside' | 'outward';
 
 export interface LabelOptions {
     fixedLabels?: fixedLabels;
     size?: labelSize;
     appendedText?: appendedText;
     labelValueToFixed?: labelValueToFixed;
+    labelPosition?: labelPosition;
+    numberOfLabels?: number;
 }
 
 export interface LabelComponentProps {
     labelOptions: LabelOptions; 
     fixedLabels?: [any, any, any, any, any];
-    fontSize?: string;
     range: range;
+    labelPosition?: labelPosition;
     containerWidth: number;
     containerHeight: number;
-    numberOfLabels?: number;
-    labelValueToFixed?: 0 | 1 | 2 | 3;
     progressFillerWidth: number;
 }   
 
@@ -73,7 +74,7 @@ export interface GaugeMeterProps {
     progressBarFillerColor?: progressBarColor;
     progressBarContainerColor?: string;
     innerAreaBackgroundColor?: string;
-   
+    
     titleOptions?: TitleOptionProps;
 }
 

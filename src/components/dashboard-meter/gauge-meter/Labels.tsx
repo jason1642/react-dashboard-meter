@@ -8,7 +8,8 @@ export const defaultLabelOptions: LabelOptions = {
   fixedLabels: undefined,
   size: 'default',
   appendedText: undefined,
-  labelValueToFixed: 0
+  labelValueToFixed: 0,
+  labelPosition: 'inward'
 }
 
 
@@ -18,7 +19,7 @@ const Labels: React.FunctionComponent<ILabelComponentProps> = ({
    range,
    containerWidth,
    containerHeight,
-   progressFillerWidth
+   progressFillerWidth,
 }) => {
   const renderLabels = React.useMemo(()=>
     positionLabelsArray(

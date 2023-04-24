@@ -1,14 +1,14 @@
 import type { LabelOptions, range } from "../types"
 import styled from 'styled-components';
-import { horizontalLabelArchPositioner, verticalLabelArchPositioner } from "./methods";
+import { horizontalLabelArchPositioner, verticalLabelArchPositioner, firstLabelHorizontalPositions,  lastLabelHorizontalPositions } from "./methods";
 interface IPositionLabelArrayProps {
     range: range;
     labelOptions: LabelOptions;
+    progressFillerWidth: number;
     fontSize?: string;
     fixedLabels?: Array<string>;
     numberOfLabels?: number;
     labelValueToFixed?: 0 | 1 | 2 | 3;
-    progressFillerWidth: number;
 }
 
 const Label = styled.span<{ top: number | string, left: number | string, progressFillerWidth: number, fontSize: string }>`
@@ -31,7 +31,7 @@ const Label = styled.span<{ top: number | string, left: number | string, progres
 
 const AppendedTextSpan = styled.span<{fontCalc:string}>`
   display:flex;
-  font-size: ${({fontCalc})=>`calc(${fontCalc} * .8)`};
+  font-size: ${({fontCalc})=>`calc(${fontCalc} * .7)`};
 `;
 export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.ReactNode = (
     {
@@ -39,6 +39,7 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
             fixedLabels,
             size,
             appendedText,
+            labelPosition
         },
         range,
         progressFillerWidth,
@@ -75,8 +76,8 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
             <Label
                 progressFillerWidth={progressFillerWidth}
                 fontSize={fontCalc}
-                top={verticalLabelArchPositioner(numberOfLabels, i, fontCalc, progressFillerWidth)}
-                left={horizontalLabelArchPositioner(numberOfLabels, i, fontCalc, progressFillerWidth)}
+                top={verticalLabelArchPositioner(labelPosition!, numberOfLabels, i, fontCalc, progressFillerWidth)}
+                left={horizontalLabelArchPositioner(labelPosition!, numberOfLabels, i, fontCalc, progressFillerWidth)}
 
             >{Number((intervalAmount * i).toFixed(labelValueToFixed))}
             <AppendedTextSpan fontCalc={fontCalc}>{appendedTextFormula}</AppendedTextSpan>
@@ -89,7 +90,7 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
         fontSize={fontCalc} 
         top={`calc(100% - (${fontCalc} * 1.25))`}
         // left={`calc((${fontCalc} / 4) + (${containerWidth / 100}px))`}
-        left={''}
+        left={firstLabelHorizontalPositions(labelPosition!, progressFillerWidth)}
     >{range[0]}<AppendedTextSpan fontCalc={fontCalc}>{appendedTextFormula}</AppendedTextSpan></Label>)
 
 
@@ -98,7 +99,7 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
         progressFillerWidth={progressFillerWidth} 
         fontSize={fontCalc}
         top={`calc(100% - (${fontCalc} * 1.25))`}
-        left={`calc(100% - ${progressFillerWidth}px)`}
+        left={lastLabelHorizontalPositions(labelPosition!, progressFillerWidth)}
     >{range[1]}
     <AppendedTextSpan fontCalc={fontCalc}>{appendedTextFormula}</AppendedTextSpan>
     </Label>)
