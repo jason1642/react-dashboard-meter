@@ -16,7 +16,7 @@ const Label = styled.span<{ top: number | string, left: number | string, progres
     justify-content: center;
     align-items: center;
     width: ${({progressFillerWidth})=>progressFillerWidth}px;
-    font-weight: 500;
+    font-weight: bold;
     /* background-color: blue; */
     text-align: center;
     position: absolute;
@@ -31,7 +31,7 @@ const Label = styled.span<{ top: number | string, left: number | string, progres
 
 const AppendedTextSpan = styled.span<{fontCalc:string}>`
   display:flex;
-  font-size: ${({fontCalc})=>`calc(${fontCalc} * .75)`};
+  font-size: ${({fontCalc})=>`calc(${fontCalc} * .8)`};
 `;
 export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.ReactNode = (
     {

@@ -1,3 +1,4 @@
+import React from 'react'
 import { StoryObj, Meta } from "@storybook/react";
 import GaugeMeter from "../gauge-meter/GaugeMeter";
 // View component with this story, changes saved in the code editor automatically show on storybook
@@ -18,8 +19,8 @@ const Container = styled.div`
 const GaugeContainer = styled.div`
   display:flex;
   background-color: #bafff2ac;
-  padding: 10px;
-  width: 400px;
+  /* padding: 10px; */
+  width: 195px;
 
 
 
@@ -80,7 +81,7 @@ type Template = StoryObj<typeof GaugeMeter>;
 // input into set object and won't work until its not undefined
 export const Primary: Template = {
   args: {
-
+    value: 82
 
   },
 };

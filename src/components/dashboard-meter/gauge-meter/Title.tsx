@@ -12,15 +12,15 @@ interface ITitleProps {
 }
 
 
-export const defaultTitleOptions = {
+export const defaultTitleOptions: TitleOptionProps = {
     // styles: undefined,
     styles: {
         color: 'black',
-        marginBottom: undefined,
+        // marginBottom: undefined,
         // marginTop: '20px'
     },
-    appenededText: undefined,
-    reactNode: undefined,
+    // appenededText: undefined,
+    // reactNode: undefined,
     verticalPosition: 'center'
 }
 
@@ -65,7 +65,7 @@ const Title: React.FunctionComponent<ITitleProps> = (
         <Container 
         progressFillerWidth={progressFillerWidth}
             fontSize={fontCalc()}
-            verticalPosition={verticalPosition}
+            verticalPosition={verticalPosition!}
             style={{fontSize: fontCalc(),...styles}}>
             {value}{appendedText ? appendedText : range[0] === 0 && range[1] === 100 ? '%' : '' }
         </Container>

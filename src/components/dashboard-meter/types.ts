@@ -19,14 +19,14 @@ export type guageInnerAreaSize = number | undefined;
 
 // Label Options Types
 export type fixedLabels = [any, any, any, any, any] | undefined;
-export type labelSize = 'small' | 'default' | 'large';
+export type labelSize = 'small' | 'default' | 'large' | undefined;
 export type appendedText = string | boolean | undefined;
 export type labelValueToFixed =  0 | 1 | 2 | 3;
 
 export interface LabelOptions {
     fixedLabels?: fixedLabels;
-    size: labelSize;
-    appendedText: appendedText;
+    size?: labelSize;
+    appendedText?: appendedText;
     labelValueToFixed?: labelValueToFixed;
 }
 
@@ -60,7 +60,7 @@ export interface TitleOptionProps {
     };
     reactNode?: React.ReactElement;
     appendedText?: string;
-    verticalPosition: verticalPosition;
+    verticalPosition?: verticalPosition;
 }
 
 // Main Components Props
@@ -68,20 +68,19 @@ export interface GaugeMeterProps {
     value: value;
     guageInnerAreaSize?: guageInnerAreaSize;
     type?: type;
-    title: title;
     range?: range;
     labelOptions?: LabelOptions;
     progressBarFillerColor?: progressBarColor;
     progressBarContainerColor?: string;
-    innerAreaBackgroundColor: string;
+    innerAreaBackgroundColor?: string;
    
-    titleOptions: TitleOptionProps;
+    titleOptions?: TitleOptionProps;
 }
 
 export interface LinearMeterProps {
     value: value;
     type?: type;
-    title: title;
+    title?: title;
     range?: range;
     labelOptions?: LabelOptions;
     progressBarColor?: progressBarColor;
