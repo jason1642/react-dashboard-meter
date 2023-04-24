@@ -88,7 +88,7 @@ export const verticalLabelArchPositioner = (labelPosition: labelPosition, numLab
     case 'inward':
       switch (numLabels) {
         case 5:
-          return index === 2 ? `calc(0% + ${progressFillerWidth * .33}px)` : `${progressFillerWidth * 2.5}px`
+          return index === 2 ? `calc(calc(${fontSize} / 2) + ${progressFillerWidth}px)` : `${progressFillerWidth * 2.5}px`
         default:
           return ``
       }

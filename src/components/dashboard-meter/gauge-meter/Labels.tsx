@@ -7,7 +7,7 @@ interface ILabelComponentProps extends LabelComponentProps {
 export const defaultLabelOptions: LabelOptions = {
   fixedLabels: undefined,
   size: 'default',
-  appendedText: undefined,
+  appendedText: false,
   labelValueToFixed: 0,
   labelPosition: 'inward'
 }

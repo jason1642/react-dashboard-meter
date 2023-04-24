@@ -20,7 +20,7 @@ export type guageInnerAreaSize = number | undefined;
 // Label Options Types
 export type fixedLabels = [any, any, any, any, any] | undefined;
 export type labelSize = 'small' | 'default' | 'large' | undefined;
-export type appendedText = string | boolean | undefined;
+export type appendedText = string | false | undefined;
 export type labelValueToFixed =  0 | 1 | 2 | 3;
 export type labelPosition = 'inward' | 'inside' | 'outward';
 
