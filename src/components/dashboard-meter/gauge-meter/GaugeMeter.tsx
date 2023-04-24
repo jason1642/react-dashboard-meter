@@ -18,7 +18,7 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
     progressBarContainerColor = 'lightgrey',
     innerAreaBackgroundColor = 'white',
     range = [0, 100],
-    guageInnerAreaSize = 85,
+    guageInnerAreaSize = 86,
 
   }) => {
   const [maxValues, setMaxValues] = useState<maxValues>()

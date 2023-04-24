@@ -34,7 +34,7 @@ const Container = styled.div<SCContainerProps>`
   font-weight: 300;
   font-size: ${({fontSize})=>fontSize};
   position: absolute;
-  top: ${({verticalPosition, progressFillerWidth})=>`calc(${verticalPosition === 'center' ? `50%` : verticalPosition === 'bottom' ? `100% - ${progressFillerWidth * .80}px` : `${progressFillerWidth}px`})`};
+  top: ${({verticalPosition,fontSize, progressFillerWidth})=>`calc(${verticalPosition === 'center' ? `50%` : verticalPosition === 'bottom' ? `100% - calc(${fontSize} * 1.2)` : `calc(${progressFillerWidth}px + ${fontSize})`})`};
   display: block;
   z-index: 10;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
