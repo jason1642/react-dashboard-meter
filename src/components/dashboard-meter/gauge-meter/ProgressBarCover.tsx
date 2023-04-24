@@ -34,7 +34,7 @@ const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
   height:${({ maxValues: { maxWidth } }) => calcRem((maxWidth / 2) + (maxWidth / 100))};
     /* 200w & 100h - Set proportional margins */
     
-    margin: -1px 0 0 -1px;
+    /* margin: -1px 0 0 -1px; */
     background: ${({background})=>background};
     border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
   }      
@@ -51,7 +51,7 @@ const ProgressBarCover: FunctionComponent<IProgressBarCoverProps> = ({ progressB
 
     return (
         <RotatingProgressBar
-          style={{marginTop: percentFilled === 100 ? '100%' : '-1px'}}
+          style={{marginTop: percentFilled === 100 ? '100%' : '-0px'}}
           background={progressBarContainerColor}
             percentFilled={percentFilled}
             maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}

@@ -20,7 +20,7 @@ const GaugeContainer = styled.div`
   display:flex;
   background-color: #bafff2ac;
   /* padding: 10px; */
-  width: 525px;
+  width: 400px;
 
 
 
@@ -81,7 +81,7 @@ type Template = StoryObj<typeof GaugeMeter>;
 // input into set object and won't work until its not undefined
 export const Primary: Template = {
   args: {
-    value: 82
+    value: 12
 
   },
 };

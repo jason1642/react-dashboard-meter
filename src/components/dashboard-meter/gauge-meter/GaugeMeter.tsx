@@ -13,9 +13,9 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
     value,
     titleOptions,
     labelOptions,
-    progressBarFillerColor = 'linear-gradient(to right, #74f685 0%, #18ff46 50%, #00ff00 100%)',
-    // progressBarFillerColor = 'linear-gradient(to right, #f7351f 0%, #f3ff18 50%, #12f912 100%)',
-    progressBarContainerColor = 'lightgrey',
+    // progressBarFillerColor = 'linear-gradient(to right, #74f685 0%, #18ff46 50%, #00ff00 100%)',
+    progressBarFillerColor = 'green',
+    progressBarContainerColor = 'black',
     innerAreaBackgroundColor = 'white',
     range = [0, 100],
     gaugeInnerAreaSize,
@@ -36,7 +36,7 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
     maxValues && setProgressFillerWidth((maxValues.maxWidth - (maxValues.maxWidth * (defaultGaugeInnerAreaSize / 100))) / 2)
   }, [maxValues, percentFilled]);
 
-  return percentFilled !== undefined && value ? (
+  return percentFilled !== undefined && typeof value === 'number' ? (
     <Container handleMaxValues={handleMaxValues}  >
       {maxValues && percentFilled !== undefined && progressFillerWidth &&  <>
 

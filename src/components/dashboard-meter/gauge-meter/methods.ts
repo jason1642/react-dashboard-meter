@@ -57,8 +57,8 @@ export const horizontalLabelArchPositioner = (labelPosition: labelPosition, numL
         case 5:
           return  `calc((100% - ${(--numLabels - index) * 25}%) ${index === 2 ?
             `- ${progressFillerWidth / 2}px` : index === 1 ?
-              `- ${progressFillerWidth / 2}px` :
-              `- (${progressFillerWidth / 2}px)`})`
+              `- ${progressFillerWidth / 1}px` :
+              ``})`
         default:
           return ``
       }
@@ -88,7 +88,7 @@ export const verticalLabelArchPositioner = (labelPosition: labelPosition, numLab
     case 'inward':
       switch (numLabels) {
         case 5:
-          return index === 2 ? `calc(calc(${fontSize} / 2) + ${progressFillerWidth}px)` : `${progressFillerWidth * 2.5}px`
+          return index === 2 ? `calc(calc(${fontSize} / 2) + ${progressFillerWidth}px)` : `${progressFillerWidth * 3}px`
         default:
           return ``
       }
