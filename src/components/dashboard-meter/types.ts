@@ -12,7 +12,7 @@ export type range = [number, number] | number;
 export type progressBarColor = string | undefined;
 export type titleFontSize = string | undefined;
 export type  percentFilled =  number | undefined;
-export type guageInnerAreaSize = number | undefined;
+export type gaugeInnerAreaSize = number | undefined;
 
 
 
@@ -67,7 +67,7 @@ export interface TitleOptionProps {
 // Main Components Props
 export interface GaugeMeterProps {
     value: value;
-    guageInnerAreaSize?: guageInnerAreaSize;
+    gaugeInnerAreaSize?: gaugeInnerAreaSize;
     type?: type;
     range?: range;
     labelOptions?: LabelOptions;

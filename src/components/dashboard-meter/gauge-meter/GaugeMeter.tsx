@@ -1,6 +1,6 @@
 import { FunctionComponent, useMemo, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import type { maxValues, GaugeMeterProps } from '../types'
+import type { maxValues, GaugeMeterProps, gaugeInnerAreaSize } from '../types'
 import Container from './Container'
 import ProgressBarFiller from './ProgressBarFiller';
 import ProgressBarCover from './ProgressBarCover';
@@ -18,21 +18,22 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
     progressBarContainerColor = 'lightgrey',
     innerAreaBackgroundColor = 'white',
     range = [0, 100],
-    guageInnerAreaSize = 86,
+    gaugeInnerAreaSize,
 
   }) => {
+    const defaultGaugeInnerAreaSize: gaugeInnerAreaSize = gaugeInnerAreaSize ? gaugeInnerAreaSize :  labelOptions?.labelPosition === 'inside' ? 79 :  86
   const [maxValues, setMaxValues] = useState<maxValues>()
   const handleMaxValues: (maxValues: maxValues) => void = (maxValues: maxValues) => {
     setMaxValues(maxValues)
   }
-
+ 
   const percentFilled: number | undefined = useMemo(() => calculatePercentFilled(value, range), [range, value])
   const [progressFillerWidth, setProgressFillerWidth] = useState<number>()
 
   useEffect(() => {
     // console.log(maxValues)
     // console.log(percentFilled)
-    maxValues && setProgressFillerWidth((maxValues.maxWidth - (maxValues.maxWidth * (guageInnerAreaSize / 100))) / 2)
+    maxValues && setProgressFillerWidth((maxValues.maxWidth - (maxValues.maxWidth * (defaultGaugeInnerAreaSize / 100))) / 2)
   }, [maxValues, percentFilled]);
 
   return percentFilled !== undefined && value ? (
@@ -40,7 +41,7 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
       {maxValues && percentFilled !== undefined && progressFillerWidth &&  <>
 
         <ProgressBarFiller
-          guageInnerAreaSize={guageInnerAreaSize}
+          gaugeInnerAreaSize={defaultGaugeInnerAreaSize}
           maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
           innerAreaBackgroundColor={innerAreaBackgroundColor}
           progressBarFillerColor={progressBarFillerColor}
