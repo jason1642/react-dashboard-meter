@@ -1,6 +1,7 @@
 import type { LabelOptions, range } from "../types"
 import styled from 'styled-components';
 import { horizontalLabelArchPositioner, verticalLabelArchPositioner, firstLabelHorizontalPositions,  lastLabelHorizontalPositions } from "./methods";
+
 interface IPositionLabelArrayProps {
     range: range;
     labelOptions: LabelOptions;

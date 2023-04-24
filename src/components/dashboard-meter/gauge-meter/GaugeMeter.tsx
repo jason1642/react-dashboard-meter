@@ -1,5 +1,4 @@
 import { FunctionComponent, useMemo, useState, useEffect } from 'react';
-import styled from 'styled-components';
 import type { maxValues, GaugeMeterProps, gaugeInnerAreaSize } from '../types'
 import Container from './Container'
 import ProgressBarFiller from './ProgressBarFiller';
@@ -13,11 +12,11 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
     value,
     titleOptions,
     labelOptions,
-    // progressBarFillerColor = 'linear-gradient(to right, #74f685 0%, #18ff46 50%, #00ff00 100%)',
-    progressBarFillerColor = 'green',
-    progressBarContainerColor = 'black',
+    progressBarFillerColor = 'linear-gradient(to right, #74f685 0%, #18ff46 50%, #00ff00 100%)',
+    // progressBarFillerColor = 'green',
+    progressBarContainerColor = 'grey',
     innerAreaBackgroundColor = 'white',
-    range = [0, 100],
+    range = [0, 40],
     gaugeInnerAreaSize,
 
   }) => {
@@ -36,9 +35,9 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
     maxValues && setProgressFillerWidth((maxValues.maxWidth - (maxValues.maxWidth * (defaultGaugeInnerAreaSize / 100))) / 2)
   }, [maxValues, percentFilled]);
 
-  return percentFilled !== undefined && typeof value === 'number' ? (
+  return percentFilled && typeof value === 'number' ? (
     <Container handleMaxValues={handleMaxValues}  >
-      {maxValues && percentFilled !== undefined && progressFillerWidth &&  <>
+      {maxValues && progressFillerWidth &&  <>
 
         <ProgressBarFiller
           gaugeInnerAreaSize={defaultGaugeInnerAreaSize}

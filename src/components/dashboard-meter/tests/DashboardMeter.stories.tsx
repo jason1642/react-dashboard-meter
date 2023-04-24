@@ -18,7 +18,7 @@ const Container = styled.div`
 
 const GaugeContainer = styled.div`
   display:flex;
-  background-color: #bafff2ac;
+  /* background-color: #bafff2ac; */
   /* padding: 10px; */
   width: 400px;
 
@@ -46,10 +46,10 @@ const meta: Meta<typeof GaugeMeter> = {
                 backgroundColor: 'grey',
               // backgroundColor: 'linear-gradient(to bottom, #131313, #000000)',
             //   background: 'linear-gradient(to bottom, hsl(224.21052631578948, 100%, 26.078431372549023%), #a5fbd7)',
-               position: 'relative',
+              //  position: 'relative',
               //  border: '1px solid blue',
                borderRadius: '15px',
-                height: '70vh',
+                // height: '70vh',
                 marginTop: '15px',
                 marginLeft: '10px',
                  width: '65vw'
@@ -81,7 +81,7 @@ type Template = StoryObj<typeof GaugeMeter>;
 // input into set object and won't work until its not undefined
 export const Primary: Template = {
   args: {
-    value: 12
+    value: 40
 
   },
 };
