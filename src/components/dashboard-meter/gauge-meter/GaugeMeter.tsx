@@ -44,7 +44,7 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
             range,
             percentFilled,
             progressFillerWidth,
-            progressBarOptions,
+            progressBarOptions: {fillerTriColors: ['purple', 'green', 'blue'], emptyAreaColor: 'orange'},
             progressBarFillerColor,
             innerAreaBackgroundColor
           }}

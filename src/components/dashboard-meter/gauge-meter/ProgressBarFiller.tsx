@@ -21,7 +21,7 @@ const ProgressMeter = styled.div<ProgressMeterProps>`
   height:${({ maxValues: { maxHeight } }) => calcRem(maxHeight)};
   background:${({percentFilled})=>`linear-gradient(${(percentFilled / 100) * 180}deg,transparent 50%,#a79898 0) top/100% 200%, linear-gradient(to right, green, yellow,  red)`};
 
-  background:${({percentFilled, progressBarOptions})=>`linear-gradient(${(percentFilled / 100) * 180}deg,transparent 50%,${progressBarOptions?.emptyAreaColor || '#a79898'} 0) top/100% 200%, linear-gradient(to right, ${typeof progressBarOptions?.fillerTriColors === 'object' ? progressBarOptions.fillerTriColors.join(',') : progressBarOptions?.fillerTriColors})`};
+  background:${({percentFilled, progressBarOptions})=>`linear-gradient(${(percentFilled / 100) * 180}deg,transparent 50%,${progressBarOptions?.emptyAreaColor || '#a79898'} 0) top/100% 200%, linear-gradient(to right, ${typeof progressBarOptions?.fillerTriColors === 'object' ? progressBarOptions.fillerTriColors : [progressBarOptions?.fillerTriColors, progressBarOptions?.fillerTriColors]})`};
   /* a linear gradient to control the progress. Adjust the angle from 0deg to 180deg*/
      
      /* a radial gradient to show only a part of the gradient (20px here)*/
