@@ -8,16 +8,7 @@ export const calcRem: (val:number, fontSizePx?: number) => string = (val, fontSi
 
 
 
-// Progress Bar Filler
-export const fillerTriColors = (triColorInput: fillerTriColors) => {
-  if (triColorInput === undefined) return;
 
-  if(typeof triColorInput === 'string') return [triColorInput, triColorInput, triColorInput]
-
-  if(typeof triColorInput === 'object') {
-    triColorInput.
-  }
-}
 
 
 
