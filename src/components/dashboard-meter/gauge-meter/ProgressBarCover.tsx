@@ -16,13 +16,13 @@ const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
     position: absolute;
     top: 0;
     left: 0%;
-    /* z-index: 0; */
-    overflow-y: clip;
+    z-index: 0;
+    /* overflow-y: clip; */
     width: ${({ maxValues: { maxWidth } }) => calcRem(maxWidth + (maxWidth / 100))};
     height:${({ maxValues: { maxWidth } }) => calcRem((maxWidth / 2) + (maxWidth / 100))};
     /* 200w & 100h - Set proportional margins */
     
-    /* margin: -0px 0 0 -1px; */
+    /* margin: -1px 0 0 -1px; */
     background: ${({background})=>background};
     border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
   }  
@@ -38,7 +38,7 @@ const RotatingProgressBar = styled.div<RotatingProgressBarProps>`
 /* 0% - 100% based on 0deg - 180deg */
   transform: ${({ percentFilled }) => `rotate(${(percentFilled / 100) * 180}deg)`};
   transform-origin: center center;
-  /* backface-visibility: hidden; */
+  backface-visibility: hidden;
   /* transition: all .8s ease-in-out; */
 
     

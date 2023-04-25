@@ -12,7 +12,7 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
     value,
     titleOptions,
     labelOptions,
-    progressBarFillerColor = 'linear-gradient(to right, #74f685 0%, #18ff46 50%, #00ff00 100%)',
+    progressBarFillerColor = 's',
     // progressBarFillerColor = 'green',
     progressBarContainerColor = 'grey',
     innerAreaBackgroundColor = 'white',

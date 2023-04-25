@@ -17,8 +17,19 @@ const StaticProgressMeter = styled.div<StaticProgressMeterProps>`
   position: relative;
   width: ${({ maxValues: { maxWidth } }) => calcRem(maxWidth)};
   height:${({ maxValues: { maxHeight } }) => calcRem(maxHeight)};
-  background: ${({background})=>background};
+  background:  /* a linear gradient to control the progress. Adjust the angle from 0deg to 180deg*/
+     linear-gradient(50deg,transparent 50%,#a79898 0) top/100% 200%,
+     /* a radial gradient to show only a part of the gradient (20px here)*/
+     /* radial-gradient(farthest-side at bottom,#9e9797 calc(100% - 20px),transparent 0), */
+     /* the main gradient */
+     linear-gradient(to right, green , yellow , red);;
   /* background: linear-gradient(to right, #f7351f 0%, #f3ff18 50%, #12f912 100%); */
+
+
+  
+
+
+
   border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
   overflow: visible;
   /* Inner area */
