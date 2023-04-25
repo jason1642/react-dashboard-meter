@@ -19,6 +19,8 @@ const ProgressMeter = styled.div<ProgressMeterProps>`
   position: relative;
   width: ${({ maxValues: { maxWidth } }) => calcRem(maxWidth)};
   height:${({ maxValues: { maxHeight } }) => calcRem(maxHeight)};
+  background:${({percentFilled})=>`linear-gradient(${(percentFilled / 100) * 180}deg,transparent 50%,#a79898 0) top/100% 200%, linear-gradient(to right, green , yellow , red)`};
+
   background:${({percentFilled, progressBarOptions})=>`linear-gradient(${(percentFilled / 100) * 180}deg,transparent 50%,${progressBarOptions?.emptyAreaColor || '#a79898'} 0) top/100% 200%, linear-gradient(to right, green , yellow , red)`};
   /* a linear gradient to control the progress. Adjust the angle from 0deg to 180deg*/
      
@@ -81,7 +83,7 @@ const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = (
          percentFilled
     }) => {
         const progressFillerRef: React.MutableRefObject<HTMLDivElement | null> | null = React.useRef(null)
-    // const fillerTriColors =       
+    const fillerTriColors =        
   return (
     <ProgressMeter
     ref={progressFillerRef}

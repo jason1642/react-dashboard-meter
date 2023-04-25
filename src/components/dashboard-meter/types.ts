@@ -64,8 +64,10 @@ export interface TitleOptionProps {
     verticalPosition?: verticalPosition;
 }
 
+export type fillerTriColors = string | [string, string, string?] | undefined;
+
 export interface ProgressBarOptions {
-    fillerTriColors: string | [string, string, string?] | undefined;
+    fillerTriColors: fillerTriColors;
     emptyAreaColor: string | undefined;
 }
 

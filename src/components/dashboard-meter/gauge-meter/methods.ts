@@ -1,9 +1,32 @@
-import type { labelPosition } from "../types"
+import type { labelPosition,fillerTriColors } from "../types"
 
 
 export const calcRem: (val:number, fontSizePx?: number) => string = (val, fontSizePx= 16) =>
   // Either calc all sizes by multplying static value, or having val be width and have responsive calculations
   `${(val) / fontSizePx}rem`
+
+
+
+
+// Progress Bar Filler
+export const fillerTriColors = (triColorInput: fillerTriColors) => {
+  if (triColorInput === undefined) return;
+
+  if(typeof triColorInput === 'string') return [triColorInput, triColorInput, triColorInput]
+
+  if(typeof triColorInput === 'object') {
+    triColorInput.
+  }
+}
+
+
+
+
+
+
+
+
+  // LABEL POSITIONING
 
   export const firstLabelHorizontalPositions = (labelPosition: labelPosition, progressFillerWidth: number ) => 
     labelPosition === 'inside' ?
@@ -21,9 +44,6 @@ export const calcRem: (val:number, fontSizePx?: number) => string = (val, fontSi
        labelPosition === 'inward' ? 
          `calc(100% - ${progressFillerWidth * 2.2}px)` : 
           `calc()`
-
-
-
 
 
 
