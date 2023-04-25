@@ -17,14 +17,10 @@ interface GaugeProps {
 // Container for meter, labels, and title
 const Container = styled.div<GaugeProps>`
   position: relative;
-  /* overflow: hidden; */
-  overflow-y: clip;
+  /* overflow-y: clip; */
 
-  /* overflow-x: clip; */
   display: block;
-  /* margin: 25px; */
   background: transparent;
-  /* border: 1px solid white; */
   margin: 5px;
   width: 100%;
   height: ${({ maxWidth }) => maxWidth! / 2}px;
@@ -36,7 +32,7 @@ const GuageContainer: FunctionComponent<IGuageContainerProps> = ({children, hand
 
     useEffect(() => {
         gaugeRef.current && handleMaxValues({ maxHeight: gaugeRef.current.clientHeight, maxWidth: gaugeRef?.current.clientWidth })
-    
+        
       }, [gaugeRef]);
 
   return (

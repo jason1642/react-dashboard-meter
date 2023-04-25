@@ -72,7 +72,6 @@ export interface GaugeMeterProps {
     range?: range;
     labelOptions?: LabelOptions;
     progressBarFillerColor?: progressBarColor;
-    progressBarContainerColor?: string;
     innerAreaBackgroundColor?: string;
     
     titleOptions?: TitleOptionProps;
