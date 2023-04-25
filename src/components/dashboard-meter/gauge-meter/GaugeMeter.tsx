@@ -45,6 +45,7 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
           innerAreaBackgroundColor={innerAreaBackgroundColor}
           progressBarFillerColor={progressBarFillerColor}
           range={range}
+          percentFilled={percentFilled}
           progressFillerWidth={progressFillerWidth}
           labelOptions={{ ...defaultLabelOptions, ...labelOptions }}
         />

@@ -4,26 +4,27 @@ import type { value, progressBarColor, titleFontSize, maxValues, range, LabelOpt
 import { calcRem } from './methods';
 import Labels from './Labels';
 
-interface StaticProgressMeterProps {
+interface ProgressMeterProps {
     maxValues: maxValues;
     gaugeInnerAreaSize: number;
     background: progressBarColor;
     innerAreaBackground:string;
+    percentFilled: number;
   }
 
 // Filler for curved progress bar
-const StaticProgressMeter = styled.div<StaticProgressMeterProps>`
+const ProgressMeter = styled.div<ProgressMeterProps>`
   display:block;
   position: relative;
   width: ${({ maxValues: { maxWidth } }) => calcRem(maxWidth)};
   height:${({ maxValues: { maxHeight } }) => calcRem(maxHeight)};
-  background:  /* a linear gradient to control the progress. Adjust the angle from 0deg to 180deg*/
-     linear-gradient(50deg,transparent 50%,#a79898 0) top/100% 200%,
+  background:${({percentFilled})=>`linear-gradient(${(percentFilled / 100) * 180}deg,transparent 50%,#a79898 0) top/100% 200%, linear-gradient(to right, green , yellow , red)`};
+  /* a linear gradient to control the progress. Adjust the angle from 0deg to 180deg*/
+     
      /* a radial gradient to show only a part of the gradient (20px here)*/
      /* radial-gradient(farthest-side at bottom,#9e9797 calc(100% - 20px),transparent 0), */
      /* the main gradient */
-     linear-gradient(to right, green , yellow , red);;
-  /* background: linear-gradient(to right, #f7351f 0%, #f3ff18 50%, #12f912 100%); */
+     
 
 
   
@@ -59,6 +60,7 @@ interface IProgressBarFillerProps {
     range: range;
     labelOptions: LabelOptions;
     progressFillerWidth: number;
+    percentFilled: number;
     innerAreaBackgroundColor: string;
 }
 
@@ -72,18 +74,20 @@ const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = (
          maxValues,
          gaugeInnerAreaSize,
          innerAreaBackgroundColor,
-         progressFillerWidth
+         progressFillerWidth,
+         percentFilled
     }) => {
         const progressFillerRef: React.MutableRefObject<HTMLDivElement | null> | null = React.useRef(null)
-
+      console.log(`linear-gradient(${(percentFilled / 100) * 180}deg},transparent 50%,#a79898 0) top/100% 200%, linear-gradient(to right, green , yellow , red)`)
       
   return (
-    <StaticProgressMeter
+    <ProgressMeter
     ref={progressFillerRef}
     innerAreaBackground={innerAreaBackgroundColor}
     background={progressBarFillerColor}
     maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
     gaugeInnerAreaSize={gaugeInnerAreaSize}
+    percentFilled={percentFilled}
   >
     {
         progressFillerWidth &&
@@ -96,7 +100,7 @@ const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = (
             />
 
     }
-  </StaticProgressMeter>    
+  </ProgressMeter>    
   );
 };
 
