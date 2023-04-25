@@ -9,9 +9,10 @@ import Title, { defaultTitleOptions } from './Title';
 const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
   {
     value,
+    progressBarOptions,
     titleOptions,
     labelOptions,
-    progressBarFillerColor = 's',
+    progressBarFillerColor,
     innerAreaBackgroundColor = 'white',
     range = [0, 40],
     gaugeInnerAreaSize,
@@ -38,12 +39,16 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
         <ProgressBarFiller
           gaugeInnerAreaSize={defaultGaugeInnerAreaSize}
           maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
-          innerAreaBackgroundColor={innerAreaBackgroundColor}
-          progressBarFillerColor={progressBarFillerColor}
-          range={range}
-          percentFilled={percentFilled}
-          progressFillerWidth={progressFillerWidth}
           labelOptions={{ ...defaultLabelOptions, ...labelOptions }}
+          {...{
+            range,
+            percentFilled,
+            progressFillerWidth,
+            progressBarOptions,
+            progressBarFillerColor,
+            innerAreaBackgroundColor
+          }}
+         
         />
 
 

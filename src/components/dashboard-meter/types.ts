@@ -64,6 +64,11 @@ export interface TitleOptionProps {
     verticalPosition?: verticalPosition;
 }
 
+export interface ProgressBarOptions {
+    fillerTriColors: string | [string, string, string?] | undefined;
+    emptyAreaColor: string | undefined;
+}
+
 // Main Components Props
 export interface GaugeMeterProps {
     value: value;
@@ -73,7 +78,7 @@ export interface GaugeMeterProps {
     labelOptions?: LabelOptions;
     progressBarFillerColor?: progressBarColor;
     innerAreaBackgroundColor?: string;
-    
+    progressBarOptions?: ProgressBarOptions;
     titleOptions?: TitleOptionProps;
 }
 
