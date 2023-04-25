@@ -2,7 +2,6 @@ import { FunctionComponent, useMemo, useState, useEffect } from 'react';
 import type { maxValues, GaugeMeterProps, gaugeInnerAreaSize } from '../types'
 import Container from './Container'
 import ProgressBarFiller from './ProgressBarFiller';
-import ProgressBarCover from './ProgressBarCover';
 import { calculatePercentFilled } from './calculatePercentFilled';
 import { defaultLabelOptions } from './Labels';
 import Title, { defaultTitleOptions } from './Title';
@@ -50,12 +49,6 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
           labelOptions={{ ...defaultLabelOptions, ...labelOptions }}
         />
 
-        {/* Cover is the component that rotates */}
-        <ProgressBarCover
-          progressBarContainerColor={progressBarContainerColor}
-          percentFilled={percentFilled}
-          maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
-        />
 
 
 
