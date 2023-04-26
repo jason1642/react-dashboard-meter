@@ -23,16 +23,18 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
     setMaxValues(maxValues)
   }
  
-  const percentFilled: number | undefined = useMemo(() => calculatePercentFilled(value, range), [range, value])
+  const percentFilled = useMemo<number | undefined>(()=>calculatePercentFilled(value, range), [range, value])
+
+
   const [progressFillerWidth, setProgressFillerWidth] = useState<number>()
 
   useEffect(() => {
     maxValues && setProgressFillerWidth((maxValues.maxWidth - (maxValues.maxWidth * (defaultGaugeInnerAreaSize / 100))) / 2)
   }, [maxValues]);
 
-  return percentFilled && typeof value === 'number' ? (
+  return (typeof percentFilled === 'number') && (typeof value === 'number') ? (
     <Container handleMaxValues={handleMaxValues}  >
-      {maxValues && progressFillerWidth &&  <>
+      { maxValues && progressFillerWidth &&  <>
 
         <ProgressBarFiller
           gaugeInnerAreaSize={defaultGaugeInnerAreaSize}

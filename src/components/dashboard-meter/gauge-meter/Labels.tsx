@@ -35,7 +35,7 @@ const Labels: React.FunctionComponent<ILabelComponentProps> = ({
   // If range is a single number, range wil be 0 - x
   // If range is a tuple, range will be min and max values
   // Make sure to create even splits to have symmetrical label positions
-  console.log(containerHeight, containerWidth)
+  // console.log(containerHeight, containerWidth)
 
 
   return (

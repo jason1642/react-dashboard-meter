@@ -18,7 +18,7 @@ const Container = styled.div`
 
 const GaugeContainer = styled.div`
   display:flex;
-  /* background-color: purple; */
+  background-color: purple;
   /* padding: 10px; */
   width:250px;
 

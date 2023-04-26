@@ -78,7 +78,7 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
     
 
     for (let i = 1; i < numberOfLabels - 1; i++) {
-       console.log(range)
+    //    console.log(range)
         labelIncrementalValues.push(
             <Label
                 progressFillerWidth={progressFillerWidth}

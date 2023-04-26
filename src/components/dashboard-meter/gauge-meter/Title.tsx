@@ -60,10 +60,10 @@ const Title: React.FunctionComponent<ITitleProps> = (
     }) => {
         
     const fontCalc = `calc(${containerWidth / 12}px )`;
-        console.log(fontCalc)
+        // console.log(fontCalc)
         if (typeof range === 'number') range = [0, range]
 
-
+        // console.log(value)
     return  (
         <Container 
         progressFillerWidth={progressFillerWidth}
