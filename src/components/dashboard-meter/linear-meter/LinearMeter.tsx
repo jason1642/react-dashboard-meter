@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import type {LinearMeterProps} from '../types'
-import GaugeMeter from '../gauge-meter/GaugeMeter'
+// import GaugeMeter from '../gauge-meter/GaugeMeter'
 
 
 const Container = styled.div`
@@ -13,16 +13,12 @@ const Container = styled.div`
 `;
 
 const LinearMeter: React.FunctionComponent<LinearMeterProps> = ({
-    value, type, title, range,progressBarColor
+    value, type, title, range
 }) => {
 
   return (
     <Container>
-        {/* <GaugeMeter  
-        progressBarColor={progressBarColor} 
-        percentFilled={55} 
-        labels={['%']} 
-        /> */}
+
   LINEAR METER WIP
     </Container>
   );

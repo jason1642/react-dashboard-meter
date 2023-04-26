@@ -51,8 +51,8 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
     // progressFillWidth is space between inner semi circle outer border and outer progress bar outer border. 
     // Responsive calc to get font size that fills in space if there are 4 or less characters based on .9rem
     // Change the decimal number that is multpliying progressFillerWidth to change scale of font but stay responsive
-    const fontCalc: string = `calc(${progressFillerWidth * .5}px)`;
-    console.log(fontCalc)
+    const fontCalc: string = `calc(${progressFillerWidth * .6}px)`;
+    // console.log(fontCalc)
     // Check range to see if its an appropriate amount of numbers for the default number of labels
     // Create an array of numbers (from the range) to be represented in each label.
     if (typeof range === 'number') range = [0, range]

@@ -21,7 +21,7 @@ const Container = styled.div<GaugeProps>`
 
   display: block;
   background: transparent;
-  margin: 5px;
+  /* margin: 5px; */
   width: 100%;
   height: ${({ maxWidth }) => maxWidth! / 2}px;
 
@@ -32,7 +32,7 @@ const GuageContainer: FunctionComponent<IGuageContainerProps> = ({children, hand
 
     useEffect(() => {
         gaugeRef.current && handleMaxValues({ maxHeight: gaugeRef.current.clientHeight, maxWidth: gaugeRef?.current.clientWidth })
-        
+
       }, [gaugeRef]);
 
   return (

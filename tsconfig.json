@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5", 
+    "target": "ES6", 
     "typeRoots": ["node_modules/@types", "esm/types"],
     "esModuleInterop": true, 
     "forceConsistentCasingInFileNames": true,
@@ -31,6 +31,7 @@
   // ],
    "exclude": 
       [
+        "./src/components/dashboard-meter/linear-meter",
         "./dist",
         "./.storybook",
         "./public",
