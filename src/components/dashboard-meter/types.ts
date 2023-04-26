@@ -74,6 +74,7 @@ export interface ProgressBarOptions {
 export interface GaugeMeterProps {
     value: value;
     gaugeInnerAreaSize?: gaugeInnerAreaSize;
+    containerStyles?: any;
     type?: type;
     range?: range;
     labelOptions?: LabelOptions;

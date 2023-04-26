@@ -84,6 +84,9 @@ export const Primary: Template = {
     value: 40,
     titleOptions: {
       // toFixedAmount:2
+    },
+    containerStyles: {
+      // minWidth: '1500px'
     }
   
   },

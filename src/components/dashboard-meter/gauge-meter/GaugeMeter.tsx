@@ -15,7 +15,7 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
     innerAreaBackgroundColor = 'white',
     range = [0, 100],
     gaugeInnerAreaSize,
-
+    containerStyles
   }) => {
     const defaultGaugeInnerAreaSize: gaugeInnerAreaSize = gaugeInnerAreaSize ? gaugeInnerAreaSize :  labelOptions?.labelPosition === 'inside' ? 79 :  86
   const [maxValues, setMaxValues] = useState<maxValues>()
@@ -33,7 +33,7 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
   }, [maxValues]);
 
   return (typeof percentFilled === 'number') && (typeof value === 'number') ? (
-    <Container handleMaxValues={handleMaxValues}  >
+    <Container containerStyles={containerStyles} handleMaxValues={handleMaxValues}  >
       { maxValues && progressFillerWidth &&  <>
 
         <ProgressBarFiller
@@ -47,19 +47,14 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
             progressBarOptions,
             innerAreaBackgroundColor
           }}
-         
         />
-
-
-
 
         <Title
           containerWidth={maxValues.maxWidth}
           progressFillerWidth={progressFillerWidth}
           range={range}
-          titleOptions={{ ...defaultTitleOptions, ...(titleOptions || []) }}
           value={value}
-
+          titleOptions={{ ...defaultTitleOptions, ...(titleOptions || {}) }}
         />
 
       </>

@@ -90,8 +90,7 @@ const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = (
     percentFilled={percentFilled}
     progressBarOptions={progressBarOptions}
   >
-    {
-        progressFillerWidth &&
+   
             <Labels 
             progressFillerWidth={progressFillerWidth}
             containerHeight={maxValues.maxHeight} 
@@ -100,7 +99,7 @@ const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = (
             range={range}
             />
 
-    }
+    
   </ProgressMeter>    
   );
 };

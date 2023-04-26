@@ -5,7 +5,7 @@ import { maxValues } from '../types';
 
 interface IGuageContainerProps {
     children: React.ReactNode;
- 
+    containerStyles?: any;
     handleMaxValues: (maxValues: maxValues)=>void;
 }
 
@@ -23,11 +23,12 @@ const Container = styled.div<GaugeProps>`
   background: transparent;
   /* margin: 5px; */
   width: 100%;
+  min-width: 150px;
   height: ${({ maxWidth }) => maxWidth! / 2}px;
 
 `;
 
-const GuageContainer: FunctionComponent<IGuageContainerProps> = ({children, handleMaxValues}) => {
+const GuageContainer: FunctionComponent<IGuageContainerProps> = ({children, handleMaxValues, containerStyles}) => {
     const gaugeRef: MutableRefObject<HTMLDivElement | null> | null = useRef(null)
 
     useEffect(() => {
@@ -36,7 +37,7 @@ const GuageContainer: FunctionComponent<IGuageContainerProps> = ({children, hand
       }, [gaugeRef]);
 
   return (
-    <Container maxWidth={gaugeRef?.current?.clientWidth} ref={gaugeRef}>
+    <Container style={{...containerStyles}} maxWidth={gaugeRef?.current?.clientWidth} ref={gaugeRef}>
         {children}
     </Container>
   );
