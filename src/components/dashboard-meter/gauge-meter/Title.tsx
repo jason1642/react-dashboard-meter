@@ -41,7 +41,9 @@ const Container = styled.div<SCContainerProps>`
   width: 100%;
   text-align: center;
 `;
-
+const AppendedText = styled.span<{fontSize: string}>`
+    font-size: calc(${({fontSize})=>fontSize} * .8);
+`;
 const Title: React.FunctionComponent<ITitleProps> = (
     {
         titleOptions: {
@@ -56,18 +58,23 @@ const Title: React.FunctionComponent<ITitleProps> = (
         progressFillerWidth
     }) => {
         
-    const fontCalc = (fontSize?: string): string => `calc(${containerWidth / 12}px )`;
-        console.log(fontCalc())
+    const fontCalc = `calc(${containerWidth / 12}px )`;
+        console.log(fontCalc)
         if (typeof range === 'number') range = [0, range]
 
 
-    return reactNode ? reactNode : (
+    return  (
         <Container 
         progressFillerWidth={progressFillerWidth}
-            fontSize={fontCalc()}
+            fontSize={fontCalc}
             verticalPosition={verticalPosition!}
-            style={{fontSize: fontCalc(),...styles}}>
-            {value}{appendedText ? appendedText : range[0] === 0 && range[1] === 100 ? '%' : '' }
+            style={{fontSize: fontCalc,...styles}}>
+
+        {
+            reactNode ? reactNode :<>{value}<AppendedText  fontSize={fontCalc}>{appendedText ? appendedText : range[0] === 0 && range[1] === 100 ? '%' : '' }</AppendedText></>
+        }
+            
+
         </Container>
     );
 };

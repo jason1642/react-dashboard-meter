@@ -81,8 +81,8 @@ type Template = StoryObj<typeof GaugeMeter>;
 // input into set object and won't work until its not undefined
 export const Primary: Template = {
   args: {
-    value: 40
-
+    value: 40,
+  
   },
 };
 
