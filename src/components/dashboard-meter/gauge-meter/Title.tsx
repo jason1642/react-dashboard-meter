@@ -50,7 +50,8 @@ const Title: React.FunctionComponent<ITitleProps> = (
             styles,
             reactNode,
             appendedText,
-            verticalPosition
+            verticalPosition,
+            toFixedAmount
         },
         value,
         range,
@@ -71,7 +72,7 @@ const Title: React.FunctionComponent<ITitleProps> = (
             style={{fontSize: fontCalc,...styles}}>
 
         {
-            reactNode ? reactNode :<>{value}<AppendedText  fontSize={fontCalc}>{appendedText ? appendedText : range[0] === 0 && range[1] === 100 ? '%' : '' }</AppendedText></>
+            reactNode ? reactNode :<>{value.toFixed(toFixedAmount || 0)}<AppendedText  fontSize={fontCalc}>{appendedText ? appendedText : range[0] === 0 && range[1] === 100 ? '%' : '' }</AppendedText></>
         }
             
 

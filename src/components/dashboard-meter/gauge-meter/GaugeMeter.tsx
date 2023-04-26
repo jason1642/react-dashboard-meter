@@ -12,7 +12,6 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
     progressBarOptions,
     titleOptions,
     labelOptions,
-    progressBarFillerColor,
     innerAreaBackgroundColor = 'white',
     range = [0, 100],
     gaugeInnerAreaSize,
@@ -28,7 +27,6 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
   const [progressFillerWidth, setProgressFillerWidth] = useState<number>()
 
   useEffect(() => {
-    // console.log(maxValues)
     maxValues && setProgressFillerWidth((maxValues.maxWidth - (maxValues.maxWidth * (defaultGaugeInnerAreaSize / 100))) / 2)
   }, [maxValues]);
 
@@ -45,7 +43,6 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
             percentFilled,
             progressFillerWidth,
             progressBarOptions,
-            progressBarFillerColor,
             innerAreaBackgroundColor
           }}
          

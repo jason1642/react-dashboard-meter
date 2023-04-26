@@ -1,4 +1,4 @@
-import type { labelPosition,fillerTriColors } from "../types"
+import type { labelPosition } from "../types"
 
 
 export const calcRem: (val:number, fontSizePx?: number) => string = (val, fontSizePx= 16) =>

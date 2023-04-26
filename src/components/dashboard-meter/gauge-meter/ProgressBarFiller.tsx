@@ -1,13 +1,12 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import type { value, progressBarColor, maxValues, range, LabelOptions, ProgressBarOptions } from '../types'
+import type { value, maxValues, range, LabelOptions, ProgressBarOptions } from '../types'
 import { calcRem  } from './methods';
 import Labels from './Labels';
 
 interface ProgressMeterProps {
     maxValues: maxValues;
     gaugeInnerAreaSize: number;
-    background: progressBarColor;
     innerAreaBackground:string;
     percentFilled: number;
     progressBarOptions?: ProgressBarOptions;
@@ -57,7 +56,6 @@ const ProgressMeter = styled.div<ProgressMeterProps>`
 `;
 
 interface IProgressBarFillerProps {
-    progressBarFillerColor?: string;
     maxValues: { maxHeight: number, maxWidth: number };
     gaugeInnerAreaSize: number;
     range: range;
@@ -72,7 +70,6 @@ interface IProgressBarFillerProps {
 
 const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = (
     {
-        progressBarFillerColor = '', 
         labelOptions,
         range,
         progressBarOptions,
@@ -88,7 +85,6 @@ const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = (
     <ProgressMeter
     ref={progressFillerRef}
     innerAreaBackground={innerAreaBackgroundColor}
-    background={progressBarFillerColor}
     maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
     gaugeInnerAreaSize={gaugeInnerAreaSize}
     percentFilled={percentFilled}

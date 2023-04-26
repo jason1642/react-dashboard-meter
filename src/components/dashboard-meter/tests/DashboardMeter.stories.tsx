@@ -82,6 +82,9 @@ type Template = StoryObj<typeof GaugeMeter>;
 export const Primary: Template = {
   args: {
     value: 40,
+    titleOptions: {
+      toFixedAmount: 1
+    }
   
   },
 };

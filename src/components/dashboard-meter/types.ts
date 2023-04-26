@@ -9,7 +9,6 @@ export type value = number;
 export type type = 'linear' | 'gague';
 export type title = [string, string, string?] | string | undefined;
 export type range = [number, number] | number;
-export type progressBarColor = string | undefined;
 export type titleFontSize = string | undefined;
 export type  percentFilled =  number | undefined;
 export type gaugeInnerAreaSize = number | undefined;
@@ -57,8 +56,8 @@ export interface TitleOptionProps {
         fontWeight?:string;
         fontFamily?: string;
         marginTop?:string;
-
     };
+    toFixedAmount?: 0 | 1 | 2;
     reactNode?: React.ReactElement;
     appendedText?: string;
     verticalPosition?: verticalPosition;
@@ -67,8 +66,8 @@ export interface TitleOptionProps {
 export type fillerTriColors = string | [string, string, string?] | undefined;
 
 export interface ProgressBarOptions {
-    fillerTriColors: fillerTriColors;
-    emptyAreaColor: string | undefined;
+    fillerTriColors?: fillerTriColors;
+    emptyAreaColor?: string | undefined;
 }
 
 // Main Components Props
@@ -78,7 +77,6 @@ export interface GaugeMeterProps {
     type?: type;
     range?: range;
     labelOptions?: LabelOptions;
-    progressBarFillerColor?: progressBarColor;
     innerAreaBackgroundColor?: string;
     progressBarOptions?: ProgressBarOptions;
     titleOptions?: TitleOptionProps;
@@ -90,5 +88,4 @@ export interface LinearMeterProps {
     title?: title;
     range?: range;
     labelOptions?: LabelOptions;
-    progressBarColor?: progressBarColor;
 }
