@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES6", 
+    "target": "es5", 
     "typeRoots": ["node_modules/@types", "esm/types"],
     "esModuleInterop": true, 
     "forceConsistentCasingInFileNames": true,
@@ -18,6 +18,8 @@
     "allowSyntheticDefaultImports": true,  
     "emitDeclarationOnly": true,
     // "rootDir": "src",
+    "allowJs": true,
+
     "sourceRoot": "src",
         // "paths": {
     //   "common": ["./src/*"],

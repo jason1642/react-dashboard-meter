@@ -71,9 +71,15 @@ const Title: React.FunctionComponent<ITitleProps> = (
             verticalPosition={verticalPosition!}
             style={{fontSize: fontCalc,...styles}}>
 
-        {
-            reactNode ? reactNode :<>{value.toFixed(toFixedAmount || 0)}<AppendedText  fontSize={fontCalc}>{appendedText ? appendedText : range[0] === 0 && range[1] === 100 ? '%' : '' }</AppendedText></>
-        }
+            {
+                reactNode ?
+                    reactNode
+                    :
+                    <>
+                        {value.toFixed((toFixedAmount! >= 0 && toFixedAmount! <= 2) ? toFixedAmount : 0)}
+                        <AppendedText fontSize={fontCalc}>{appendedText ? appendedText : range[0] === 0 && range[1] === 100 ? '%' : ''}</AppendedText>
+                    </>
+            }
             
 
         </Container>

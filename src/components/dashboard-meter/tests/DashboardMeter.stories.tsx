@@ -83,7 +83,7 @@ export const Primary: Template = {
   args: {
     value: 40,
     titleOptions: {
-      toFixedAmount: 1
+      // toFixedAmount:2
     }
   
   },
