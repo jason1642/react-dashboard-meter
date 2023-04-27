@@ -34,6 +34,8 @@ const MyComponent: React.FunctionComponent<IMyComponentProps> = ({ value }) => {
     )}
  ```
 
+![](https://github.com/jason1642/react-dashboard-meter/blob/main/Screenshot%202023-04-27%20at%209.40.45%20AM.png)
+
  ## API
  
  Name | Is Required? | type | Default | options | Description 
