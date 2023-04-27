@@ -12,15 +12,16 @@ const Container = styled.div`
   padding: 0 0px;
   width: 100vw;
   height: 100vh;
-
+  align-items: center;
+  justify-content: center;
 `;
 
 
 const GaugeContainer = styled.div`
   display:flex;
-  background-color: purple;
+  /* background-color: purple; */
   /* padding: 10px; */
-  width:250px;
+  width:450px;
 
 
 
@@ -43,16 +44,18 @@ const meta: Meta<typeof GaugeMeter> = {
         <div 
           style={
             {
-                backgroundColor: 'grey',
+                backgroundColor: 'white',
               // backgroundColor: 'linear-gradient(to bottom, #131313, #000000)',
             //   background: 'linear-gradient(to bottom, hsl(224.21052631578948, 100%, 26.078431372549023%), #a5fbd7)',
               //  position: 'relative',
               //  border: '1px solid blue',
                borderRadius: '15px',
                 // height: '70vh',
+                margin: '0 auto',
                 marginTop: '15px',
-                marginLeft: '10px',
-                 width: '65vw'
+                // marginLeft: '10px',
+                 width: '65vw',
+                 padding: '25px',
                  }
                  } >
 
