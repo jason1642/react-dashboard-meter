@@ -54,12 +54,12 @@ const meta: Meta<typeof GaugeMeter> = {
                 margin: '0 auto',
                 marginTop: '15px',
                 // marginLeft: '10px',
-                 width: '65vw',
+                //  width: '65vw',
                  padding: '25px',
                  }
                  } >
 
-                    <GaugeContainer>
+                    <GaugeContainer> 
                           <Story  />
                     </GaugeContainer>
           

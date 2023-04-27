@@ -6,7 +6,7 @@ import Labels from './Labels';
 
 interface ProgressMeterProps {
     maxValues: maxValues;
-    gaugeInnerAreaSize: number;
+    innerAreaSize: number;
     innerAreaBackground:string;
     percentFilled: number;
     progressBarOptions?: ProgressBarOptions;
@@ -46,10 +46,10 @@ const ProgressMeter = styled.div<ProgressMeterProps>`
     z-index: 3;
     display: flex;
     /* Values with * .x - Percent of entire semi-circle gauge covered by inner space */
-    width:${({ maxValues: { maxWidth }, gaugeInnerAreaSize }) => calcRem(maxWidth * (gaugeInnerAreaSize / 100))};
-    height:${({ maxValues: { maxWidth, maxHeight, }, gaugeInnerAreaSize }) => calcRem(maxHeight * (gaugeInnerAreaSize / 100))};
+    width:${({ maxValues: { maxWidth }, innerAreaSize }) => calcRem(maxWidth * (innerAreaSize / 100))};
+    height:${({ maxValues: { maxWidth, maxHeight, }, innerAreaSize }) => calcRem(maxHeight * (innerAreaSize / 100))};
     /* Original margin-left = -70 */
-    margin-left: -${({ maxValues: { maxWidth, maxHeight }, gaugeInnerAreaSize }) => calcRem(maxHeight * (gaugeInnerAreaSize / 100))};
+    margin-left: -${({ maxValues: { maxWidth, maxHeight }, innerAreaSize }) => calcRem(maxHeight * (innerAreaSize / 100))};
     background: ${({innerAreaBackground})=>innerAreaBackground};
     border-radius: 50% 50% 50% 50% / 100% 100% 0% 0% ;
   } 
@@ -57,13 +57,13 @@ const ProgressMeter = styled.div<ProgressMeterProps>`
 
 interface IProgressBarFillerProps {
     maxValues: { maxHeight: number, maxWidth: number };
-    gaugeInnerAreaSize: number;
+    innerAreaSize: number;
     range: range;
     progressBarOptions?: ProgressBarOptions;
     labelOptions: LabelOptions;
     progressFillerWidth: number;
     percentFilled: number;
-    innerAreaBackgroundColor: string;
+    innerAreaColor: string;
 }
 
 
@@ -74,8 +74,8 @@ const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = (
         range,
         progressBarOptions,
          maxValues,
-         gaugeInnerAreaSize,
-         innerAreaBackgroundColor,
+         innerAreaSize,
+         innerAreaColor,
          progressFillerWidth,
          percentFilled
     }) => {
@@ -84,9 +84,9 @@ const ProgressBarFiller: React.FunctionComponent<IProgressBarFillerProps> = (
   return (
     <ProgressMeter
     ref={progressFillerRef}
-    innerAreaBackground={innerAreaBackgroundColor}
+    innerAreaBackground={innerAreaColor}
     maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
-    gaugeInnerAreaSize={gaugeInnerAreaSize}
+    innerAreaSize={innerAreaSize}
     percentFilled={percentFilled}
     progressBarOptions={progressBarOptions}
   >

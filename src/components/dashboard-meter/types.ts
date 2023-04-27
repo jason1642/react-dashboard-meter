@@ -11,7 +11,7 @@ export type title = [string, string, string?] | string | undefined;
 export type range = [number, number] | number;
 export type titleFontSize = string | undefined;
 export type  percentFilled =  number | undefined;
-export type gaugeInnerAreaSize = number | undefined;
+export type innerAreaSize = number | undefined;
 
 
 
@@ -73,12 +73,12 @@ export interface ProgressBarOptions {
 // Main Components Props
 export interface GaugeMeterProps {
     value: value;
-    gaugeInnerAreaSize?: gaugeInnerAreaSize;
+    innerAreaSize?: innerAreaSize;
     containerStyles?: any;
     type?: type;
     range?: range;
     labelOptions?: LabelOptions;
-    innerAreaBackgroundColor?: string;
+    innerAreaColor?: string;
     progressBarOptions?: ProgressBarOptions;
     titleOptions?: TitleOptionProps;
 }

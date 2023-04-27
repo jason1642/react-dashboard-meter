@@ -1,5 +1,5 @@
 import { FunctionComponent, useMemo, useState, useEffect } from 'react';
-import type { maxValues, GaugeMeterProps, gaugeInnerAreaSize } from '../types'
+import type { maxValues, GaugeMeterProps, innerAreaSize } from '../types'
 import Container from './Container'
 import ProgressBarFiller from './ProgressBarFiller';
 import { calculatePercentFilled } from './calculatePercentFilled';
@@ -12,12 +12,12 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
     progressBarOptions,
     titleOptions,
     labelOptions,
-    innerAreaBackgroundColor = 'white',
+    innerAreaColor = 'white',
     range = [0, 100],
-    gaugeInnerAreaSize,
+    innerAreaSize,
     containerStyles
   }) => {
-    const defaultGaugeInnerAreaSize: gaugeInnerAreaSize = gaugeInnerAreaSize ? gaugeInnerAreaSize :  labelOptions?.labelPosition === 'inside' ? 79 :  86
+    const defaultinnerAreaSize: innerAreaSize = innerAreaSize ? innerAreaSize :  labelOptions?.labelPosition === 'inside' ? 79 :  86
   const [maxValues, setMaxValues] = useState<maxValues>()
   const handleMaxValues: (maxValues: maxValues) => void = (maxValues: maxValues) => {
     setMaxValues(maxValues)
@@ -29,7 +29,7 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
   const [progressFillerWidth, setProgressFillerWidth] = useState<number>()
 
   useEffect(() => {
-    maxValues && setProgressFillerWidth((maxValues.maxWidth - (maxValues.maxWidth * (defaultGaugeInnerAreaSize / 100))) / 2)
+    maxValues && setProgressFillerWidth((maxValues.maxWidth - (maxValues.maxWidth * (defaultinnerAreaSize / 100))) / 2)
   }, [maxValues]);
 
   return (typeof percentFilled === 'number') && (typeof value === 'number') ? (
@@ -37,7 +37,7 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
       { maxValues && progressFillerWidth &&  <>
 
         <ProgressBarFiller
-          gaugeInnerAreaSize={defaultGaugeInnerAreaSize}
+          innerAreaSize={defaultinnerAreaSize}
           maxValues={{ maxHeight: maxValues.maxWidth / 2, maxWidth: maxValues.maxWidth }}
           labelOptions={{ ...defaultLabelOptions, ...labelOptions }}
           {...{
@@ -45,7 +45,7 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
             percentFilled,
             progressFillerWidth,
             progressBarOptions,
-            innerAreaBackgroundColor
+            innerAreaColor
           }}
         />
 
