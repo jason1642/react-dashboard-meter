@@ -57,7 +57,7 @@ export interface TitleOptionProps {
     appendedTextStyles?:any;
     toFixedAmount?: 0 | 1 | 2;
     reactNode?: React.ReactElement;
-    appendedText?: string;
+    appendedText?: string | false;
     verticalPosition?: verticalPosition;
 }
 

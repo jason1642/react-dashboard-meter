@@ -89,7 +89,7 @@ const Title: React.FunctionComponent<ITitleProps> = (
                     :
                     <>
                         <span style={valueTextStyles}>{value.toFixed((toFixedAmount! >= 0 && toFixedAmount! <= 2) ? toFixedAmount : 0)}</span>
-                        <AppendedText style={appendedTextStyles} fontSize={fontCalc}>{appendedText ? appendedText : range[0] === 0 && range[1] === 100 ? '%' : ''}</AppendedText>
+                        <AppendedText style={appendedTextStyles} fontSize={fontCalc}>{appendedText ? appendedText : appendedText === false ? '' :  range[0] === 0 && range[1] === 100 ? '%' : ''}</AppendedText>
                     </>
             }
             
