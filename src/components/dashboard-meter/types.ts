@@ -27,7 +27,7 @@ export type labelStyles = any;
 
 export interface LabelOptions {
     fixedLabels?: fixedLabels;
-    labelStyles: labelStyles;
+    labelStyles?: labelStyles;
     size?: labelSize;
     appendedText?: appendedText;
     labelValueToFixed?: labelValueToFixed;

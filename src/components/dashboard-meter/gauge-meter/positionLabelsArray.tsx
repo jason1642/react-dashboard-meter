@@ -33,6 +33,7 @@ const Label = styled.span<{ top: number | string, left: number | string, progres
 
 const AppendedTextSpan = styled.span<{fontCalc:string}>`
   display:flex;
+  color: black;
   font-size: ${({fontCalc})=>`calc(${fontCalc} * .7)`};
 `;
 export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.ReactNode = (
