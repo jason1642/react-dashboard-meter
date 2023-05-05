@@ -22,7 +22,7 @@
     "meter",
     "react-component"
   ],
-  "version": "0.0.914",
+  "version": "0.0.915",
   "devDependencies": {
     "@babel/preset-env": "^7.21.4",
     "@babel/preset-react": "^7.18.6",

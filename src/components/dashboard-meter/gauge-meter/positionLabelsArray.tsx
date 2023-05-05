@@ -18,6 +18,7 @@ const Label = styled.span<{ top: number | string, left: number | string, progres
     align-items: center;
     width: ${({progressFillerWidth})=>progressFillerWidth}px;
     font-weight: bold;
+    color: black;
     /* background-color: blue; */
     text-align: center;
     position: absolute;
