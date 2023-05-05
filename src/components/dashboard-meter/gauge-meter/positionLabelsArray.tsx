@@ -41,7 +41,8 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
             fixedLabels,
             size,
             appendedText,
-            labelPosition
+            labelPosition,
+            labelStyles
         },
         range,
         progressFillerWidth,
@@ -82,6 +83,8 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
     //    console.log(range)
         labelIncrementalValues.push(
             <Label
+            style={labelStyles}
+
                 key={verticalLabelArchPositioner(labelPosition!, numberOfLabels, i, fontCalc, progressFillerWidth)}
                 progressFillerWidth={progressFillerWidth}
                 fontSize={fontCalc}
@@ -95,6 +98,8 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
 
     // 0% or first label
     labelIncrementalValues.unshift(<Label 
+        style={labelStyles}
+
         key={firstLabelHorizontalPositions(labelPosition!, progressFillerWidth)}
         progressFillerWidth={progressFillerWidth} 
         fontSize={fontCalc} 
@@ -106,6 +111,7 @@ export const positionLabelsArray: (options: IPositionLabelArrayProps) => React.R
 
     // 100% or last label
     labelIncrementalValues.push(<Label
+        style={labelStyles}
         key={lastLabelHorizontalPositions(labelPosition!, progressFillerWidth)}
         progressFillerWidth={progressFillerWidth} 
         fontSize={fontCalc}

@@ -22,9 +22,12 @@ export type labelSize = 'small' | 'default' | 'large' | undefined;
 export type appendedText = string | false | undefined;
 export type labelValueToFixed =  0 | 1 | 2 | 3;
 export type labelPosition = 'inward' | 'inside' | 'outward';
+export type labelStyles = any;
+
 
 export interface LabelOptions {
     fixedLabels?: fixedLabels;
+    labelStyles: labelStyles;
     size?: labelSize;
     appendedText?: appendedText;
     labelValueToFixed?: labelValueToFixed;

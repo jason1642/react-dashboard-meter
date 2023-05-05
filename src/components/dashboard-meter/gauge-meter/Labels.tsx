@@ -9,7 +9,10 @@ export const defaultLabelOptions: LabelOptions = {
   size: 'default',
   appendedText: false,
   labelValueToFixed: 0,
-  labelPosition: 'inward'
+  labelPosition: 'inward',
+  labelStyles:  {
+    color: 'black'
+  }
 }
 
 
