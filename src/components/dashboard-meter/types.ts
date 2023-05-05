@@ -52,14 +52,9 @@ export type verticalPosition = 'center' | 'bottom' | 'top';
 
 
 export interface TitleOptionProps {
-    styles?: {
-        fontSize?: string;
-        color?: string;
-        marginBottom?:string;
-        fontWeight?:string;
-        fontFamily?: string;
-        marginTop?:string;
-    };
+    containerStyles?: any;
+    valueTextStyles?:any;
+    appendedTextStyles?:any;
     toFixedAmount?: 0 | 1 | 2;
     reactNode?: React.ReactElement;
     appendedText?: string;

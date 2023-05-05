@@ -9,15 +9,24 @@ interface ITitleProps {
     range: range;
     containerWidth: number;
     progressFillerWidth: number;
+    containerStyles: any;
+    valueTextStyles: any;
+    appendedTextStyles:any;
 }
 
 
 export const defaultTitleOptions: TitleOptionProps = {
     // styles: undefined,
-    styles: {
+    containerStyles: {
         color: 'black',
         // marginBottom: undefined,
         // marginTop: '20px'
+    },
+    valueTextStyles: {
+        color: 'black',
+    },
+    appendedTextStyles: {
+
     },
     // appenededText: undefined,
     // reactNode: undefined,
@@ -47,11 +56,14 @@ const AppendedText = styled.span<{fontSize: string}>`
 const Title: React.FunctionComponent<ITitleProps> = (
     {
         titleOptions: {
-            styles,
+            
             reactNode,
             appendedText,
             verticalPosition,
-            toFixedAmount
+            toFixedAmount,
+            containerStyles,
+            valueTextStyles,
+            appendedTextStyles
         },
         value,
         range,
@@ -69,15 +81,15 @@ const Title: React.FunctionComponent<ITitleProps> = (
         progressFillerWidth={progressFillerWidth}
             fontSize={fontCalc}
             verticalPosition={verticalPosition!}
-            style={{fontSize: fontCalc,...styles}}>
+            style={{fontSize: fontCalc,...containerStyles}}>
 
             {
                 reactNode ?
                     reactNode
                     :
                     <>
-                        {value.toFixed((toFixedAmount! >= 0 && toFixedAmount! <= 2) ? toFixedAmount : 0)}
-                        <AppendedText fontSize={fontCalc}>{appendedText ? appendedText : range[0] === 0 && range[1] === 100 ? '%' : ''}</AppendedText>
+                        <span>{value.toFixed((toFixedAmount! >= 0 && toFixedAmount! <= 2) ? toFixedAmount : 0)}</span>
+                        <AppendedText style={appendedTextStyles} fontSize={fontCalc}>{appendedText ? appendedText : range[0] === 0 && range[1] === 100 ? '%' : ''}</AppendedText>
                     </>
             }
             
