@@ -9,9 +9,9 @@ interface ITitleProps {
     range: range;
     containerWidth: number;
     progressFillerWidth: number;
-    containerStyles: any;
-    valueTextStyles: any;
-    appendedTextStyles:any;
+    containerStyles?: any;
+    valueTextStyles?: any;
+    appendedTextStyles?:any;
 }
 
 
@@ -88,7 +88,7 @@ const Title: React.FunctionComponent<ITitleProps> = (
                     reactNode
                     :
                     <>
-                        <span>{value.toFixed((toFixedAmount! >= 0 && toFixedAmount! <= 2) ? toFixedAmount : 0)}</span>
+                        <span style={valueTextStyles}>{value.toFixed((toFixedAmount! >= 0 && toFixedAmount! <= 2) ? toFixedAmount : 0)}</span>
                         <AppendedText style={appendedTextStyles} fontSize={fontCalc}>{appendedText ? appendedText : range[0] === 0 && range[1] === 100 ? '%' : ''}</AppendedText>
                     </>
             }
