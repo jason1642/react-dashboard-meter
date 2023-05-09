@@ -1,5 +1,5 @@
 {
-  "name": "@jason1642/react-dashboard-meter",
+  "name": "react-dashboard-meter",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
@@ -21,7 +21,7 @@
     "gauge",
     "meter",
     "react-component"
-  ],
+  ], 
   "version": "0.0.919",
   "devDependencies": {
     "@babel/preset-env": "^7.21.4",
