@@ -21,7 +21,7 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
   const [maxValues, setMaxValues] = useState<maxValues>()
   const handleMaxValues: (maxValues: maxValues) => void = (maxValues: maxValues) => {
     setMaxValues(maxValues)
-  }
+  } 
  
   const percentFilled = useMemo<number | undefined>(()=>calculatePercentFilled(value, range), [range, value])
 
