@@ -14,7 +14,7 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
     labelOptions,
     innerAreaColor = 'white',
     range = [0, 100],
-    innerAreaSize,
+    innerAreaSize, 
     containerStyles
   }) => {
     const defaultinnerAreaSize: innerAreaSize = innerAreaSize ? innerAreaSize :  labelOptions?.labelPosition === 'inside' ? 79 :  86
