@@ -25,7 +25,7 @@ const GaugeMeter: FunctionComponent<GaugeMeterProps> = (
  
   const percentFilled = useMemo<number | undefined>(()=>calculatePercentFilled(value, range), [range, value])
 
-
+ 
   const [progressFillerWidth, setProgressFillerWidth] = useState<number>()
 
   useEffect(() => {
