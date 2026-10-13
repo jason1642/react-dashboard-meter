@@ -15,6 +15,8 @@ export type labelValueToFixed = 0 | 1 | 2 | 3;
 export type fixedLabels = [ReactNode, ReactNode, ReactNode, ReactNode, ReactNode];
 export type verticalPosition = "center" | "bottom" | "top";
 export type fillerTriColors = string | [string, string, string?];
+export type GaugeShape = "half-circle" | "three-quarter";
+export type GaugeVariant = "filled-arc" | "needle";
 
 export interface LabelOptions {
   fixedLabels?: fixedLabels;
@@ -51,6 +53,8 @@ export interface ProgressBarOptions {
 
 export interface RadialGaugeProps {
   value: value;
+  shape?: GaugeShape;
+  variant?: GaugeVariant;
   innerAreaSize?: innerAreaSize;
   containerStyles?: CSSProperties;
   range?: range;

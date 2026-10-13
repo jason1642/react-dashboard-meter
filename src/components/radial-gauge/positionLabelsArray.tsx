@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
-import type { LabelOptions, range } from "./RadialGauge.types";
+import type { GaugeShape, LabelOptions, range } from "./RadialGauge.types";
+import { getArcPoint, getGaugeArcGeometry } from "./arcGeometry";
 
 interface PositionLabelArrayOptions {
   range: range;
@@ -7,6 +8,8 @@ interface PositionLabelArrayOptions {
   containerWidth: number;
   containerHeight: number;
   progressFillerWidth: number;
+  innerAreaSize: number;
+  shape: GaugeShape;
 }
 
 const labelClassName =
@@ -18,28 +21,36 @@ export const positionLabelsArray = ({
   containerWidth,
   containerHeight,
   progressFillerWidth,
+  innerAreaSize,
+  shape,
 }: PositionLabelArrayOptions): ReactNode[] => {
   const [minimum, maximum] = typeof range === "number" ? [0, range] : range;
   const {
     fixedLabels,
     size = "default",
     appendedText = false,
-    labelPosition = "inward",
+    labelPosition = "outward",
     labelStyles,
     labelValueToFixed = 0,
   } = labelOptions;
   const requestedCount = labelOptions.numberOfLabels ?? fixedLabels?.length ?? 5;
-  const count = Math.max(2, Math.floor(requestedCount));
+  const count = Number.isFinite(requestedCount)
+    ? Math.max(2, Math.min(25, Math.floor(requestedCount)))
+    : 5;
   const fontScale = size === "small" ? 0.5 : size === "large" ? 0.75 : 0.6;
   const fontSize = Math.max(10, progressFillerWidth * fontScale);
-  const inset =
+  const geometry = getGaugeArcGeometry(
+    containerWidth,
+    containerHeight,
+    shape,
+    innerAreaSize,
+  );
+  const labelRadius =
     labelPosition === "inside"
-      ? progressFillerWidth * 0.2
-      : labelPosition === "outward"
-        ? -progressFillerWidth * 0.3
-        : progressFillerWidth * 0.35;
-  const radiusX = Math.max(0, containerWidth / 2 - inset);
-  const radiusY = Math.max(0, containerHeight - inset);
+      ? geometry.radius - geometry.strokeWidth * 0.25
+      : labelPosition === "inward"
+        ? geometry.radius - geometry.strokeWidth * 0.9
+        : geometry.radius + fontSize * 0.9;
   const suffix =
     appendedText === false
       ? ""
@@ -47,20 +58,20 @@ export const positionLabelsArray = ({
 
   return Array.from({ length: count }, (_, index) => {
     const ratio = index / (count - 1);
-    const angle = Math.PI * (1 - ratio);
-    const left = containerWidth / 2 + radiusX * Math.cos(angle);
-    const top = containerHeight - radiusY * Math.sin(angle);
-    const transform =
-      index === 0
-        ? "translateY(-50%)"
-        : index === count - 1
-          ? "translate(-100%, -50%)"
-          : "translate(-50%, -50%)";
+    const angle = geometry.startAngle + geometry.sweepAngle * ratio;
+    const point = getArcPoint(geometry, angle, labelRadius);
     const value = minimum + (maximum - minimum) * ratio;
     const label = fixedLabels?.[index] ?? value.toFixed(labelValueToFixed);
+    const cosine = Math.cos((angle * Math.PI) / 180);
+    const transform =
+      cosine < -0.8
+        ? "translateY(-50%)"
+        : cosine > 0.8
+          ? "translate(-100%, -50%)"
+          : "translate(-50%, -50%)";
     const style: CSSProperties = {
-      left,
-      top,
+      left: point.x,
+      top: point.y,
       transform,
       width: Math.max(progressFillerWidth * 2, fontSize * 2),
       fontSize,

@@ -1,8 +1,20 @@
 import type { FunctionComponent } from "react";
-import type { LabelComponentProps, LabelOptions } from "./RadialGauge.types";
+import type {
+  GaugeShape,
+  LabelOptions,
+  range,
+} from "./RadialGauge.types";
 import { positionLabelsArray } from "./positionLabelsArray";
 
-interface LabelsProps extends LabelComponentProps {}
+interface LabelsProps {
+  labelOptions: LabelOptions;
+  range: range;
+  containerWidth: number;
+  containerHeight: number;
+  progressFillerWidth: number;
+  innerAreaSize: number;
+  shape: GaugeShape;
+}
 
 export const defaultLabelOptions: LabelOptions = {
   size: "default",
@@ -20,6 +32,8 @@ const Labels: FunctionComponent<LabelsProps> = ({
   containerWidth,
   containerHeight,
   progressFillerWidth,
+  innerAreaSize,
+  shape,
 }) => (
   <>
     {positionLabelsArray({
@@ -27,6 +41,8 @@ const Labels: FunctionComponent<LabelsProps> = ({
       containerWidth,
       containerHeight,
       progressFillerWidth,
+      innerAreaSize,
+      shape,
       labelOptions,
     })}
   </>

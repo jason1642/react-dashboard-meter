@@ -12,6 +12,8 @@ const meta = {
   tags: ["autodocs"],
   args: {
     value: 68,
+    shape: "half-circle",
+    variant: "filled-arc",
     range: [0, 100],
     innerAreaColor: "#ffffff",
     labelOptions: {
@@ -88,5 +90,25 @@ export const InsideLabels: Story = {
         color: "#374151",
       },
     },
+  },
+};
+
+export const ThreeQuarterNeedle: Story = {
+  args: {
+    value: 72,
+    shape: "three-quarter",
+    variant: "needle",
+    labelOptions: {
+      fixedLabels: ["0", "25", "50", "75", "100"],
+      labelPosition: "outward",
+    },
+  },
+};
+
+export const ThreeQuarterFilledArc: Story = {
+  args: {
+    value: 72,
+    shape: "three-quarter",
+    variant: "filled-arc",
   },
 };

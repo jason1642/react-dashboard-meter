@@ -1,6 +1,8 @@
 export { RadialGauge } from "./radial-gauge/RadialGauge";
 export type {
   GaugeMeterProps,
+  GaugeShape,
+  GaugeVariant,
   LabelOptions,
   LabelComponentProps,
   ProgressBarOptions,
