@@ -23,6 +23,11 @@ const RadialGauge = ({
   range = [0, 100],
   innerAreaSize,
   containerStyles,
+  roundedCaps = true,
+  showValue = true,
+  showTarget = false,
+  target,
+  ticks = "labels-and-ticks",
 }: GaugeMeterProps) => {
   const resolvedInnerAreaSize: innerAreaSize =
     innerAreaSize ?? (labelOptions?.labelPosition === "inside" ? 79 : 86);
@@ -71,14 +76,18 @@ const RadialGauge = ({
             progressFillerWidth={progressFillerWidth}
             progressBarOptions={progressBarOptions}
             innerAreaColor={innerAreaColor}
+            roundedCaps={roundedCaps}
+            ticks={ticks}
+            showTarget={showTarget}
+            target={target}
           />
-          <Title
+          {showValue && <Title
             containerWidth={dimensions.maxWidth}
             progressFillerWidth={progressFillerWidth}
             range={range}
             value={value}
-            titleOptions={{ ...shapeTitleDefaults, ...titleOptions }}
-          />
+            titleOptions={{ ...shapeTitleDefaults, ...titleOptions, ...(variant === "needle" ? { verticalPosition: "bottom" as const } : {}) }}
+          />}
         </>
       )}
     </GaugeContainer>

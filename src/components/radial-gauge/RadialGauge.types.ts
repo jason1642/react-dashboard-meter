@@ -17,6 +17,7 @@ export type verticalPosition = "center" | "bottom" | "top";
 export type fillerTriColors = string | [string, string, string?];
 export type GaugeShape = "half-circle" | "three-quarter";
 export type GaugeVariant = "filled-arc" | "needle";
+export type GaugeTicks = "labels-and-ticks" | "ticks-only" | "none" | "labels-only";
 
 export interface LabelOptions {
   fixedLabels?: fixedLabels;
@@ -55,6 +56,11 @@ export interface RadialGaugeProps {
   value: value;
   shape?: GaugeShape;
   variant?: GaugeVariant;
+  roundedCaps?: boolean;
+  showValue?: boolean;
+  showTarget?: boolean;
+  target?: number;
+  ticks?: GaugeTicks;
   innerAreaSize?: innerAreaSize;
   containerStyles?: CSSProperties;
   range?: range;

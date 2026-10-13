@@ -6,6 +6,7 @@ export type {
   GaugeMeterProps,
   GaugeShape,
   GaugeVariant,
+  GaugeTicks,
   LabelOptions,
   LabelComponentProps,
   ProgressBarOptions,

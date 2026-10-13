@@ -45,6 +45,7 @@ const Title: FunctionComponent<TitleProps> = ({
         : `calc(${progressFillerWidth}px + ${fontSize})`;
   const style: CSSProperties = {
     top,
+    transform: verticalPosition === "center" ? "translateY(-50%)" : undefined,
     fontSize,
     ...containerStyles,
   };

@@ -2,6 +2,7 @@ import { useId, type CSSProperties, type FunctionComponent } from "react";
 import type {
   GaugeShape,
   GaugeVariant,
+  GaugeTicks,
   LabelOptions,
   maxValues,
   ProgressBarOptions,
@@ -21,6 +22,10 @@ interface ProgressBarFillerProps {
   progressFillerWidth: number;
   percentFilled: number;
   innerAreaColor: string;
+  roundedCaps: boolean;
+  ticks: GaugeTicks;
+  showTarget: boolean;
+  target?: number;
 }
 
 const FALLBACK_COLORS = ["#34d399", "#fbbf24", "#fb7185"];
@@ -36,6 +41,10 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
   innerAreaColor,
   progressFillerWidth,
   percentFilled,
+  roundedCaps,
+  ticks,
+  showTarget,
+  target,
 }) => {
   const generatedId = useId().replace(/:/g, "");
   const gradientId = `radial-gauge-gradient-${generatedId}`;
@@ -60,6 +69,16 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
   const activePath = getArcPath(geometry, percentFilled);
   const trackColor = progressBarOptions?.emptyAreaColor ?? "#a79898";
   const viewBox = `0 0 ${maxValues.maxWidth} ${maxValues.maxHeight}`;
+  const cap = roundedCaps ? "round" : "butt";
+  const [rangeMinimum, rangeMaximum] = typeof range === "number" ? [0, range] : range;
+  const targetValue = target ?? (rangeMinimum + rangeMaximum) / 2;
+  const targetPercent = Math.max(
+    0,
+    Math.min(100, ((targetValue - rangeMinimum) / (rangeMaximum - rangeMinimum)) * 100),
+  );
+  const targetAngle = geometry.startAngle + geometry.sweepAngle * targetPercent / 100;
+  const targetInner = getArcPoint(geometry, targetAngle, geometry.radius - geometry.strokeWidth * 0.65);
+  const targetOuter = getArcPoint(geometry, targetAngle, geometry.radius + geometry.strokeWidth * 0.65);
 
   const needleAngle =
     geometry.startAngle + (geometry.sweepAngle * percentFilled) / 100;
@@ -111,12 +130,23 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
 
         <path d={sectorPath} fill={innerAreaColor} />
 
+        {(ticks === "labels-and-ticks" || ticks === "ticks-only") && Array.from({ length: 5 }, (_, index) => {
+          const angle = geometry.startAngle + geometry.sweepAngle * index / 4;
+          const from = getArcPoint(geometry, angle, geometry.radius - geometry.strokeWidth * 0.72);
+          const to = getArcPoint(geometry, angle, geometry.radius + geometry.strokeWidth * 0.72);
+          return <line key={`tick-${index}`} x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke="#94a3b8" strokeWidth={Math.max(1, geometry.strokeWidth * 0.09)} />;
+        })}
+
+        {showTarget && (
+          <line x1={targetInner.x} y1={targetInner.y} x2={targetOuter.x} y2={targetOuter.y} stroke="#f8fafc" strokeWidth={Math.max(2, geometry.strokeWidth * 0.12)} />
+        )}
+
         {variant === "needle" ? (
           <path
             d={fullPath}
             fill="none"
             stroke={`url(#${gradientId})`}
-            strokeLinecap="round"
+            strokeLinecap={cap}
             strokeWidth={geometry.strokeWidth}
           />
         ) : (
@@ -125,7 +155,7 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
               d={fullPath}
               fill="none"
               stroke={trackColor}
-              strokeLinecap="round"
+              strokeLinecap={cap}
               strokeWidth={geometry.strokeWidth}
             />
             {activePath && (
@@ -135,7 +165,7 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
                 pathLength={100}
                 stroke={`url(#${gradientId})`}
                 strokeDasharray={`${percentFilled} 100`}
-                strokeLinecap="round"
+                strokeLinecap={cap}
                 strokeWidth={geometry.strokeWidth}
               />
             )}
@@ -169,6 +199,7 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
         labelOptions={labelOptions}
         range={range}
         shape={shape}
+        ticks={ticks}
       />
     </div>
   );

@@ -14,6 +14,11 @@ const meta = {
     value: 68,
     shape: "half-circle",
     variant: "filled-arc",
+    roundedCaps: true,
+    showValue: true,
+    showTarget: false,
+    target: 80,
+    ticks: "labels-and-ticks",
     range: [0, 100],
     innerAreaColor: "#ffffff",
     labelOptions: {
@@ -44,6 +49,14 @@ const meta = {
   ],
   parameters: {
     layout: "centered",
+  },
+  argTypes: {
+    shape: { control: "select", options: ["half-circle", "three-quarter"] },
+    variant: { control: "select", options: ["filled-arc", "needle"] },
+    ticks: { control: "select", options: ["labels-and-ticks", "ticks-only", "none", "labels-only"] },
+    roundedCaps: { control: "boolean" },
+    showValue: { control: "boolean" },
+    showTarget: { control: "boolean" },
   },
 } satisfies Meta<typeof RadialGauge>;
 
