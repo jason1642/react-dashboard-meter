@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { RadialGauge } from "./RadialGauge";
-import type { GaugeMeterProps } from "../types";
+import type { GaugeMeterProps } from "./RadialGauge.types";
 
 const standardLabels: NonNullable<
   GaugeMeterProps["labelOptions"]
 >["fixedLabels"] = ["0", "25", "50", "75", "100"];
 
 const meta = {
-  title: "Dashboard Meter/GaugeMeter",
+  title: "Dashboard Meter/RadialGauge",
   component: RadialGauge,
   tags: ["autodocs"],
   args: {

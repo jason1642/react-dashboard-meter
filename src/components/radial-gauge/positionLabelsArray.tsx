@@ -1,169 +1,84 @@
-import type { LabelOptions, range } from "../types";
-import styled from "styled-components";
-import {
-  horizontalLabelArchPositioner,
-  verticalLabelArchPositioner,
-  firstLabelHorizontalPositions,
-  lastLabelHorizontalPositions,
-} from "./methods";
+import type { CSSProperties, ReactNode } from "react";
+import type { LabelOptions, range } from "./RadialGauge.types";
 
-interface IPositionLabelArrayProps {
+interface PositionLabelArrayOptions {
   range: range;
   labelOptions: LabelOptions;
+  containerWidth: number;
+  containerHeight: number;
   progressFillerWidth: number;
-  fontSize?: string;
-  fixedLabels?: Array<string>;
-  numberOfLabels?: number;
-  labelValueToFixed?: 0 | 1 | 2 | 3;
 }
 
-const Label = styled.span<{
-  top: number | string;
-  left: number | string;
-  progressFillerWidth: number;
-  fontSize: string;
-}>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: ${({ progressFillerWidth }) => progressFillerWidth}px;
-  font-weight: bold;
-  color: black;
-  /* background-color: blue; */
-  text-align: center;
-  position: absolute;
-  font-size: ${({ fontSize }) => fontSize};
-  /* font-size: calc(1rem + 1vw); */
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    "Open Sans",
-    "Helvetica Neue",
-    sans-serif;
-  z-index: 33;
-  left: ${({ left }) => left};
-  top: ${({ top }) => top};
-`;
+const labelClassName =
+  "absolute z-[33] flex items-center justify-center text-center font-sans font-bold text-black";
 
-const AppendedTextSpan = styled.span<{ fontCalc: string }>`
-  display: flex;
-  color: black;
-  font-size: ${({ fontCalc }) => `calc(${fontCalc} * .7)`};
-`;
-export const positionLabelsArray: (
-  options: IPositionLabelArrayProps,
-) => React.ReactNode = ({
-  labelOptions: { fixedLabels, size, appendedText, labelPosition, labelStyles },
+export const positionLabelsArray = ({
   range,
+  labelOptions,
+  containerWidth,
+  containerHeight,
   progressFillerWidth,
-
-  labelValueToFixed,
-  numberOfLabels = 5,
-}) => {
-  // progressFillWidth is space between inner semi circle outer border and outer progress bar outer border.
-  // Responsive calc to get font size that fills in space if there are 4 or less characters based on .9rem
-  // Change the decimal number that is multpliying progressFillerWidth to change scale of font but stay responsive
-  const fontCalc: string = `calc(${progressFillerWidth * 0.6}px)`;
-  // console.log(fontCalc)
-  // Check range to see if its an appropriate amount of numbers for the default number of labels
-  // Create an array of numbers (from the range) to be represented in each label.
-  if (typeof range === "number") range = [0, range];
-  const appendedTextFormula = appendedText
-    ? appendedText
-    : typeof appendedText === "boolean" && appendedText === false
+}: PositionLabelArrayOptions): ReactNode[] => {
+  const [minimum, maximum] = typeof range === "number" ? [0, range] : range;
+  const {
+    fixedLabels,
+    size = "default",
+    appendedText = false,
+    labelPosition = "inward",
+    labelStyles,
+    labelValueToFixed = 0,
+  } = labelOptions;
+  const requestedCount = labelOptions.numberOfLabels ?? fixedLabels?.length ?? 5;
+  const count = Math.max(2, Math.floor(requestedCount));
+  const fontScale = size === "small" ? 0.5 : size === "large" ? 0.75 : 0.6;
+  const fontSize = Math.max(10, progressFillerWidth * fontScale);
+  const inset =
+    labelPosition === "inside"
+      ? progressFillerWidth * 0.2
+      : labelPosition === "outward"
+        ? -progressFillerWidth * 0.3
+        : progressFillerWidth * 0.35;
+  const radiusX = Math.max(0, containerWidth / 2 - inset);
+  const radiusY = Math.max(0, containerHeight - inset);
+  const suffix =
+    appendedText === false
       ? ""
-      : range[0] === 0 && range[1] === 100
-        ? "%"
-        : "";
+      : appendedText ?? (minimum === 0 && maximum === 100 ? "%" : "");
 
-  // 3 labels = 0% 50% 100%
-  // 5 labels = 0% 25% 50% 75% 100%
-  // 6 labels = 0% 20% 40% 60% 80% 100%
-  // In other words - Omit the 0% in each case, and divide 100 by the amount of values in the array.
-  // 6 labels ^ - 100 / 5 = 20% increments
-  // 9 labels = 100 / 8 = 11.11% increments (round it)
-  // Default amount of labels is 5
-  let labelIncrementalValues: Array<React.ReactNode> = [];
-  // CURRENT SCENARIO - No fixed labels provided, range is default (0 - 100), numberOfLabels is default (5)
-  const intervalAmount: number = range[1] / (numberOfLabels - 1);
+  return Array.from({ length: count }, (_, index) => {
+    const ratio = index / (count - 1);
+    const angle = Math.PI * (1 - ratio);
+    const left = containerWidth / 2 + radiusX * Math.cos(angle);
+    const top = containerHeight - radiusY * Math.sin(angle);
+    const transform =
+      index === 0
+        ? "translateY(-50%)"
+        : index === count - 1
+          ? "translate(-100%, -50%)"
+          : "translate(-50%, -50%)";
+    const value = minimum + (maximum - minimum) * ratio;
+    const label = fixedLabels?.[index] ?? value.toFixed(labelValueToFixed);
+    const style: CSSProperties = {
+      left,
+      top,
+      transform,
+      width: Math.max(progressFillerWidth * 2, fontSize * 2),
+      fontSize,
+      ...labelStyles,
+    };
 
-  for (let i = 1; i < numberOfLabels - 1; i++) {
-    //    console.log(range)
-    labelIncrementalValues.push(
-      <Label
-        style={labelStyles}
-        key={verticalLabelArchPositioner(
-          labelPosition!,
-          numberOfLabels,
-          i,
-          fontCalc,
-          progressFillerWidth,
+    return (
+      <span key={`${index}-${value}`} className={labelClassName} style={style}>
+        {label}
+        {suffix && (
+          <span
+            className="flex text-inherit"
+            style={{ fontSize: `calc(${fontSize}px * 0.7)` }}
+          >
+            {suffix}
+          </span>
         )}
-        progressFillerWidth={progressFillerWidth}
-        fontSize={fontCalc}
-        top={verticalLabelArchPositioner(
-          labelPosition!,
-          numberOfLabels,
-          i,
-          fontCalc,
-          progressFillerWidth,
-        )}
-        left={horizontalLabelArchPositioner(
-          labelPosition!,
-          numberOfLabels,
-          i,
-          fontCalc,
-          progressFillerWidth,
-        )}
-      >
-        {Number((intervalAmount * i).toFixed(labelValueToFixed))}
-        <AppendedTextSpan fontCalc={fontCalc}>
-          {appendedTextFormula}
-        </AppendedTextSpan>
-      </Label>,
+      </span>
     );
-  }
-
-  // 0% or first label
-  labelIncrementalValues.unshift(
-    <Label
-      style={labelStyles}
-      key={firstLabelHorizontalPositions(labelPosition!, progressFillerWidth)}
-      progressFillerWidth={progressFillerWidth}
-      fontSize={fontCalc}
-      top={`calc(100% - (${fontCalc} * 1.5))`}
-      // left={`calc((${fontCalc} / 4) + (${containerWidth / 100}px))`}
-      left={firstLabelHorizontalPositions(labelPosition!, progressFillerWidth)}
-    >
-      {range[0]}
-      <AppendedTextSpan fontCalc={fontCalc}>
-        {appendedTextFormula}
-      </AppendedTextSpan>
-    </Label>,
-  );
-
-  // 100% or last label
-  labelIncrementalValues.push(
-    <Label
-      style={labelStyles}
-      key={lastLabelHorizontalPositions(labelPosition!, progressFillerWidth)}
-      progressFillerWidth={progressFillerWidth}
-      fontSize={fontCalc}
-      top={`calc(100% - (${fontCalc} * 1.5))`}
-      left={lastLabelHorizontalPositions(labelPosition!, progressFillerWidth)}
-    >
-      {range[1]}
-      <AppendedTextSpan fontCalc={fontCalc}>
-        {appendedTextFormula}
-      </AppendedTextSpan>
-    </Label>,
-  );
-
-  return labelIncrementalValues;
+  });
 };

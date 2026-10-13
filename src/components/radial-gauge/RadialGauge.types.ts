@@ -1,27 +1,24 @@
+import type { CSSProperties, ReactNode } from "react";
+
 export interface maxValues {
   maxHeight: number;
   maxWidth: number;
 }
 
 export type value = number;
-export type type = "linear" | "gague";
-export type title = [string, string, string?] | string | undefined;
 export type range = [number, number] | number;
-export type titleFontSize = string | undefined;
-export type percentFilled = number | undefined;
-export type innerAreaSize = number | undefined;
-
-// Label Options Types
-export type fixedLabels = [any, any, any, any, any] | undefined;
-export type labelSize = "small" | "default" | "large" | undefined;
-export type appendedText = string | false | undefined;
-export type labelValueToFixed = 0 | 1 | 2 | 3;
+export type innerAreaSize = number;
 export type labelPosition = "inward" | "inside" | "outward";
-export type labelStyles = any;
+export type labelSize = "small" | "default" | "large";
+export type appendedText = string | false;
+export type labelValueToFixed = 0 | 1 | 2 | 3;
+export type fixedLabels = [ReactNode, ReactNode, ReactNode, ReactNode, ReactNode];
+export type verticalPosition = "center" | "bottom" | "top";
+export type fillerTriColors = string | [string, string, string?];
 
 export interface LabelOptions {
   fixedLabels?: fixedLabels;
-  labelStyles?: labelStyles;
+  labelStyles?: CSSProperties;
   size?: labelSize;
   appendedText?: appendedText;
   labelValueToFixed?: labelValueToFixed;
@@ -31,40 +28,31 @@ export interface LabelOptions {
 
 export interface LabelComponentProps {
   labelOptions: LabelOptions;
-  fixedLabels?: [any, any, any, any, any];
   range: range;
-  labelPosition?: labelPosition;
   containerWidth: number;
   containerHeight: number;
   progressFillerWidth: number;
 }
 
-// Title Options Types
-export type verticalPosition = "center" | "bottom" | "top";
-
 export interface TitleOptionProps {
-  containerStyles?: any;
-  valueTextStyles?: any;
-  appendedTextStyles?: any;
+  containerStyles?: CSSProperties;
+  valueTextStyles?: CSSProperties;
+  appendedTextStyles?: CSSProperties;
   toFixedAmount?: 0 | 1 | 2;
-  reactNode?: React.ReactElement;
+  reactNode?: ReactNode;
   appendedText?: string | false;
   verticalPosition?: verticalPosition;
 }
 
-export type fillerTriColors = string | [string, string, string?] | undefined;
-
 export interface ProgressBarOptions {
   fillerTriColors?: fillerTriColors;
-  emptyAreaColor?: string | undefined;
+  emptyAreaColor?: string;
 }
 
-// Main Components Props
-export interface GaugeMeterProps {
+export interface RadialGaugeProps {
   value: value;
   innerAreaSize?: innerAreaSize;
-  containerStyles?: any;
-  type?: type;
+  containerStyles?: CSSProperties;
   range?: range;
   labelOptions?: LabelOptions;
   innerAreaColor?: string;
@@ -72,10 +60,5 @@ export interface GaugeMeterProps {
   titleOptions?: TitleOptionProps;
 }
 
-export interface LinearMeterProps {
-  value: value;
-  type?: type;
-  title?: title;
-  range?: range;
-  labelOptions?: LabelOptions;
-}
+// Preserve the previous public type name for existing consumers.
+export type GaugeMeterProps = RadialGaugeProps;

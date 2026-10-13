@@ -1,12 +1,13 @@
-import { FunctionComponent, useMemo, useState, useEffect } from "react";
-import type { maxValues, GaugeMeterProps, innerAreaSize } from "../types";
-import Container from "./Container";
+import { useCallback, useState } from "react";
+import "../../tailwind.css";
+import type { GaugeMeterProps, innerAreaSize, maxValues } from "./RadialGauge.types";
+import GaugeContainer from "./Container";
 import ProgressBarFiller from "./ProgressBarFiller";
 import { calculatePercentFilled } from "./calculatePercentFilled";
 import { defaultLabelOptions } from "./Labels";
 import Title, { defaultTitleOptions } from "./Title";
 
-const RadialGauge: FunctionComponent<GaugeMeterProps> = ({
+const RadialGauge = ({
   value,
   progressBarOptions,
   titleOptions,
@@ -15,70 +16,53 @@ const RadialGauge: FunctionComponent<GaugeMeterProps> = ({
   range = [0, 100],
   innerAreaSize,
   containerStyles,
-}) => {
-  const defaultinnerAreaSize: innerAreaSize = innerAreaSize
-    ? innerAreaSize
-    : labelOptions?.labelPosition === "inside"
-      ? 79
-      : 86;
-  const [maxValues, setMaxValues] = useState<maxValues>();
-  const handleMaxValues: (maxValues: maxValues) => void = (
-    maxValues: maxValues,
-  ) => {
-    setMaxValues(maxValues);
-  };
+}: GaugeMeterProps) => {
+  const resolvedInnerAreaSize: innerAreaSize =
+    innerAreaSize ?? (labelOptions?.labelPosition === "inside" ? 79 : 86);
+  const [dimensions, setDimensions] = useState<maxValues>();
+  const handleMaxValues = useCallback((nextDimensions: maxValues) => {
+    setDimensions((current) =>
+      current?.maxWidth === nextDimensions.maxWidth ? current : nextDimensions,
+    );
+  }, []);
+  const percentFilled = calculatePercentFilled(value, range);
 
-  const percentFilled = useMemo<number | undefined>(
-    () => calculatePercentFilled(value, range),
-    [range, value],
-  );
+  if (typeof percentFilled !== "number") return null;
 
-  const [progressFillerWidth, setProgressFillerWidth] = useState<number>();
+  const progressFillerWidth = dimensions
+    ? (dimensions.maxWidth * (1 - resolvedInnerAreaSize / 100)) / 2
+    : undefined;
 
-  useEffect(() => {
-    maxValues &&
-      setProgressFillerWidth(
-        (maxValues.maxWidth -
-          maxValues.maxWidth * (defaultinnerAreaSize / 100)) /
-          2,
-      );
-  }, [maxValues]);
-
-  return typeof percentFilled === "number" && typeof value === "number" ? (
-    <Container
+  return (
+    <GaugeContainer
       containerStyles={containerStyles}
       handleMaxValues={handleMaxValues}
     >
-      {maxValues && progressFillerWidth && (
+      {dimensions && progressFillerWidth !== undefined && (
         <>
           <ProgressBarFiller
-            innerAreaSize={defaultinnerAreaSize}
+            innerAreaSize={resolvedInnerAreaSize}
             maxValues={{
-              maxHeight: maxValues.maxWidth / 2,
-              maxWidth: maxValues.maxWidth,
+              maxHeight: dimensions.maxWidth / 2,
+              maxWidth: dimensions.maxWidth,
             }}
             labelOptions={{ ...defaultLabelOptions, ...labelOptions }}
-            {...{
-              range,
-              percentFilled,
-              progressFillerWidth,
-              progressBarOptions,
-              innerAreaColor,
-            }}
+            range={range}
+            percentFilled={percentFilled}
+            progressFillerWidth={progressFillerWidth}
+            progressBarOptions={progressBarOptions}
+            innerAreaColor={innerAreaColor}
           />
-
           <Title
-            containerWidth={maxValues.maxWidth}
+            containerWidth={dimensions.maxWidth}
             progressFillerWidth={progressFillerWidth}
             range={range}
             value={value}
-            titleOptions={{ ...defaultTitleOptions, ...(titleOptions || {}) }}
+            titleOptions={{ ...defaultTitleOptions, ...titleOptions }}
           />
         </>
       )}
-    </Container>
-  ) : (
-    <></>
+    </GaugeContainer>
   );
 };
 

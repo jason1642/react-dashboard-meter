@@ -1,54 +1,56 @@
-import { FunctionComponent, useEffect, useRef, MutableRefObject } from "react";
-import styled from "styled-components";
-import { maxValues } from "../types";
+import { useLayoutEffect, useRef, type CSSProperties, type ReactNode } from "react";
+import type { maxValues } from "./RadialGauge.types";
 
-interface IGuageContainerProps {
-  children: React.ReactNode;
-  containerStyles?: any;
+interface GaugeContainerProps {
+  children: ReactNode;
+  containerStyles?: CSSProperties;
   handleMaxValues: (maxValues: maxValues) => void;
 }
 
-interface GaugeProps {
-  maxWidth?: number;
-}
-
-// Container for meter, labels, and title
-const Container = styled.div<GaugeProps>`
-  position: relative;
-  /* overflow-y: clip; */
-
-  display: block;
-  background: transparent;
-  /* margin: 5px; */
-  width: 100%;
-  min-width: 150px;
-  height: ${({ maxWidth }) => maxWidth! / 2}px;
-`;
-
-const GuageContainer: FunctionComponent<IGuageContainerProps> = ({
+const GaugeContainer = ({
   children,
-  handleMaxValues,
   containerStyles,
-}) => {
-  const gaugeRef: MutableRefObject<HTMLDivElement | null> | null = useRef(null);
+  handleMaxValues,
+}: GaugeContainerProps) => {
+  const gaugeRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    gaugeRef.current &&
-      handleMaxValues({
-        maxHeight: gaugeRef.current.clientHeight,
-        maxWidth: gaugeRef?.current.clientWidth,
-      });
-  }, [gaugeRef]);
+  useLayoutEffect(() => {
+    const element = gaugeRef.current;
+    if (!element) return;
+
+    const measure = () => {
+      const maxWidth = element.clientWidth;
+      if (maxWidth > 0) {
+        handleMaxValues({ maxWidth, maxHeight: maxWidth / 2 });
+      }
+    };
+
+    measure();
+
+    if (typeof ResizeObserver === "undefined") {
+      window.addEventListener("resize", measure);
+      return () => window.removeEventListener("resize", measure);
+    }
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [handleMaxValues]);
+
+  const style: CSSProperties = {
+    height: gaugeRef.current ? gaugeRef.current.clientWidth / 2 : undefined,
+    ...containerStyles,
+  };
 
   return (
-    <Container
-      style={{ ...containerStyles }}
-      maxWidth={gaugeRef?.current?.clientWidth}
+    <div
       ref={gaugeRef}
+      className="relative block min-w-[150px] w-full bg-transparent"
+      style={style}
     >
       {children}
-    </Container>
+    </div>
   );
 };
 
-export default GuageContainer;
+export default GaugeContainer;

@@ -1,114 +1,77 @@
-import * as React from "react";
-import styled from "styled-components";
-import { TitleOptionProps, range, verticalPosition } from "../types";
+import type { CSSProperties, FunctionComponent } from "react";
+import type { range, TitleOptionProps } from "./RadialGauge.types";
 
-interface ITitleProps {
+interface TitleProps {
   titleOptions: TitleOptionProps;
   value: number;
   range: range;
   containerWidth: number;
   progressFillerWidth: number;
-  containerStyles?: any;
-  valueTextStyles?: any;
-  appendedTextStyles?: any;
 }
 
 export const defaultTitleOptions: TitleOptionProps = {
-  // styles: undefined,
   containerStyles: {
     color: "black",
-    // marginBottom: undefined,
-    // marginTop: '20px'
   },
   valueTextStyles: {
     color: "black",
   },
   appendedTextStyles: {},
-  // appenededText: undefined,
-  // reactNode: undefined,
   verticalPosition: "center",
 };
 
-interface SCContainerProps {
-  verticalPosition: verticalPosition;
-  fontSize: string;
-  progressFillerWidth: number;
-}
-const Container = styled.div<SCContainerProps>`
-  display: flex;
-  font-weight: 300;
-  font-size: ${({ fontSize }) => fontSize};
-  position: absolute;
-  top: ${({ verticalPosition, fontSize, progressFillerWidth }) =>
-    `calc(${verticalPosition === "center" ? `50%` : verticalPosition === "bottom" ? `100% - calc(${fontSize} * 1.2)` : `calc(${progressFillerWidth}px + ${fontSize})`})`};
-  display: block;
-  z-index: 10;
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    "Open Sans",
-    "Helvetica Neue",
-    sans-serif;
-  width: 100%;
-  text-align: center;
-`;
-const AppendedText = styled.span<{ fontSize: string }>`
-  font-size: calc(${({ fontSize }) => fontSize} * 0.8);
-`;
-const Title: React.FunctionComponent<ITitleProps> = ({
-  titleOptions: {
-    reactNode,
-    appendedText,
-    verticalPosition,
-    toFixedAmount,
-    containerStyles,
-    valueTextStyles,
-    appendedTextStyles,
-  },
+const Title: FunctionComponent<TitleProps> = ({
+  titleOptions,
   value,
   range,
   containerWidth,
   progressFillerWidth,
 }) => {
-  const fontCalc = `calc(${containerWidth / 12}px )`;
-  // console.log(fontCalc)
-  if (typeof range === "number") range = [0, range];
+  const {
+    reactNode,
+    appendedText,
+    verticalPosition = "center",
+    toFixedAmount = 0,
+    containerStyles,
+    valueTextStyles,
+    appendedTextStyles,
+  } = titleOptions;
+  const fontSize = `${containerWidth / 12}px`;
+  const top =
+    verticalPosition === "center"
+      ? "50%"
+      : verticalPosition === "bottom"
+        ? `calc(100% - (${fontSize} * 1.2))`
+        : `calc(${progressFillerWidth}px + ${fontSize})`;
+  const style: CSSProperties = {
+    top,
+    fontSize,
+    ...containerStyles,
+  };
+  const normalizedRange = typeof range === "number" ? [0, range] : range;
+  const suffix =
+    appendedText ??
+    (normalizedRange[0] === 0 && normalizedRange[1] === 100 ? "%" : "");
 
-  // console.log(value)
   return (
-    <Container
-      progressFillerWidth={progressFillerWidth}
-      fontSize={fontCalc}
-      verticalPosition={verticalPosition!}
-      style={{ fontSize: fontCalc, ...containerStyles }}
-    >
-      {reactNode ? (
-        reactNode
-      ) : (
+    <div className="absolute z-10 block w-full text-center font-light font-sans" style={style}>
+      {reactNode ?? (
         <>
-          <span style={valueTextStyles}>
-            {value.toFixed(
-              toFixedAmount! >= 0 && toFixedAmount! <= 2 ? toFixedAmount : 0,
-            )}
-          </span>
-          <AppendedText style={appendedTextStyles} fontSize={fontCalc}>
-            {appendedText
-              ? appendedText
-              : appendedText === false
-                ? ""
-                : range[0] === 0 && range[1] === 100
-                  ? "%"
-                  : ""}
-          </AppendedText>
+          <span style={valueTextStyles}>{value.toFixed(toFixedAmount)}</span>
+          {suffix && (
+            <span
+              className="text-inherit"
+              style={{
+                fontSize: `calc(${fontSize} * 0.8)`,
+                ...appendedTextStyles,
+              }}
+            >
+              {suffix}
+            </span>
+          )}
         </>
       )}
-    </Container>
+    </div>
   );
 };
 

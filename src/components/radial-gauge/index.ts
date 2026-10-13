@@ -3,6 +3,10 @@ export { RadialGauge } from "./RadialGauge";
 
 // Export public types so users can type props or configurations
 export type {
+  GaugeMeterProps,
+  LabelOptions,
   LabelComponentProps,
-  //   RadialGaugeThreshold
+  ProgressBarOptions,
+  RadialGaugeProps,
+  TitleOptionProps,
 } from "./RadialGauge.types";
