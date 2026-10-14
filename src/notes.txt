@@ -1,0 +1,19 @@
+Bugs 
+- Edge cases on value. Causes progress bar to disappear or appear under value text after its fixed. Make value default to max 
+- rounded caps ends dont get filled in
+- progress bar color bugs in three quarter shape
+- Needle causes progress bar to fill entirely when value is less than max
+- 
+
+Potential issues:
+- changing the variant value retroactively causes the label text move further down to make room for needle, changing the height. 
+- 
+
+Things to think about 
+- Tick and value labels need space beyond the progress bar, depending on text size and other sizes, width and height might be hard to work with. Add scaling or something.
+- Make sure progress bar and needle animates smoothly. add to story book a "live" simulation
+- 
+
+To Do: 
+- Progress bar: [color - static filled, dynamic filling, ] [Thickness, choppy/smooth animation]
+- 
