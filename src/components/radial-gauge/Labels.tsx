@@ -22,9 +22,9 @@ export const defaultLabelOptions: LabelOptions = {
   size: "default",
   appendedText: false,
   labelValueToFixed: 0,
-  labelPosition: "inward",
+  labelPosition: "outward",
   labelStyles: {
-    color: "black",
+    color: "#94a3b8",
   },
 };
 

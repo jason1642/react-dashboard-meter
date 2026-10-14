@@ -7,6 +7,7 @@ export type {
   LabelOptions,
   LabelComponentProps,
   ProgressBarOptions,
+  ProgressBarColorMode,
   RadialGaugeProps,
   TitleOptionProps,
 } from "./radial-gauge/RadialGauge.types";

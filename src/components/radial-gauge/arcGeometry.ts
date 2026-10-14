@@ -14,8 +14,8 @@ export interface Point {
   y: number;
 }
 
-export const getGaugeHeight = (width: number, shape: GaugeShape): number =>
-  width * (shape === "half-circle" ? 0.5 : 0.72);
+export const getGaugeHeight = (width: number, _shape: GaugeShape): number =>
+  width * 0.72;
 
 export const getGaugeArcGeometry = (
   width: number,
@@ -25,9 +25,10 @@ export const getGaugeArcGeometry = (
 ): GaugeArcGeometry => {
   const startAngle = shape === "half-circle" ? 180 : 135;
   const sweepAngle = shape === "half-circle" ? 180 : 270;
+  const arcHeight = shape === "half-circle" ? height - width * 0.22 : height;
   const availableRadius =
     shape === "half-circle"
-      ? Math.min(width / 2, height)
+      ? Math.min(width / 2, arcHeight)
       : Math.min(width / 2, height / 1.7072);
   const strokeWidth = Math.max(
     8,
@@ -35,7 +36,7 @@ export const getGaugeArcGeometry = (
   );
   const radius =
     shape === "half-circle"
-      ? Math.max(1, Math.min(width / 2 - strokeWidth / 2, height - strokeWidth))
+      ? Math.max(1, Math.min(width / 2 - strokeWidth / 2, arcHeight - strokeWidth))
       : Math.max(
           1,
           Math.min(
@@ -47,7 +48,9 @@ export const getGaugeArcGeometry = (
   return {
     centerX: width / 2,
     centerY:
-      shape === "half-circle" ? height - strokeWidth / 2 : radius + strokeWidth / 2,
+      shape === "half-circle"
+        ? arcHeight + width * 0.08 - strokeWidth / 2
+        : radius + strokeWidth / 2,
     radius,
     strokeWidth,
     startAngle,

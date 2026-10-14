@@ -13,7 +13,7 @@ interface PositionLabelArrayOptions {
 }
 
 const labelClassName =
-  "absolute z-[33] flex items-center justify-center text-center font-sans font-bold text-black";
+  "absolute z-[33] flex items-center justify-center text-center font-sans font-medium text-slate-400";
 
 export const positionLabelsArray = ({
   range,
@@ -38,7 +38,7 @@ export const positionLabelsArray = ({
     ? Math.max(2, Math.min(25, Math.floor(requestedCount)))
     : 5;
   const fontScale = size === "small" ? 0.5 : size === "large" ? 0.75 : 0.6;
-  const fontSize = Math.max(10, progressFillerWidth * fontScale);
+  const fontSize = Math.max(12, progressFillerWidth * fontScale);
   const geometry = getGaugeArcGeometry(
     containerWidth,
     containerHeight,
@@ -50,7 +50,7 @@ export const positionLabelsArray = ({
       ? geometry.radius - geometry.strokeWidth * 0.25
       : labelPosition === "inward"
         ? geometry.radius - geometry.strokeWidth * 0.9
-        : geometry.radius + fontSize * 0.9;
+        : geometry.radius + geometry.strokeWidth * 1.08 + fontSize * 0.9;
   const suffix =
     appendedText === false
       ? ""
@@ -65,9 +65,9 @@ export const positionLabelsArray = ({
     const cosine = Math.cos((angle * Math.PI) / 180);
     const transform =
       cosine < -0.8
-        ? "translateY(-50%)"
+        ? "translate(-100%, -50%)"
         : cosine > 0.8
-          ? "translate(-100%, -50%)"
+          ? "translateY(-50%)"
           : "translate(-50%, -50%)";
     const style: CSSProperties = {
       left: point.x,

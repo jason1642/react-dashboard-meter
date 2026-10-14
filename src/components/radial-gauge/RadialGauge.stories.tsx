@@ -20,14 +20,14 @@ const meta = {
     target: 80,
     ticks: "labels-and-ticks",
     range: [0, 100],
-    innerAreaColor: "#ffffff",
     labelOptions: {
       fixedLabels: standardLabels,
       labelPosition: "outward",
     },
     progressBarOptions: {
-      fillerTriColors: ["#16a34a", "#facc15", "#ef4444"],
-      emptyAreaColor: "#d1d5db",
+      fillerTriColors: ["#34d399", "#fbbf24", "#fb7185"],
+      emptyAreaColor: "#283244",
+      colorMode: "thresholds",
     },
     titleOptions: {
       appendedText: "%",
@@ -41,6 +41,7 @@ const meta = {
           boxSizing: "border-box",
           width: "min(440px, 90vw)",
           padding: 24,
+          backgroundColor: "#283244",
         }}
       >
         <Story />
@@ -53,7 +54,10 @@ const meta = {
   argTypes: {
     shape: { control: "select", options: ["half-circle", "three-quarter"] },
     variant: { control: "select", options: ["filled-arc", "needle"] },
-    ticks: { control: "select", options: ["labels-and-ticks", "ticks-only", "none", "labels-only"] },
+    ticks: {
+      control: "select",
+      options: ["labels-and-ticks", "ticks-only", "none", "labels-only"],
+    },
     roundedCaps: { control: "boolean" },
     showValue: { control: "boolean" },
     showTarget: { control: "boolean" },

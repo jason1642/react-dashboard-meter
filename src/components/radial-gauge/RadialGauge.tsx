@@ -19,11 +19,10 @@ const RadialGauge = ({
   progressBarOptions,
   titleOptions,
   labelOptions,
-  innerAreaColor = "white",
   range = [0, 100],
   innerAreaSize,
   containerStyles,
-  roundedCaps = true,
+  roundedCaps = false,
   showValue = true,
   showTarget = false,
   target,
@@ -60,7 +59,7 @@ const RadialGauge = ({
   return (
     <GaugeContainer
       shape={shape}
-      containerStyles={containerStyles}
+      containerStyles={{ backgroundColor: "#111827", ...containerStyles }}
       handleMaxValues={handleMaxValues}
     >
       {dimensions && progressFillerWidth !== undefined && (
@@ -75,7 +74,6 @@ const RadialGauge = ({
             percentFilled={percentFilled}
             progressFillerWidth={progressFillerWidth}
             progressBarOptions={progressBarOptions}
-            innerAreaColor={innerAreaColor}
             roundedCaps={roundedCaps}
             ticks={ticks}
             showTarget={showTarget}

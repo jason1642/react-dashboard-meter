@@ -18,6 +18,7 @@ export type fillerTriColors = string | [string, string, string?];
 export type GaugeShape = "half-circle" | "three-quarter";
 export type GaugeVariant = "filled-arc" | "needle";
 export type GaugeTicks = "labels-and-ticks" | "ticks-only" | "none" | "labels-only";
+export type ProgressBarColorMode = "thresholds" | "gradient";
 
 export interface LabelOptions {
   fixedLabels?: fixedLabels;
@@ -50,6 +51,7 @@ export interface TitleOptionProps {
 export interface ProgressBarOptions {
   fillerTriColors?: fillerTriColors;
   emptyAreaColor?: string;
+  colorMode?: ProgressBarColorMode;
 }
 
 export interface RadialGaugeProps {
@@ -65,6 +67,7 @@ export interface RadialGaugeProps {
   containerStyles?: CSSProperties;
   range?: range;
   labelOptions?: LabelOptions;
+  /** @deprecated The gauge interior is transparent; style the container instead. */
   innerAreaColor?: string;
   progressBarOptions?: ProgressBarOptions;
   titleOptions?: TitleOptionProps;

@@ -11,10 +11,10 @@ interface TitleProps {
 
 export const defaultTitleOptions: TitleOptionProps = {
   containerStyles: {
-    color: "black",
+    color: "#e7ebf5",
   },
   valueTextStyles: {
-    color: "black",
+    color: "#e7ebf5",
   },
   appendedTextStyles: {},
   verticalPosition: "center",
@@ -41,7 +41,7 @@ const Title: FunctionComponent<TitleProps> = ({
     verticalPosition === "center"
       ? "50%"
       : verticalPosition === "bottom"
-        ? `calc(100% - (${fontSize} * 1.2))`
+        ? `calc(100% - (${fontSize} * 1.35))`
         : `calc(${progressFillerWidth}px + ${fontSize})`;
   const style: CSSProperties = {
     top,

@@ -21,7 +21,6 @@ interface ProgressBarFillerProps {
   labelOptions: LabelOptions;
   progressFillerWidth: number;
   percentFilled: number;
-  innerAreaColor: string;
   roundedCaps: boolean;
   ticks: GaugeTicks;
   showTarget: boolean;
@@ -38,7 +37,6 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
   progressBarOptions,
   maxValues,
   innerAreaSize,
-  innerAreaColor,
   progressFillerWidth,
   percentFilled,
   roundedCaps,
@@ -49,11 +47,13 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
   const generatedId = useId().replace(/:/g, "");
   const gradientId = `radial-gauge-gradient-${generatedId}`;
   const colors = progressBarOptions?.fillerTriColors;
-  const stops = Array.isArray(colors)
+  const colorMode = progressBarOptions?.colorMode ?? "thresholds";
+  const requestedStops = Array.isArray(colors)
     ? colors.filter(Boolean)
     : colors
       ? [colors, colors]
       : FALLBACK_COLORS;
+  const stops = requestedStops.length > 0 ? requestedStops : FALLBACK_COLORS;
   const gradientStops = stops.map((color, index) => ({
     color,
     offset: stops.length === 1 ? "0%" : `${(index / (stops.length - 1)) * 100}%`,
@@ -65,9 +65,8 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
     innerAreaSize,
   );
   const fullPath = getArcPath(geometry);
-  const sectorPath = `${fullPath} L ${geometry.centerX} ${geometry.centerY} Z`;
   const activePath = getArcPath(geometry, percentFilled);
-  const trackColor = progressBarOptions?.emptyAreaColor ?? "#a79898";
+  const trackColor = progressBarOptions?.emptyAreaColor ?? "#283244";
   const viewBox = `0 0 ${maxValues.maxWidth} ${maxValues.maxHeight}`;
   const cap = roundedCaps ? "round" : "butt";
   const [rangeMinimum, rangeMaximum] = typeof range === "number" ? [0, range] : range;
@@ -128,27 +127,35 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
           </linearGradient>
         </defs>
 
-        <path d={sectorPath} fill={innerAreaColor} />
-
-        {(ticks === "labels-and-ticks" || ticks === "ticks-only") && Array.from({ length: 5 }, (_, index) => {
-          const angle = geometry.startAngle + geometry.sweepAngle * index / 4;
-          const from = getArcPoint(geometry, angle, geometry.radius - geometry.strokeWidth * 0.72);
-          const to = getArcPoint(geometry, angle, geometry.radius + geometry.strokeWidth * 0.72);
-          return <line key={`tick-${index}`} x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke="#94a3b8" strokeWidth={Math.max(1, geometry.strokeWidth * 0.09)} />;
-        })}
-
-        {showTarget && (
-          <line x1={targetInner.x} y1={targetInner.y} x2={targetOuter.x} y2={targetOuter.y} stroke="#f8fafc" strokeWidth={Math.max(2, geometry.strokeWidth * 0.12)} />
-        )}
-
         {variant === "needle" ? (
-          <path
-            d={fullPath}
-            fill="none"
-            stroke={`url(#${gradientId})`}
-            strokeLinecap={cap}
-            strokeWidth={geometry.strokeWidth}
-          />
+          colorMode === "gradient" ? (
+            <path
+              d={fullPath}
+              fill="none"
+              stroke={`url(#${gradientId})`}
+              strokeLinecap={cap}
+              strokeWidth={geometry.strokeWidth}
+            />
+          ) : (
+            <>
+              {stops.map((color, index) => {
+                const segmentSize = 100 / stops.length;
+                return (
+                  <path
+                    key={`needle-zone-${index}`}
+                    d={fullPath}
+                    fill="none"
+                    pathLength={100}
+                    stroke={color}
+                    strokeDasharray={`${segmentSize} ${100 - segmentSize}`}
+                    strokeDashoffset={-index * segmentSize}
+                    strokeLinecap="butt"
+                    strokeWidth={geometry.strokeWidth}
+                  />
+                );
+              })}
+            </>
+          )
         ) : (
           <>
             <path
@@ -158,7 +165,7 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
               strokeLinecap={cap}
               strokeWidth={geometry.strokeWidth}
             />
-            {activePath && (
+            {activePath && colorMode === "gradient" && (
               <path
                 d={activePath}
                 fill="none"
@@ -169,7 +176,73 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
                 strokeWidth={geometry.strokeWidth}
               />
             )}
+            {activePath && colorMode === "thresholds" &&
+              stops.map((color, index) => {
+                const segmentSize = 100 / stops.length;
+                const segmentStart = index * segmentSize;
+                const segmentEnd = Math.min(percentFilled, segmentStart + segmentSize);
+                const visibleSize = segmentEnd - segmentStart;
+                if (visibleSize <= 0) return null;
+                return (
+                  <path
+                    key={`active-zone-${index}`}
+                    d={fullPath}
+                    fill="none"
+                    pathLength={100}
+                    stroke={color}
+                    strokeDasharray={`${visibleSize} ${100 - visibleSize}`}
+                    strokeDashoffset={-segmentStart}
+                    strokeLinecap="butt"
+                    strokeWidth={geometry.strokeWidth}
+                  />
+                );
+              })}
           </>
+        )}
+
+        {colorMode === "thresholds" && stops.slice(1).map((_, index) => {
+          const boundaryPercent = (index + 1) * 100 / stops.length;
+          if (variant === "filled-arc" && boundaryPercent > percentFilled) return null;
+          const angle = geometry.startAngle + geometry.sweepAngle * (index + 1) / stops.length;
+          const from = getArcPoint(geometry, angle, geometry.radius - geometry.strokeWidth * 0.52);
+          const to = getArcPoint(geometry, angle, geometry.radius + geometry.strokeWidth * 0.52);
+          return (
+            <line
+              key={`zone-separator-${index}`}
+              x1={from.x}
+              y1={from.y}
+              x2={to.x}
+              y2={to.y}
+              stroke="#111827"
+              strokeWidth={Math.max(1.5, geometry.strokeWidth * 0.07)}
+            />
+          );
+        })}
+
+        {(ticks === "labels-and-ticks" || ticks === "ticks-only") &&
+          Array.from({ length: 21 }, (_, index) => {
+            const isMajor = index % 5 === 0;
+            const angle = geometry.startAngle + geometry.sweepAngle * index / 20;
+            const innerOffset = geometry.strokeWidth * (isMajor ? 0.64 : 0.54);
+            const outerOffset = geometry.strokeWidth * (isMajor ? 1.08 : 0.78);
+            const from = getArcPoint(geometry, angle, geometry.radius + innerOffset);
+            const to = getArcPoint(geometry, angle, geometry.radius + outerOffset);
+            return (
+              <line
+                key={`tick-${index}`}
+                x1={from.x}
+                y1={from.y}
+                x2={to.x}
+                y2={to.y}
+                stroke={isMajor ? "#8491a8" : "#3f4b60"}
+                strokeLinecap="round"
+                strokeWidth={isMajor ? Math.max(1.5, geometry.strokeWidth * 0.075) : Math.max(1, geometry.strokeWidth * 0.04)}
+              />
+            );
+          })}
+
+        {showTarget && (
+          <line x1={targetInner.x} y1={targetInner.y} x2={targetOuter.x} y2={targetOuter.y} stroke="#f8fafc" strokeWidth={Math.max(2, geometry.strokeWidth * 0.12)} />
         )}
 
         {variant === "needle" && (
