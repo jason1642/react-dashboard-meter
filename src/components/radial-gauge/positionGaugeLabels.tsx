@@ -1,9 +1,10 @@
 import type { CSSProperties, ReactNode } from "react";
-import type { GaugeShape, LabelOptions, range } from "./RadialGauge.types";
-import { getArcPoint, getGaugeArcGeometry } from "./arcGeometry";
+import type { GaugeShape, LabelOptions, Range } from "./types";
+import { getArcPoint } from "../../helpers/arc";
+import { getGaugeArcGeometry } from "./geometry";
 
-interface PositionLabelArrayOptions {
-  range: range;
+interface PositionGaugeLabelsOptions {
+  range: Range;
   labelOptions: LabelOptions;
   containerWidth: number;
   containerHeight: number;
@@ -15,7 +16,7 @@ interface PositionLabelArrayOptions {
 const labelClassName =
   "absolute z-[33] flex items-center justify-center text-center font-sans font-medium text-slate-400";
 
-export const positionLabelsArray = ({
+export const positionGaugeLabels = ({
   range,
   labelOptions,
   containerWidth,
@@ -23,7 +24,7 @@ export const positionLabelsArray = ({
   progressFillerWidth,
   innerAreaSize,
   shape,
-}: PositionLabelArrayOptions): ReactNode[] => {
+}: PositionGaugeLabelsOptions): ReactNode[] => {
   const [minimum, maximum] = typeof range === "number" ? [0, range] : range;
   const {
     fixedLabels,
@@ -49,7 +50,7 @@ export const positionLabelsArray = ({
     labelPosition === "inside"
       ? geometry.radius - geometry.strokeWidth * 0.25
       : labelPosition === "inward"
-        ? geometry.radius - geometry.strokeWidth * 0.9
+        ? geometry.radius - geometry.strokeWidth * 0.62
         : geometry.radius + geometry.strokeWidth * 1.08 + fontSize * 0.9;
   const suffix =
     appendedText === false

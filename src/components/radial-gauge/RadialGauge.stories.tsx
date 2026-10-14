@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { RadialGauge } from "./RadialGauge";
-import type { GaugeMeterProps } from "./RadialGauge.types";
+import type { RadialGaugeProps } from "./types";
 
 const standardLabels: NonNullable<
-  GaugeMeterProps["labelOptions"]
+  RadialGaugeProps["labelOptions"]
 >["fixedLabels"] = ["0", "25", "50", "75", "100"];
 
 const meta = {
@@ -29,7 +29,7 @@ const meta = {
       emptyAreaColor: "#283244",
       colorMode: "thresholds",
     },
-    titleOptions: {
+    valueOptions: {
       appendedText: "%",
       toFixedAmount: 0,
     },
@@ -85,7 +85,7 @@ export const CustomRange: Story = {
   args: {
     value: 720,
     range: [0, 1000],
-    titleOptions: {
+    valueOptions: {
       appendedText: " pts",
       toFixedAmount: 0,
     },

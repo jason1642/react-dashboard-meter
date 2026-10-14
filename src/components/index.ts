@@ -1,5 +1,17 @@
 export { RadialGauge } from "./radial-gauge/RadialGauge";
 export type {
+  GaugeDimensions,
+  GaugeValue,
+  Range,
+  InnerAreaSize,
+  LabelPosition,
+  LabelSize,
+  AppendedText,
+  LabelValueToFixed,
+  FixedLabels,
+  VerticalPosition,
+  FillerTriColors,
+  GaugeValueOptions,
   GaugeMeterProps,
   GaugeShape,
   GaugeVariant,
@@ -10,5 +22,5 @@ export type {
   ProgressBarColorMode,
   RadialGaugeProps,
   TitleOptionProps,
-} from "./radial-gauge/RadialGauge.types";
+} from "./radial-gauge/types";
 // export {default as LinearMeter} from './dashboard-meter/linear-meter/LinearMeter'

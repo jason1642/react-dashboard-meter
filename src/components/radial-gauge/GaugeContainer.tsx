@@ -1,19 +1,17 @@
 import { useLayoutEffect, useRef, type CSSProperties, type ReactNode } from "react";
-import type { GaugeShape, maxValues } from "./RadialGauge.types";
-import { getGaugeHeight } from "./arcGeometry";
+import type { GaugeDimensions } from "./types";
+import { getGaugeHeight } from "./geometry";
 
 interface GaugeContainerProps {
   children: ReactNode;
   containerStyles?: CSSProperties;
-  shape: GaugeShape;
-  handleMaxValues: (maxValues: maxValues) => void;
+  onDimensionsChange: (dimensions: GaugeDimensions) => void;
 }
 
 const GaugeContainer = ({
   children,
   containerStyles,
-  shape,
-  handleMaxValues,
+  onDimensionsChange,
 }: GaugeContainerProps) => {
   const gaugeRef = useRef<HTMLDivElement>(null);
 
@@ -24,7 +22,7 @@ const GaugeContainer = ({
     const measure = () => {
       const maxWidth = element.clientWidth;
       if (maxWidth > 0) {
-        handleMaxValues({ maxWidth, maxHeight: getGaugeHeight(maxWidth, shape) });
+        onDimensionsChange({ maxWidth, maxHeight: getGaugeHeight(maxWidth) });
       }
     };
 
@@ -38,11 +36,11 @@ const GaugeContainer = ({
     const observer = new ResizeObserver(measure);
     observer.observe(element);
     return () => observer.disconnect();
-  }, [handleMaxValues, shape]);
+  }, [onDimensionsChange]);
 
   const style: CSSProperties = {
     height: gaugeRef.current
-      ? getGaugeHeight(gaugeRef.current.clientWidth, shape)
+      ? getGaugeHeight(gaugeRef.current.clientWidth)
       : undefined,
     ...containerStyles,
   };

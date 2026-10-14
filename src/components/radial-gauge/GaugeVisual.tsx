@@ -4,17 +4,19 @@ import type {
   GaugeVariant,
   GaugeTicks,
   LabelOptions,
-  maxValues,
+  GaugeDimensions,
+  InnerAreaSize,
   ProgressBarOptions,
-  range,
-} from "./RadialGauge.types";
-import { getArcPath, getArcPoint, getGaugeArcGeometry } from "./arcGeometry";
-import Labels from "./Labels";
+  Range,
+} from "./types";
+import { getArcPath, getArcPoint, getArcSegmentPath } from "../../helpers/arc";
+import { getGaugeArcGeometry } from "./geometry";
+import GaugeLabels from "./GaugeLabels";
 
-interface ProgressBarFillerProps {
-  maxValues: maxValues;
-  innerAreaSize: number;
-  range: range;
+interface GaugeVisualProps {
+  dimensions: GaugeDimensions;
+  innerAreaSize: InnerAreaSize;
+  range: Range;
   shape: GaugeShape;
   variant: GaugeVariant;
   progressBarOptions?: ProgressBarOptions;
@@ -29,13 +31,13 @@ interface ProgressBarFillerProps {
 
 const FALLBACK_COLORS = ["#34d399", "#fbbf24", "#fb7185"];
 
-const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
+const GaugeVisual: FunctionComponent<GaugeVisualProps> = ({
   labelOptions,
   range,
   shape,
   variant,
   progressBarOptions,
-  maxValues,
+  dimensions,
   innerAreaSize,
   progressFillerWidth,
   percentFilled,
@@ -59,15 +61,17 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
     offset: stops.length === 1 ? "0%" : `${(index / (stops.length - 1)) * 100}%`,
   }));
   const geometry = getGaugeArcGeometry(
-    maxValues.maxWidth,
-    maxValues.maxHeight,
+    dimensions.maxWidth,
+    dimensions.maxHeight,
     shape,
     innerAreaSize,
   );
   const fullPath = getArcPath(geometry);
   const activePath = getArcPath(geometry, percentFilled);
+  const needleShowsProgress = variant === "needle" && shape === "three-quarter";
+  const showsProgress = variant === "filled-arc" || needleShowsProgress;
   const trackColor = progressBarOptions?.emptyAreaColor ?? "#283244";
-  const viewBox = `0 0 ${maxValues.maxWidth} ${maxValues.maxHeight}`;
+  const viewBox = `0 0 ${dimensions.maxWidth} ${dimensions.maxHeight}`;
   const cap = roundedCaps ? "round" : "butt";
   const [rangeMinimum, rangeMaximum] = typeof range === "number" ? [0, range] : range;
   const targetValue = target ?? (rangeMinimum + rangeMaximum) / 2;
@@ -81,10 +85,12 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
 
   const needleAngle =
     geometry.startAngle + (geometry.sweepAngle * percentFilled) / 100;
+  const needleTipRadius = geometry.radius - geometry.strokeWidth *
+    (labelOptions.labelPosition === "inward" ? 1.05 : 0.85);
   const tip = getArcPoint(
     geometry,
     needleAngle,
-    geometry.radius - geometry.strokeWidth * 0.85,
+    Math.max(geometry.strokeWidth * 0.2, needleTipRadius),
   );
   const radians = (needleAngle * Math.PI) / 180;
   const baseRadius = geometry.strokeWidth * 0.45;
@@ -103,8 +109,8 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
     `${baseCenter.x - perpendicular.x},${baseCenter.y - perpendicular.y}`,
   ].join(" ");
   const wrapperStyle: CSSProperties = {
-    width: maxValues.maxWidth,
-    height: maxValues.maxHeight,
+    width: dimensions.maxWidth,
+    height: dimensions.maxHeight,
   };
 
   return (
@@ -127,7 +133,7 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
           </linearGradient>
         </defs>
 
-        {variant === "needle" ? (
+        {variant === "needle" && !needleShowsProgress ? (
           colorMode === "gradient" ? (
             <path
               d={fullPath}
@@ -143,12 +149,9 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
                 return (
                   <path
                     key={`needle-zone-${index}`}
-                    d={fullPath}
+                    d={getArcSegmentPath(geometry, index * segmentSize, (index + 1) * segmentSize)}
                     fill="none"
-                    pathLength={100}
                     stroke={color}
-                    strokeDasharray={`${segmentSize} ${100 - segmentSize}`}
-                    strokeDashoffset={-index * segmentSize}
                     strokeLinecap="butt"
                     strokeWidth={geometry.strokeWidth}
                   />
@@ -162,16 +165,14 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
               d={fullPath}
               fill="none"
               stroke={trackColor}
-              strokeLinecap={cap}
+              strokeLinecap={roundedCaps ? "round" : "butt"}
               strokeWidth={geometry.strokeWidth}
             />
             {activePath && colorMode === "gradient" && (
               <path
                 d={activePath}
                 fill="none"
-                pathLength={100}
                 stroke={`url(#${gradientId})`}
-                strokeDasharray={`${percentFilled} 100`}
                 strokeLinecap={cap}
                 strokeWidth={geometry.strokeWidth}
               />
@@ -186,12 +187,9 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
                 return (
                   <path
                     key={`active-zone-${index}`}
-                    d={fullPath}
+                    d={getArcSegmentPath(geometry, segmentStart, segmentEnd)}
                     fill="none"
-                    pathLength={100}
                     stroke={color}
-                    strokeDasharray={`${visibleSize} ${100 - visibleSize}`}
-                    strokeDashoffset={-segmentStart}
                     strokeLinecap="butt"
                     strokeWidth={geometry.strokeWidth}
                   />
@@ -202,7 +200,7 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
 
         {colorMode === "thresholds" && stops.slice(1).map((_, index) => {
           const boundaryPercent = (index + 1) * 100 / stops.length;
-          if (variant === "filled-arc" && boundaryPercent > percentFilled) return null;
+          if (showsProgress && boundaryPercent > percentFilled) return null;
           const angle = geometry.startAngle + geometry.sweepAngle * (index + 1) / stops.length;
           const from = getArcPoint(geometry, angle, geometry.radius - geometry.strokeWidth * 0.52);
           const to = getArcPoint(geometry, angle, geometry.radius + geometry.strokeWidth * 0.52);
@@ -218,6 +216,25 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
             />
           );
         })}
+
+        {roundedCaps && colorMode === "thresholds" &&
+          (showsProgress ? percentFilled > 0 : true) && (() => {
+            const endPercent = showsProgress ? percentFilled : 100;
+            const endColorIndex = Math.min(
+              stops.length - 1,
+              Math.max(0, Math.ceil(endPercent / (100 / stops.length)) - 1),
+            );
+            const endAngle = geometry.startAngle + geometry.sweepAngle * endPercent / 100;
+            const endPoint = getArcPoint(geometry, endAngle);
+            const startPoint = getArcPoint(geometry, geometry.startAngle);
+            const radius = geometry.strokeWidth / 2;
+            return (
+              <>
+                <circle cx={startPoint.x} cy={startPoint.y} r={radius} fill={stops[0]} />
+                <circle cx={endPoint.x} cy={endPoint.y} r={radius} fill={stops[endColorIndex]} />
+              </>
+            );
+          })()}
 
         {(ticks === "labels-and-ticks" || ticks === "ticks-only") &&
           Array.from({ length: 21 }, (_, index) => {
@@ -264,10 +281,10 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
         )}
       </svg>
 
-      <Labels
+      <GaugeLabels
         progressFillerWidth={progressFillerWidth}
-        containerHeight={maxValues.maxHeight}
-        containerWidth={maxValues.maxWidth}
+        containerHeight={dimensions.maxHeight}
+        containerWidth={dimensions.maxWidth}
         innerAreaSize={innerAreaSize}
         labelOptions={labelOptions}
         range={range}
@@ -278,4 +295,4 @@ const ProgressBarFiller: FunctionComponent<ProgressBarFillerProps> = ({
   );
 };
 
-export default ProgressBarFiller;
+export default GaugeVisual;

@@ -16,4 +16,6 @@ Things to think about
 
 To Do: 
 - Progress bar: [color - static filled, dynamic filling, ] [Thickness, choppy/smooth animation]
+- Needle variants
+- Inner area filled option in a half pie chart fashion
 - 

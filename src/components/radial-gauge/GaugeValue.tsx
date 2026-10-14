@@ -1,15 +1,19 @@
 import type { CSSProperties, FunctionComponent } from "react";
-import type { range, TitleOptionProps } from "./RadialGauge.types";
+import type {
+  GaugeValue as GaugeValueNumber,
+  GaugeValueOptions,
+  Range,
+} from "./types";
 
-interface TitleProps {
-  titleOptions: TitleOptionProps;
-  value: number;
-  range: range;
+interface GaugeValueProps {
+  valueOptions: GaugeValueOptions;
+  value: GaugeValueNumber;
+  range: Range;
   containerWidth: number;
   progressFillerWidth: number;
 }
 
-export const defaultTitleOptions: TitleOptionProps = {
+export const defaultGaugeValueOptions: GaugeValueOptions = {
   containerStyles: {
     color: "#e7ebf5",
   },
@@ -20,8 +24,8 @@ export const defaultTitleOptions: TitleOptionProps = {
   verticalPosition: "center",
 };
 
-const Title: FunctionComponent<TitleProps> = ({
-  titleOptions,
+const GaugeValueDisplay: FunctionComponent<GaugeValueProps> = ({
+  valueOptions,
   value,
   range,
   containerWidth,
@@ -35,7 +39,7 @@ const Title: FunctionComponent<TitleProps> = ({
     containerStyles,
     valueTextStyles,
     appendedTextStyles,
-  } = titleOptions;
+  } = valueOptions;
   const fontSize = `${containerWidth / 12}px`;
   const top =
     verticalPosition === "center"
@@ -76,4 +80,4 @@ const Title: FunctionComponent<TitleProps> = ({
   );
 };
 
-export default Title;
+export default GaugeValueDisplay;

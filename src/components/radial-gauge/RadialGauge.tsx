@@ -1,22 +1,23 @@
 import { useCallback, useState } from "react";
 import "../../tailwind.css";
 import type {
-  GaugeMeterProps,
-  innerAreaSize,
-  maxValues,
-} from "./RadialGauge.types";
-import GaugeContainer from "./Container";
-import ProgressBarFiller from "./ProgressBarFiller";
-import { calculatePercentFilled } from "./calculatePercentFilled";
-import { getGaugeArcGeometry } from "./arcGeometry";
-import { defaultLabelOptions } from "./Labels";
-import Title, { defaultTitleOptions } from "./Title";
+  GaugeDimensions,
+  InnerAreaSize,
+  RadialGaugeProps,
+} from "./types";
+import { clampToRange, getRangeBounds, valueToPercent } from "../../helpers/meterScale";
+import GaugeContainer from "./GaugeContainer";
+import GaugeVisual from "./GaugeVisual";
+import { getGaugeArcGeometry } from "./geometry";
+import { defaultLabelOptions } from "./GaugeLabels";
+import GaugeValue, { defaultGaugeValueOptions } from "./GaugeValue";
 
 const RadialGauge = ({
   value,
   shape = "half-circle",
   variant = "filled-arc",
   progressBarOptions,
+  valueOptions,
   titleOptions,
   labelOptions,
   range = [0, 100],
@@ -27,11 +28,16 @@ const RadialGauge = ({
   showTarget = false,
   target,
   ticks = "labels-and-ticks",
-}: GaugeMeterProps) => {
-  const resolvedInnerAreaSize: innerAreaSize =
+}: RadialGaugeProps) => {
+  const [, rangeMaximum] = getRangeBounds(range);
+  const valueForRange = typeof value === "number" && Number.isFinite(value)
+    ? value
+    : rangeMaximum;
+  const resolvedValue = clampToRange(valueForRange, range);
+  const resolvedInnerAreaSize: InnerAreaSize =
     innerAreaSize ?? (labelOptions?.labelPosition === "inside" ? 79 : 86);
-  const [dimensions, setDimensions] = useState<maxValues>();
-  const handleMaxValues = useCallback((nextDimensions: maxValues) => {
+  const [dimensions, setDimensions] = useState<GaugeDimensions>();
+  const handleDimensionsChange = useCallback((nextDimensions: GaugeDimensions) => {
     setDimensions((current) =>
       current?.maxWidth === nextDimensions.maxWidth &&
       current?.maxHeight === nextDimensions.maxHeight
@@ -39,11 +45,11 @@ const RadialGauge = ({
         : nextDimensions,
     );
   }, []);
-  const percentFilled = calculatePercentFilled(value, range);
-  const shapeTitleDefaults =
+  const percentFilled = valueToPercent(resolvedValue, range);
+  const shapeValueDefaults =
     shape === "three-quarter"
-      ? { ...defaultTitleOptions, verticalPosition: "bottom" as const }
-      : defaultTitleOptions;
+      ? { ...defaultGaugeValueOptions, verticalPosition: "bottom" as const }
+      : defaultGaugeValueOptions;
 
   if (typeof percentFilled !== "number") return null;
 
@@ -58,15 +64,14 @@ const RadialGauge = ({
 
   return (
     <GaugeContainer
-      shape={shape}
       containerStyles={{ backgroundColor: "#111827", ...containerStyles }}
-      handleMaxValues={handleMaxValues}
+      onDimensionsChange={handleDimensionsChange}
     >
       {dimensions && progressFillerWidth !== undefined && (
         <>
-          <ProgressBarFiller
+          <GaugeVisual
             innerAreaSize={resolvedInnerAreaSize}
-            maxValues={dimensions}
+            dimensions={dimensions}
             labelOptions={{ ...defaultLabelOptions, ...labelOptions }}
             range={range}
             shape={shape}
@@ -79,12 +84,17 @@ const RadialGauge = ({
             showTarget={showTarget}
             target={target}
           />
-          {showValue && <Title
+          {showValue && <GaugeValue
             containerWidth={dimensions.maxWidth}
             progressFillerWidth={progressFillerWidth}
             range={range}
-            value={value}
-            titleOptions={{ ...shapeTitleDefaults, ...titleOptions, ...(variant === "needle" ? { verticalPosition: "bottom" as const } : {}) }}
+            value={resolvedValue}
+            valueOptions={{
+              ...shapeValueDefaults,
+              ...titleOptions,
+              ...valueOptions,
+              ...(variant === "needle" ? { verticalPosition: "bottom" as const } : {}),
+            }}
           />}
         </>
       )}

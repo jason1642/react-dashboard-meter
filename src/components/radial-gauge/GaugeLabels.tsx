@@ -3,13 +3,13 @@ import type {
   GaugeShape,
   GaugeTicks,
   LabelOptions,
-  range,
-} from "./RadialGauge.types";
-import { positionLabelsArray } from "./positionLabelsArray";
+  Range,
+} from "./types";
+import { positionGaugeLabels } from "./positionGaugeLabels";
 
-interface LabelsProps {
+interface GaugeLabelsProps {
   labelOptions: LabelOptions;
-  range: range;
+  range: Range;
   containerWidth: number;
   containerHeight: number;
   progressFillerWidth: number;
@@ -28,7 +28,7 @@ export const defaultLabelOptions: LabelOptions = {
   },
 };
 
-const Labels: FunctionComponent<LabelsProps> = ({
+const GaugeLabels: FunctionComponent<GaugeLabelsProps> = ({
   labelOptions,
   range,
   containerWidth,
@@ -39,7 +39,7 @@ const Labels: FunctionComponent<LabelsProps> = ({
   ticks,
 }) => (
   <>
-    {(ticks === "labels-and-ticks" || ticks === "labels-only") && positionLabelsArray({
+    {(ticks === "labels-and-ticks" || ticks === "labels-only") && positionGaugeLabels({
       range,
       containerWidth,
       containerHeight,
@@ -51,4 +51,4 @@ const Labels: FunctionComponent<LabelsProps> = ({
   </>
 );
 
-export default Labels;
+export default GaugeLabels;
