@@ -20,7 +20,7 @@ export type FillerTriColors = string | [string, string, string?];
 export type GaugeShape = ArcShape;
 export type GaugeVariant = "filled-arc" | "needle";
 export type GaugeTicks = "labels-and-ticks" | "ticks-only" | "none" | "labels-only";
-export type ProgressBarColorMode = "thresholds" | "gradient";
+export type ProgressBarColorMode = "thresholds" | "gradient" | "single-color";
 
 export interface LabelOptions {
   fixedLabels?: FixedLabels;
@@ -53,6 +53,10 @@ export interface GaugeValueOptions {
 export interface ProgressBarOptions {
   fillerTriColors?: FillerTriColors;
   emptyAreaColor?: string;
+  color?: string;
+  thickness?: number;
+  /** Threshold boundaries as percentages of the configured range, excluding 0 and 100. */
+  thresholds?: number[];
   colorMode?: ProgressBarColorMode;
 }
 
@@ -73,8 +77,6 @@ export interface RadialGaugeProps {
   innerAreaColor?: string;
   progressBarOptions?: ProgressBarOptions;
   valueOptions?: GaugeValueOptions;
-  /** @deprecated Use valueOptions. */
-  titleOptions?: GaugeValueOptions;
 }
 
 // Legacy aliases retained for consumers using the original public type names.
@@ -89,5 +91,4 @@ export type labelValueToFixed = LabelValueToFixed;
 export type fixedLabels = FixedLabels;
 export type verticalPosition = VerticalPosition;
 export type fillerTriColors = FillerTriColors;
-export type TitleOptionProps = GaugeValueOptions;
 export type GaugeMeterProps = RadialGaugeProps;

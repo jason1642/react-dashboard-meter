@@ -7,6 +7,7 @@ export const getGaugeArcGeometry = (
   height: number,
   shape: ArcShape,
   innerAreaSize: number,
+  thickness?: number,
 ): ArcGeometry => {
   const startAngle = shape === "half-circle" ? 180 : 135;
   const sweepAngle = shape === "half-circle" ? 180 : 270;
@@ -15,10 +16,13 @@ export const getGaugeArcGeometry = (
     shape === "half-circle"
       ? Math.min(width / 2, arcHeight)
       : Math.min(width / 2, height / 1.7072);
-  const strokeWidth = Math.max(
+  const defaultStrokeWidth = Math.max(
     8,
     Math.min(width * 0.18, availableRadius * (1 - innerAreaSize / 100)),
   );
+  const strokeWidth = Number.isFinite(thickness) && thickness !== undefined
+    ? Math.max(1, Math.min(thickness, availableRadius * 0.5))
+    : defaultStrokeWidth;
   const radius =
     shape === "half-circle"
       ? Math.max(1, Math.min(width / 2 - strokeWidth / 2, arcHeight - strokeWidth))

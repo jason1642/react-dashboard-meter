@@ -46,21 +46,6 @@ export interface LabelComponentProps {
 }   
 
 
-// Title Options Types
-export type verticalPosition = 'center' | 'bottom' | 'top';
-
-
-
-export interface TitleOptionProps {
-    containerStyles?: any;
-    valueTextStyles?:any;
-    appendedTextStyles?:any;
-    toFixedAmount?: 0 | 1 | 2;
-    reactNode?: React.ReactElement;
-    appendedText?: string | false;
-    verticalPosition?: verticalPosition;
-}
-
 export type fillerTriColors = string | [string, string, string?] | undefined;
 
 export interface ProgressBarOptions {
@@ -78,7 +63,6 @@ export interface GaugeMeterProps {
     labelOptions?: LabelOptions;
     innerAreaColor?: string;
     progressBarOptions?: ProgressBarOptions;
-    titleOptions?: TitleOptionProps;
 }
 
 export interface LinearMeterProps {

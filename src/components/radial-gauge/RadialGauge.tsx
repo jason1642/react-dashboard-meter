@@ -18,7 +18,6 @@ const RadialGauge = ({
   variant = "filled-arc",
   progressBarOptions,
   valueOptions,
-  titleOptions,
   labelOptions,
   range = [0, 100],
   innerAreaSize,
@@ -59,6 +58,7 @@ const RadialGauge = ({
         dimensions.maxHeight,
         shape,
         resolvedInnerAreaSize,
+        progressBarOptions?.thickness,
       ).strokeWidth
     : undefined;
 
@@ -91,7 +91,6 @@ const RadialGauge = ({
             value={resolvedValue}
             valueOptions={{
               ...shapeValueDefaults,
-              ...titleOptions,
               ...valueOptions,
               ...(variant === "needle" ? { verticalPosition: "bottom" as const } : {}),
             }}

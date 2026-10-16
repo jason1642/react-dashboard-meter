@@ -9,6 +9,7 @@ interface PositionGaugeLabelsOptions {
   containerWidth: number;
   containerHeight: number;
   progressFillerWidth: number;
+  thickness: number;
   innerAreaSize: number;
   shape: GaugeShape;
 }
@@ -22,6 +23,7 @@ export const positionGaugeLabels = ({
   containerWidth,
   containerHeight,
   progressFillerWidth,
+  thickness,
   innerAreaSize,
   shape,
 }: PositionGaugeLabelsOptions): ReactNode[] => {
@@ -45,12 +47,13 @@ export const positionGaugeLabels = ({
     containerHeight,
     shape,
     innerAreaSize,
+    thickness,
   );
   const labelRadius =
     labelPosition === "inside"
       ? geometry.radius - geometry.strokeWidth * 0.25
       : labelPosition === "inward"
-        ? geometry.radius - geometry.strokeWidth * 0.62
+        ? geometry.radius - geometry.strokeWidth / 2 - fontSize * 0.65
         : geometry.radius + geometry.strokeWidth * 1.08 + fontSize * 0.9;
   const suffix =
     appendedText === false
@@ -60,12 +63,24 @@ export const positionGaugeLabels = ({
   return Array.from({ length: count }, (_, index) => {
     const ratio = index / (count - 1);
     const angle = geometry.startAngle + geometry.sweepAngle * ratio;
-    const point = getArcPoint(geometry, angle, labelRadius);
+    const isInwardEndpoint = labelPosition === "inward" && (index === 0 || index === count - 1);
+    // Endpoint labels otherwise sit on top of the arc and its major tick marks.
+    const point = getArcPoint(
+      geometry,
+      angle,
+      isInwardEndpoint
+        ? geometry.radius + geometry.strokeWidth * 1.08 + fontSize * 0.9
+        : labelRadius,
+    );
     const value = minimum + (maximum - minimum) * ratio;
     const label = fixedLabels?.[index] ?? value.toFixed(labelValueToFixed);
     const cosine = Math.cos((angle * Math.PI) / 180);
     const transform =
-      cosine < -0.8
+      isInwardEndpoint && index === 0
+        ? "translate(-100%, -50%)"
+        : isInwardEndpoint && index === count - 1
+          ? "translateY(-50%)"
+          : cosine < -0.8
         ? "translate(-100%, -50%)"
         : cosine > 0.8
           ? "translateY(-50%)"

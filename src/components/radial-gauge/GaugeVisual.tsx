@@ -56,6 +56,20 @@ const GaugeVisual: FunctionComponent<GaugeVisualProps> = ({
       ? [colors, colors]
       : FALLBACK_COLORS;
   const stops = requestedStops.length > 0 ? requestedStops : FALLBACK_COLORS;
+  const singleColor = progressBarOptions?.color ?? stops[0];
+  const equalBoundaries = stops.slice(1).map((_, index) => ((index + 1) / stops.length) * 100);
+  const requestedBoundaries = progressBarOptions?.thresholds;
+  const hasValidBoundaries = requestedBoundaries?.length === stops.length - 1 &&
+    requestedBoundaries.every((boundary, index) =>
+      Number.isFinite(boundary) &&
+      boundary > (index === 0 ? 0 : requestedBoundaries[index - 1]) &&
+      boundary < 100,
+    );
+  const zoneBoundaries = hasValidBoundaries
+    ? [0, ...requestedBoundaries!, 100]
+    : stops.length === 3
+      ? [0, 40, 75, 100]
+      : [0, ...equalBoundaries, 100];
   const gradientStops = stops.map((color, index) => ({
     color,
     offset: stops.length === 1 ? "0%" : `${(index / (stops.length - 1)) * 100}%`,
@@ -65,6 +79,7 @@ const GaugeVisual: FunctionComponent<GaugeVisualProps> = ({
     dimensions.maxHeight,
     shape,
     innerAreaSize,
+    progressBarOptions?.thickness,
   );
   const fullPath = getArcPath(geometry);
   const activePath = getArcPath(geometry, percentFilled);
@@ -142,6 +157,14 @@ const GaugeVisual: FunctionComponent<GaugeVisualProps> = ({
               strokeLinecap={cap}
               strokeWidth={geometry.strokeWidth}
             />
+          ) : colorMode === "single-color" ? (
+            <path
+              d={fullPath}
+              fill="none"
+              stroke={singleColor}
+              strokeLinecap={cap}
+              strokeWidth={geometry.strokeWidth}
+            />
           ) : (
             <>
               {stops.map((color, index) => {
@@ -177,11 +200,19 @@ const GaugeVisual: FunctionComponent<GaugeVisualProps> = ({
                 strokeWidth={geometry.strokeWidth}
               />
             )}
+            {activePath && colorMode === "single-color" && (
+              <path
+                d={activePath}
+                fill="none"
+                stroke={singleColor}
+                strokeLinecap={cap}
+                strokeWidth={geometry.strokeWidth}
+              />
+            )}
             {activePath && colorMode === "thresholds" &&
               stops.map((color, index) => {
-                const segmentSize = 100 / stops.length;
-                const segmentStart = index * segmentSize;
-                const segmentEnd = Math.min(percentFilled, segmentStart + segmentSize);
+                const segmentStart = zoneBoundaries[index];
+                const segmentEnd = Math.min(percentFilled, zoneBoundaries[index + 1]);
                 const visibleSize = segmentEnd - segmentStart;
                 if (visibleSize <= 0) return null;
                 return (
@@ -199,9 +230,9 @@ const GaugeVisual: FunctionComponent<GaugeVisualProps> = ({
         )}
 
         {colorMode === "thresholds" && stops.slice(1).map((_, index) => {
-          const boundaryPercent = (index + 1) * 100 / stops.length;
+          const boundaryPercent = zoneBoundaries[index + 1];
           if (showsProgress && boundaryPercent > percentFilled) return null;
-          const angle = geometry.startAngle + geometry.sweepAngle * (index + 1) / stops.length;
+          const angle = geometry.startAngle + geometry.sweepAngle * boundaryPercent / 100;
           const from = getArcPoint(geometry, angle, geometry.radius - geometry.strokeWidth * 0.52);
           const to = getArcPoint(geometry, angle, geometry.radius + geometry.strokeWidth * 0.52);
           return (
@@ -220,10 +251,12 @@ const GaugeVisual: FunctionComponent<GaugeVisualProps> = ({
         {roundedCaps && colorMode === "thresholds" &&
           (showsProgress ? percentFilled > 0 : true) && (() => {
             const endPercent = showsProgress ? percentFilled : 100;
-            const endColorIndex = Math.min(
-              stops.length - 1,
-              Math.max(0, Math.ceil(endPercent / (100 / stops.length)) - 1),
+            const nextBoundaryIndex = zoneBoundaries.findIndex(
+              (boundary, index) => index > 0 && endPercent <= boundary,
             );
+            const endColorIndex = nextBoundaryIndex < 0
+              ? stops.length - 1
+              : nextBoundaryIndex - 1;
             const endAngle = geometry.startAngle + geometry.sweepAngle * endPercent / 100;
             const endPoint = getArcPoint(geometry, endAngle);
             const startPoint = getArcPoint(geometry, geometry.startAngle);

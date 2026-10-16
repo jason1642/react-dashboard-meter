@@ -21,6 +21,5 @@ export type {
   ProgressBarOptions,
   ProgressBarColorMode,
   RadialGaugeProps,
-  TitleOptionProps,
 } from "./radial-gauge/types";
 // export {default as LinearMeter} from './dashboard-meter/linear-meter/LinearMeter'

@@ -44,6 +44,7 @@ const GaugeLabels: FunctionComponent<GaugeLabelsProps> = ({
       containerWidth,
       containerHeight,
       progressFillerWidth,
+      thickness: progressFillerWidth,
       innerAreaSize,
       shape,
       labelOptions,

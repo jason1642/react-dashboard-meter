@@ -24,5 +24,4 @@ export type {
   ProgressBarOptions,
   ProgressBarColorMode,
   RadialGaugeProps,
-  TitleOptionProps,
 } from "./types";

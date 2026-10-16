@@ -61,6 +61,7 @@ const meta = {
     roundedCaps: { control: "boolean" },
     showValue: { control: "boolean" },
     showTarget: { control: "boolean" },
+    progressBarOptions: { control: "object" },
   },
 } satisfies Meta<typeof RadialGauge>;
 
@@ -127,5 +128,16 @@ export const ThreeQuarterFilledArc: Story = {
     value: 72,
     shape: "three-quarter",
     variant: "filled-arc",
+  },
+};
+
+export const SingleColor: Story = {
+  args: {
+    value: 68,
+    progressBarOptions: {
+      colorMode: "single-color",
+      color: "#60a5fa",
+      thickness: 18,
+    },
   },
 };
